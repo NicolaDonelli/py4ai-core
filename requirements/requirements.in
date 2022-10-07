@@ -1,0 +1,9 @@
+cfg-load>=0.8
+deprecated>=1.2.12
+dill>=0.3
+pandas>=1.0
+pymongo>=4.0
+scipy>=1.7.3
+setuptools>=47.1
+typeguard>=2.13.0
+typing-extensions>=4.0
