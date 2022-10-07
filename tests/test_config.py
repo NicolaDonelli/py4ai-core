@@ -1,9 +1,10 @@
-import unittest
 import os
+import unittest
+from cfg_load import Configuration
+from tests import DATA_FOLDER
 
 from py4ai.core.logging import LoggingConfig
 from py4ai.core.logging.defaults import getDefaultLogger, configFromFiles
-from tests import DATA_FOLDER
 from py4ai.core.tests.core import TestCase, logTest
 from py4ai.core.config import (
     get_all_configuration_file,
@@ -81,8 +82,6 @@ class TestLoggingConfig(TestCase):
 
 
 class TestBaseConfig(TestCase):
-
-    # todo: differenza tra config.getValue("fs")["root"] e config.fs.root ??
     @logTest
     def test_sublevel(self):
         self.assertEqual(
@@ -105,7 +104,7 @@ class TestBaseConfig(TestCase):
         self.assertIsNone(config.safeGetValue("folders"))
 
     @logTest
-    def test_update(self):
+    def test_update_dict(self):
 
         new_config = config.update({"test": {"fs": {"root": "new_folder"}}})
 
@@ -114,6 +113,26 @@ class TestBaseConfig(TestCase):
             new_config.config.meta["updated_params"],
             {"test": {"fs": {"root": "new_folder"}}},
         )
+
+    @logTest
+    def test_update_conf(self):
+        new_config = config.update(
+            Configuration(
+                cfg_dict={"test": {"fs": {"root": "new_folder"}}},
+                meta={"parse_datetime": None, "filepath": TEST_DATA_PATH},
+            )
+        )
+
+        self.assertEqual(new_config.getValue("test")["fs"]["root"], "new_folder")
+        self.assertEqual(
+            new_config.config.meta["updated_params"],
+            {"test": {"fs": {"root": "new_folder"}}},
+        )
+        self.assertEqual(
+            new_config.config.meta["filepath"],
+            TEST_DATA_PATH,
+        )
+        self.assertIsNone(new_config.config.meta["parse_datetime"])
 
 
 class TestFileSystemConfig(TestCase):
