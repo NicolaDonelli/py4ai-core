@@ -99,6 +99,10 @@ module = ["pandas.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
+module = ["sqlalchemy.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
 module = ["matplotlib.*"]
 ignore_missing_imports = true
 
@@ -127,5 +131,6 @@ module = ["bson.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["pymongo.*"]
+module = ["pymongo.*", "motor.*"]
 ignore_missing_imports = true
+

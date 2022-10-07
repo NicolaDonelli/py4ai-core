@@ -96,7 +96,7 @@ The version identifier is used for multiple purposes:
 ## Theory of Operation
 
 Versioneer works by adding a special `_version.py` file into your source
-tree, where your `__init__.py` can import it. This `_version.py` knows how to
+tree, where your `repository.py` can import it. This `_version.py` knows how to
 dynamically ask the VCS tool for version information at import time.
 
 `_version.py` also contains `$Revision$` markers, and the installation
@@ -118,7 +118,7 @@ See [INSTALL.md](./INSTALL.md) for detailed installation instructions.
 ## Version-String Flavors
 
 Code which uses Versioneer can learn about its version string at runtime by
-importing `_version` from your main `__init__.py` file and running the
+importing `_version` from your main `repository.py` file and running the
 `get_versions()` function. From the "outside" (e.g. in `setup.py`), you can
 import the top-level `versioneer.py` and run `get_versions()`.
 
@@ -154,7 +154,7 @@ developers). `version` is suitable for display in an "about" box or a CLI
 `--version` output: it can be easily compared against release notes and lists
 of bugs fixed in various releases.
 
-The installer adds the following text to your `__init__.py` to place a basic
+The installer adds the following text to your `repository.py` to place a basic
 version in `YOURPROJECT.__version__`:
 
     from ._version import get_versions

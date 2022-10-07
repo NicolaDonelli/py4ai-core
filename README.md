@@ -71,7 +71,7 @@ Creating a Database of Table objects
 
 ```python
 import pandas as pd
-from py4ai.core.data.layer.pandas.databases import Database
+from py4ai.core.data.layer.v0.pandas import Database
 
 # sample df
 df1 = pd.DataFrame([[1, 2, 3], [6, 5, 4]], columns=['a', 'b', 'c'])
@@ -95,8 +95,8 @@ db.__getitem__('df1')
 Using an Archiver with Dao objects
 
 ```python
-from py4ai.core.data.layer.pandas.archivers import CsvArchiver
-from py4ai.core.data.layer.pandas.dao import DataFrameDAO
+from py4ai.core.data.layer.v0.pandas import CsvArchiver
+from py4ai.core.data.layer.v0.pandas import DataFrameDAO
 
 # create a dao object 
 dao = DataFrameDAO()
