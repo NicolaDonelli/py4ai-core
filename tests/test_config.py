@@ -1,21 +1,21 @@
 import os
 import unittest
-from cfg_load import Configuration
-from tests import DATA_FOLDER
 
-from py4ai.core.logging import LoggingConfig
-from py4ai.core.logging.defaults import getDefaultLogger, configFromFiles
-from py4ai.core.tests.core import TestCase, logTest
+from cfg_load import Configuration
+
 from py4ai.core.config import (
-    get_all_configuration_file,
-    __this_dir__ as config_dir,
-    merge_confs,
-    BaseConfig,
-    FileSystemConfig,
     AuthConfig,
     AuthenticationServiceConfig,
+    BaseConfig,
+    FileSystemConfig,
 )
+from py4ai.core.config import __this_dir__ as config_dir
+from py4ai.core.config import get_all_configuration_file, merge_confs
 from py4ai.core.data.layer.mongo import MongoConfig
+from py4ai.core.logging import LoggingConfig
+from py4ai.core.logging.defaults import configFromFiles, getDefaultLogger
+from py4ai.core.tests.core import TestCase, logTest
+from tests import DATA_FOLDER
 
 os.environ["USER"] = os.environ.get("USER", "py4ai")
 TEST_DATA_PATH = DATA_FOLDER

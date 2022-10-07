@@ -4,7 +4,17 @@ import sys
 from abc import ABC, abstractmethod
 from functools import reduce
 from itertools import islice
-from typing import List, Iterable, Iterator, Tuple, Union, Type, Any, TypeVar, Optional
+from typing import (
+    Any,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 import dill
 import numpy as np
@@ -17,7 +27,7 @@ from py4ai.core.utils.dict import groupIterable
 if sys.version_info[0] < 3:
     pass
 
-from typing import Generic, Callable, Sequence
+from typing import Callable, Generic, Sequence
 
 T = TypeVar("T")
 

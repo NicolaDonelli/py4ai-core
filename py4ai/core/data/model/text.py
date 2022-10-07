@@ -2,14 +2,14 @@
 
 import uuid
 from typing import (
-    Dict,
     Any,
-    Optional,
-    Iterator,
-    Tuple,
-    List,
-    Hashable,
+    Dict,
     Generic,
+    Hashable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
     Type,
     TypeVar,
 )
@@ -24,7 +24,7 @@ from py4ai.core.data.model.core import (
     LazyIterable,
     RegisterLazyCachedIterables,
 )
-from py4ai.core.utils.dict import union, unflattenKeys
+from py4ai.core.utils.dict import unflattenKeys, union
 
 K = TypeVar("K", bound=Hashable)
 

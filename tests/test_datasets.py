@@ -1,6 +1,6 @@
 from py4ai.core.data.model.ml import PandasDataset, PandasTimeIndexedDataset
-from py4ai.core.datasets import get_weather_nyc_dataset, get_unbalanced_dataset
-from py4ai.core.tests.core import logTest, TestCase
+from py4ai.core.datasets import get_unbalanced_dataset, get_weather_nyc_dataset
+from py4ai.core.tests.core import TestCase, logTest
 
 
 class TestLoadDatasets(TestCase):

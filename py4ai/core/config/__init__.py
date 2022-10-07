@@ -2,24 +2,24 @@
 import os
 import re
 import sys
-import cfg_load
-
-from yaml import (
-    Loader,
-    add_implicit_resolver,
-    add_constructor,
-    Node,
-    FullLoader,
-    UnsafeLoader,
-)
-from typing import Optional, Any, Hashable, Union, Sequence, List
-from cfg_load import Configuration
-from functools import reduce
-from py4ai.core.typing import PathLike
 from datetime import datetime
-import pytz
-from py4ai.core.utils.dict import union
+from functools import reduce
+from typing import Any, Hashable, List, Optional, Sequence, Union
 
+import cfg_load
+import pytz
+from cfg_load import Configuration
+from yaml import (
+    FullLoader,
+    Loader,
+    Node,
+    UnsafeLoader,
+    add_constructor,
+    add_implicit_resolver,
+)
+
+from py4ai.core.typing import PathLike
+from py4ai.core.utils.dict import union
 
 __this_dir__, __this_filename__ = os.path.split(__file__)
 

@@ -1,8 +1,8 @@
 import unittest
 
-from py4ai.core.data.model.text import Document, CachedDocuments, LazyDocuments
+from py4ai.core.data.model.text import CachedDocuments, Document, LazyDocuments
 from py4ai.core.logging.defaults import getDefaultLogger
-from py4ai.core.tests.core import logTest, TestCase
+from py4ai.core.tests.core import TestCase, logTest
 
 logger = getDefaultLogger()
 

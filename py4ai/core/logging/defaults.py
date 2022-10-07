@@ -2,22 +2,28 @@
 
 import os
 import sys
-from types import TracebackType
 from importlib import import_module
-from typing import Optional, List, Callable, Union, Any, Type
-from logging import getLogger, basicConfig, config, captureWarnings, Logger, FileHandler
+from logging import (
+    FileHandler,
+    Logger,
+    basicConfig,
+    captureWarnings,
+    config,
+    getLogger,
+)
+from types import TracebackType
+from typing import Any, Callable, List, Optional, Type, Union
 
-from py4ai.core.typing import PathLike
 from py4ai.core.config import merge_confs
 from py4ai.core.logging import (
-    WithLoggingABC,
     DEFAULT_LOG_LEVEL,
     LevelsDict,
     LevelTypes,
     StrLevelTypes,
+    WithLoggingABC,
 )
+from py4ai.core.typing import PathLike
 from py4ai.core.utils.fs import create_dir_if_not_exists
-
 
 levels: LevelsDict = {
     "CRITICAL": 50,

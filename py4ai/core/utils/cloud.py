@@ -1,14 +1,14 @@
 """Module for providing interface to a cloud storage layer that persists files to be used in the application and downloaded on demand."""
 
-import os
-import http.server
-
 import cgi
+import http.server
+import os
+from typing import Callable
+
 import requests
 
-from typing import Callable
-from py4ai.core.typing import PathLike
 from py4ai.core.logging.defaults import WithLogging
+from py4ai.core.typing import PathLike
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
 

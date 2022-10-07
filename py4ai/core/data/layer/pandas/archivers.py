@@ -1,8 +1,10 @@
 """Module with abstraction for accessing to data persistent in pickles, mimicking a ficticious database."""
 
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from collections.abc import Iterable
-from typing import Optional, Union, Iterator, Callable, List, Iterable as IterableType
+from typing import Callable
+from typing import Iterable as IterableType
+from typing import Iterator, List, Optional, Union
 
 import pandas as pd
 from pandas.errors import EmptyDataError

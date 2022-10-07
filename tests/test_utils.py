@@ -1,28 +1,29 @@
 import os
 import unittest
-from typeguard import typechecked
-from typing import List, Dict
+from typing import Dict, List
 
 import pandas as pd
+from typeguard import typechecked
+
 from py4ai.core.logging.defaults import getDefaultLogger
-from py4ai.core.tests.core import logTest, TestCase
-from py4ai.core.utils.decorators import lazyproperty as lazy, param_check
+from py4ai.core.tests.core import TestCase, logTest
+from py4ai.core.utils.decorators import lazyproperty as lazy
+from py4ai.core.utils.decorators import param_check
 from py4ai.core.utils.dict import (
+    filterNones,
+    flattenKeys,
+    groupBy,
     groupIterable,
     pairwise,
-    union,
-    flattenKeys,
     unflattenKeys,
-    filterNones,
-    groupBy,
+    union,
 )
 from py4ai.core.utils.fs import (
-    mkdir,
     create_dir_if_not_exists,
     get_lexicographic_dirname,
+    mkdir,
 )
 from py4ai.core.utils.pandas import is_sparse, loc
-
 from tests import TMP_FOLDER
 
 logger = getDefaultLogger()

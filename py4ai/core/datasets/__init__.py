@@ -3,6 +3,7 @@
 import os
 
 import pandas as pd
+
 from py4ai.core.data.model.ml import PandasDataset, PandasTimeIndexedDataset
 
 DATA_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")

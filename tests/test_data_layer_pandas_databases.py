@@ -1,10 +1,11 @@
-import unittest
 import os
+import unittest
+
 import pandas as pd
 
-from py4ai.core.tests.core import TestCase, logTest
-from py4ai.core.logging.defaults import getDefaultLogger
 from py4ai.core.data.layer.pandas.databases import Database, Table
+from py4ai.core.logging.defaults import getDefaultLogger
+from py4ai.core.tests.core import TestCase, logTest
 from tests import TMP_FOLDER
 
 logger = getDefaultLogger()

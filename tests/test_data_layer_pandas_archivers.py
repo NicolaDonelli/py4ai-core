@@ -6,16 +6,20 @@ import numpy as np
 import pandas as pd
 
 from py4ai.core.data.layer.pandas.archivers import (
-    TableArchiver,
-    PickleArchiver,
     CsvArchiver,
+    PickleArchiver,
+    TableArchiver,
 )
-from py4ai.core.data.layer.pandas.dao import DataFrameDAO, SeriesDAO, DocumentDAO
+from py4ai.core.data.layer.pandas.dao import (
+    DataFrameDAO,
+    DocumentDAO,
+    SeriesDAO,
+)
 from py4ai.core.data.layer.pandas.databases import Database
 from py4ai.core.data.model.core import IterGenerator
 from py4ai.core.logging.defaults import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
-from tests import TMP_FOLDER, DATA_FOLDER
+from tests import DATA_FOLDER, TMP_FOLDER
 
 TEST_DATA_PATH = DATA_FOLDER
 logger = getDefaultLogger()

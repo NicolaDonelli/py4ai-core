@@ -1,21 +1,22 @@
-import unittest
 import os
+import unittest
+from typing import Iterator, Sequence, TypeVar
+
 import pandas as pd
 
 from py4ai.core.data.model.core import (
+    CachedIterable,
+    CompositeRange,
     DillSerialization,
     IterableUtilsMixin,
-    Range,
-    CompositeRange,
-    CachedIterable,
-    LazyIterable,
     IterGenerator,
+    LazyIterable,
+    Range,
     RegisterLazyCachedIterables,
 )
 from py4ai.core.logging.defaults import getDefaultLogger
-from py4ai.core.tests.core import logTest, TestCase
+from py4ai.core.tests.core import TestCase, logTest
 from tests import TMP_FOLDER
-from typing import Iterator, Sequence, TypeVar
 
 T = TypeVar("T")
 

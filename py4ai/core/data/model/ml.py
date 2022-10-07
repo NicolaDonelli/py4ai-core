@@ -3,18 +3,18 @@
 import sys
 from abc import ABC, abstractmethod
 from typing import (
-    cast,
-    Union,
-    Sequence,
-    Optional,
-    TypeVar,
-    Generic,
-    List,
-    Tuple,
     Any,
-    Type,
     Dict,
+    Generic,
     Iterator,
+    List,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
     overload,
 )
 
@@ -23,20 +23,22 @@ import pandas as pd
 from pandas import DataFrame, Series
 from typing_extensions import Literal
 
-from py4ai.core.typing import T
 from py4ai.core.data.model.core import (
     CachedIterable,
-    IterGenerator,
     DillSerialization,
     IterableUtilsMixin,
+    IterGenerator,
     LazyIterable,
     RegisterLazyCachedIterables,
 )
-from py4ai.core.utils.decorators import lazyproperty as lazy, same_type
+from py4ai.core.typing import T
+from py4ai.core.utils.decorators import lazyproperty as lazy
+from py4ai.core.utils.decorators import same_type
 from py4ai.core.utils.pandas import loc
 
 if sys.version_info[0] < 3:
-    from itertools import izip as zip, islice
+    from itertools import islice
+    from itertools import izip as zip
 else:
     from itertools import islice
 

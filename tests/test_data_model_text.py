@@ -2,16 +2,16 @@ import unittest
 from typing import Iterator
 
 import pandas as pd
-from py4ai.core.tests.core import TestCase, logTest
 
-from tests import TMP_FOLDER
-from py4ai.core.data.model.text import (
-    generate_random_uuid,
-    Document,
-    CachedDocuments,
-    LazyDocuments,
-)
 from py4ai.core.data.model.core import IterGenerator
+from py4ai.core.data.model.text import (
+    CachedDocuments,
+    Document,
+    LazyDocuments,
+    generate_random_uuid,
+)
+from py4ai.core.tests.core import TestCase, logTest
+from tests import TMP_FOLDER
 
 dict_doc1 = {"name": "Bob", "language": ["English", "French"]}
 key_doc1 = "123"

@@ -1,6 +1,7 @@
 import os
-from mongomock import MongoClient
 import random
+
+from mongomock import MongoClient
 
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
