@@ -1,25 +1,26 @@
 """Data layer module."""
-import pandas as pd
-from abc import abstractmethod, ABC
-from bson.objectid import ObjectId
+from abc import ABC, abstractmethod
 from typing import (
     Any,
     Callable,
-    Optional,
+    Dict,
+    Generic,
+    Hashable,
     Iterator,
+    List,
+    Optional,
     TypeVar,
     Union,
-    Hashable,
-    Dict,
-    List,
-    Generic,
 )
+
+import pandas as pd
+from bson.objectid import ObjectId
 from pymongo.collection import UpdateResult
 
-from py4ai.core.typing import T
-from py4ai.core.data.model.text import Document
-from py4ai.core.data.model.core import IterGenerator
 from py4ai.core.data.exceptions import NoTableException
+from py4ai.core.data.model.core import IterGenerator
+from py4ai.core.data.model.text import Document
+from py4ai.core.typing import T
 
 DataVal = Union[Document, pd.DataFrame, pd.Series]
 

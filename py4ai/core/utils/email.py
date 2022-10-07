@@ -1,14 +1,13 @@
 """Basic functionalities for interacting with email servers."""
 
 import smtplib
-from typing import List, Optional, Union
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from os.path import basename
+from typing import List, Optional, Union
 
 from py4ai.core.logging.defaults import WithLogging
-
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
 
 
 class EmailSender(WithLogging):

@@ -1,6 +1,7 @@
 """Typing utilities."""
 import os
-from typing import Union, Any, TypeVar, Hashable
+from typing import Any, Hashable, TypeVar, Union
+
 from typing_extensions import Protocol
 
 PathLike = Union[str, "os.PathLike[str]"]

@@ -1,7 +1,7 @@
 """Module with the implementation and abstraction for serializing/deserializing objects into DataFrames."""
 
 import json
-from typing import Hashable, Optional, Dict, Union, Sequence
+from typing import Dict, Hashable, Optional, Sequence, Union
 
 import pandas as pd
 

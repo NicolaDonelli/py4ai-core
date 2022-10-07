@@ -1,14 +1,15 @@
 """Module with abstraction for databases and tables."""
 
 import os
-import pandas as pd
 from glob import glob
-
 from typing import List, Optional
-from py4ai.core.typing import PathLike
-from py4ai.core.utils.fs import create_dir_if_not_exists
+
+import pandas as pd
+
 from py4ai.core.data.layer import DatabaseABC, TableABC
 from py4ai.core.logging.defaults import WithLogging
+from py4ai.core.typing import PathLike
+from py4ai.core.utils.fs import create_dir_if_not_exists
 
 
 class Database(WithLogging, DatabaseABC):

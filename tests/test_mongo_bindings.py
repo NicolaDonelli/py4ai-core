@@ -3,8 +3,8 @@ import unittest
 from py4ai.core.data.layer.mongo.archivers import MongoArchiver
 from py4ai.core.data.layer.mongo.dao import DocumentDAO
 from py4ai.core.data.model.text import Document, generate_random_uuid
-from tests import db
 from py4ai.core.tests.core import TestCase, logTest
+from tests import db
 
 
 class TestMongoConnection(TestCase):

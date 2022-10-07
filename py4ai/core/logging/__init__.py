@@ -1,9 +1,11 @@
 """Logging module."""
 from abc import ABC, abstractmethod
 from logging import Logger
+
 from typing_extensions import Literal, TypedDict
-from py4ai.core.typing import PathLike
+
 from py4ai.core.config import BaseConfig
+from py4ai.core.typing import PathLike
 
 LevelTypes = Literal[
     "CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET", 50, 40, 30, 20, 10, 0

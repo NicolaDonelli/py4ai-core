@@ -1,10 +1,12 @@
 """Basic testing functionalities to be used in unittests."""
 
-import pandas as pd
-import numpy as np
 from time import time
-from typing import Callable, TypeVar, Dict
+from typing import Callable, Dict, TypeVar
 from unittest import TestCase as CoreTestCase
+
+import numpy as np
+import pandas as pd
+
 from py4ai.core.logging.defaults import WithLogging
 
 

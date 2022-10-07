@@ -128,19 +128,22 @@ reinstall_dev: install_dev
 	${PYTHON} -m pip install --quiet $(shell ls -rt  dist/*.tar.gz | tail -1)
 	touch $(install_tag)
 
+sort_imports: setup_dev
+	${PYTHON} -m isort $(folders)
+
 format: setup_dev
 	${PYTHON} -m black $(folders)
 
 lint: setup_dev
 	${PYTHON} -m flake8 $(folders)
 
-mypy: setup_dev $(install_tag)
-	mypy --install-types --non-interactive --follow-imports silent $(folders)
+mypy: install_dev
+	${PYTHON} -m mypy --install-types --non-interactive --follow-imports silent $(folders)
 
-tests: setup_dev $(install_tag)
+tests: install_dev
 	${PYTHON} -m pytest tests
 
-checks: format lint mypy tests
+checks: sort_imports format lint mypy tests
 
 docs: setup_dev $(install_tag) $(doc_files) setup.cfg
 	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai

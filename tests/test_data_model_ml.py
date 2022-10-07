@@ -1,20 +1,20 @@
 import os
 import unittest
+from typing import Generator, Iterator
 
 import numpy as np
 import pandas as pd
 
 from py4ai.core.data.model.ml import (
-    LazyDataset,
+    CachedDataset,
     IterGenerator,
+    LazyDataset,
     MultiFeatureSample,
-    Sample,
     PandasDataset,
     PandasTimeIndexedDataset,
-    CachedDataset,
+    Sample,
     features_and_labels_to_dataset,
 )
-from typing import Iterator, Generator
 from py4ai.core.tests.core import TestCase, logTest
 from tests import TMP_FOLDER
 

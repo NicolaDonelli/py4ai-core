@@ -1,18 +1,13 @@
 """Module with abstraction for accessing to MongoDB persistent layers."""
 
 from collections.abc import Iterable
+from typing import TYPE_CHECKING, Any, Dict
+from typing import Iterable as IterableType
+from typing import Iterator, List, Optional, Union
+
 from bson.objectid import ObjectId
 from pymongo.collection import Collection, UpdateResult
-from typing import (
-    Union,
-    Optional,
-    List,
-    Dict,
-    Any,
-    Iterator,
-    Iterable as IterableType,
-    TYPE_CHECKING,
-)
+
 from py4ai.core.data.layer import Archiver
 from py4ai.core.data.layer.mongo.dao import MongoDAO
 from py4ai.core.typing import T

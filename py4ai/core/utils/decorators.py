@@ -2,9 +2,9 @@
 
 import inspect
 import os
-from functools import wraps, partial
+from functools import partial, wraps
 from glob import glob
-from typing import Callable, Any, Iterable, Tuple
+from typing import Any, Callable, Iterable, Tuple
 
 import pandas as pd
 from deprecated import deprecated

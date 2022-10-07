@@ -1,13 +1,14 @@
 """Module with the implementation and abstraction for serializing/deserializing objects to/from MongoDB."""
 
-from bson.objectid import ObjectId
-import pandas as pd
+from typing import Any, Dict, Generic, Hashable, TypeVar
 
-from typing import Dict, Generic, TypeVar, Hashable, Any
-from py4ai.core.typing import T
+import pandas as pd
+from bson.objectid import ObjectId
+
 from py4ai.core.data.layer import DAO
-from py4ai.core.utils.dict import union
 from py4ai.core.data.model.text import Document
+from py4ai.core.typing import T
+from py4ai.core.utils.dict import union
 
 K = TypeVar("K", Hashable, Hashable)
 

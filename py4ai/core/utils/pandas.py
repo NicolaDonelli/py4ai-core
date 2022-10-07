@@ -1,6 +1,7 @@
 """Basic utilities extending pandas functionalities."""
 
-from typing import Union, List, Any
+from typing import Any, List, Union
+
 from pandas import DataFrame, Index
 from pandas.core.arrays.sparse.dtype import SparseDtype
 

@@ -1,6 +1,7 @@
 import os
 import unittest
-from logging import StreamHandler, FileHandler
+from logging import FileHandler, StreamHandler
+
 from py4ai.core.logging.defaults import configFromFiles, logger
 from py4ai.core.tests.core import TestCase, logTest
 from tests import DATA_FOLDER, TMP_FOLDER, clean_tmp_folder, unset_TMP_FOLDER

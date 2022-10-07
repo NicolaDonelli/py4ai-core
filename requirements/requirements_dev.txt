@@ -63,6 +63,8 @@ importlib-metadata==4.2.0
     #   twine
 iniconfig==1.1.1
     # via pytest
+isort==5.10.1
+    # via -r requirements/requirements_dev.in
 jinja2==3.0.3
     # via sphinx
 keyring==23.5.0

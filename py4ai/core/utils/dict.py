@@ -7,11 +7,21 @@ if sys.version_info[0] < 3:
 else:
     from functools import reduce
 
-from itertools import islice, tee, groupby
-from typing import Iterator, Iterable, List, Tuple, Dict, Any, Callable, Optional
-from copy import deepcopy as copy
 from collections.abc import Mapping
+from copy import deepcopy as copy
+from itertools import groupby, islice, tee
 from operator import add
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+)
+
 from py4ai.core.typing import SupportsLessThan, T
 
 
