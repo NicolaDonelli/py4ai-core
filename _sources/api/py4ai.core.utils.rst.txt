@@ -1,0 +1,61 @@
+py4ai.core.utils package
+========================
+
+Submodules
+----------
+
+py4ai.core.utils.cloud module
+-----------------------------
+
+.. automodule:: py4ai.core.utils.cloud
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.utils.decorators module
+----------------------------------
+
+.. automodule:: py4ai.core.utils.decorators
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.utils.dict module
+----------------------------
+
+.. automodule:: py4ai.core.utils.dict
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.utils.email module
+-----------------------------
+
+.. automodule:: py4ai.core.utils.email
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.utils.fs module
+--------------------------
+
+.. automodule:: py4ai.core.utils.fs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.utils.pandas module
+------------------------------
+
+.. automodule:: py4ai.core.utils.pandas
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: py4ai.core.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

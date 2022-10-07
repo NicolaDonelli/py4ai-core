@@ -1,0 +1,21 @@
+py4ai.core.tests package
+========================
+
+Submodules
+----------
+
+py4ai.core.tests.core module
+----------------------------
+
+.. automodule:: py4ai.core.tests.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: py4ai.core.tests
+   :members:
+   :undoc-members:
+   :show-inheritance:

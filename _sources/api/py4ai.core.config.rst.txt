@@ -1,0 +1,10 @@
+py4ai.core.config package
+=========================
+
+Module contents
+---------------
+
+.. automodule:: py4ai.core.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
