@@ -160,23 +160,48 @@ class BaseConfig(object):
         """
         return self.config.get(name, None)
 
-    def update(self, my_dict: dict) -> "BaseConfig":
+    def update(self, other: Union[dict, Configuration]) -> "BaseConfig":
         """
         Update the current configuration.
 
-        :param my_dict: dictionary containing the nodes of the configuration to be updated
+        :param other: dictionary or Configuration containing the nodes of the configuration to be updated.
+            In case other is a Configuration also metadata will be updated to other's metadata.
         :return: new configuration with the updated nodes
+        :raises ValueError: if other is not a dict or a Configuration
         """
-        meta = union(
-            self.config.meta,
-            {
-                "updated_params": my_dict,
-                "modification_datetime": datetime.now().astimezone(
-                    tz=pytz.timezone("Europe/Rome")
+        if isinstance(other, dict):
+            config = Configuration(
+                union(self.config.to_dict(), other),
+                union(
+                    self.config.meta,
+                    {
+                        "updated_params": other,
+                        "modification_datetime": datetime.now().astimezone(
+                            tz=pytz.timezone("Europe/Rome")
+                        ),
+                    },
                 ),
-            },
-        )
-        return type(self)(Configuration(union(dict(self.config), my_dict), meta))
+                self.config.meta["load_remote"],
+            )
+            return type(self)(config)
+        elif isinstance(other, Configuration):
+            newconfig = self.config.update(other)
+            return type(self)(
+                Configuration(
+                    newconfig.to_dict(),
+                    union(
+                        newconfig.meta,
+                        {
+                            "updated_params": other.to_dict(),
+                            "modification_datetime": datetime.now().astimezone(
+                                tz=pytz.timezone("Europe/Rome")
+                            ),
+                        },
+                    ),
+                )
+            )
+        else:
+            raise ValueError(f"Type {type(other)} cannot be merged to Configuration")
 
 
 class FileSystemConfig(BaseConfig):
