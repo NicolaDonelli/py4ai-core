@@ -75,20 +75,20 @@ reqs_dev: requirements/requirements_dev.txt
 $(env_tag): requirements/requirements.txt
 	@echo "==Installing requirements.txt=="
 	pip-sync --quiet requirements/requirements.txt
-	rm -f $(env_dev_tag)
-	rm -f $(install_tag)
 	touch $(env_tag)
 
 $(env_dev_tag): requirements/requirements_dev.txt
 	@echo "==Installing requirements_dev.txt=="
 	pip-sync --quiet requirements/requirements_dev.txt
-	rm -f $(env_tag)
-	rm -f $(install_tag)
 	touch $(env_dev_tag)
 
 setup: $(env_tag)
+	@echo "Setup"
+	rm -f $(env_dev_tag)
 
 setup_dev: $(env_dev_tag)
+	@echo "Setup Dev"
+	rm -f $(env_tag)
 
 dist/.build-tag: $(files) setup.cfg requirements/requirements.txt
 	@echo "==Building package distribution=="
@@ -108,42 +108,22 @@ uninstall:
 	pip freeze | grep -v "@" | xargs pip uninstall -y
 	rm -f $(env_tag) $(env_dev_tag) $(pre_deps_tag) $(install_tag)
 
-install: setup $(install_tag)
-
-install_dev: setup_dev $(install_tag)
-
-reinstall: install
-	@echo "==Rebuilding package distribution=="
-	${PYTHON} setup.py --quiet sdist
-	ls -rt  dist/* | tail -1 > dist/.build-tag
-	@echo "==Reinstalling package=="
-	${PYTHON} -m pip install --quiet $(shell ls -rt  dist/*.tar.gz | tail -1)
-	touch $(install_tag)
-
-reinstall_dev: install_dev
-	@echo "==Rebuilding package distribution=="
-	${PYTHON} setup.py --quiet sdist
-	ls -rt  dist/* | tail -1 > dist/.build-tag
-	@echo "==Reinstalling package=="
-	${PYTHON} -m pip install --quiet $(shell ls -rt  dist/*.tar.gz | tail -1)
-	touch $(install_tag)
-
-sort_imports: setup_dev
-	${PYTHON} -m isort $(folders)
+install: $(install_tag)
 
 format: setup_dev
 	${PYTHON} -m black $(folders)
+	${PYTHON} -m isort $(folders)
 
 lint: setup_dev
 	${PYTHON} -m flake8 $(folders)
 
-mypy: install_dev
+mypy: setup_dev $(install_tag)
 	${PYTHON} -m mypy --install-types --non-interactive --follow-imports silent $(folders)
 
-tests: install_dev
+tests: setup_dev $(install_tag)
 	${PYTHON} -m pytest tests
 
-checks: sort_imports format lint mypy tests
+checks: format lint mypy tests
 
 docs: setup_dev $(install_tag) $(doc_files) setup.cfg
 	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
