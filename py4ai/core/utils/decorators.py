@@ -4,7 +4,7 @@ import inspect
 import os
 from functools import wraps, partial
 from glob import glob
-from typing import Callable, Any, Iterable, Tuple
+from typing import Callable, Any, Iterable, Tuple, TypeVar
 
 import pandas as pd
 from deprecated import deprecated
@@ -12,6 +12,9 @@ from deprecated import deprecated
 from py4ai.core.typing import PathLike, T
 from py4ai.core.utils.dict import union
 from py4ai.core.utils.fs import create_dir_if_not_exists
+
+A = TypeVar("A")
+B = TypeVar("B")
 
 
 def cache(func: Callable[..., T]) -> Callable[..., T]:
@@ -240,3 +243,22 @@ def param_check(with_none: bool) -> Callable[..., Any]:
     :return: decorator
     """
     return partial(paramCheck, allow_none=with_none)
+
+
+def same_type(f: Callable[[A, B], T]) -> Callable[[A, B], T]:
+    """
+    Check that both arguments of input function have the same type.
+
+    :param f: function
+    :return: function
+    """
+
+    @wraps(f)
+    def new_f(self, other):
+        if not isinstance(other, type(self)):
+            raise TypeError(
+                f"other's type ({type(other)}) is different from self's type ({type(self)})"
+            )
+        return f(self, other)
+
+    return new_f

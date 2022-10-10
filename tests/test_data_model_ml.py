@@ -318,6 +318,43 @@ class LazyDatasetTests(TestCase):
         self.assertEqual(next(lazyDat.features()), samples[0].features)
         self.assertEqual(next(lazyDat.labels()), samples[0].label)
 
+    @logTest
+    def test_union(self):
+        dataset = LazyDataset(IterGenerator(samples_gen))
+
+        def samples_gen_1():
+            for sample in samples[:2]:
+                if not any([np.isnan(x).any() for x in sample.features]):
+                    yield sample
+
+        dataset_1 = LazyDataset(IterGenerator(samples_gen_1))
+
+        def samples_gen_2():
+            for sample in samples[2:]:
+                if not any([np.isnan(x).any() for x in sample.features]):
+                    yield sample
+
+        dataset_2 = LazyDataset(IterGenerator(samples_gen_2))
+        cached_2 = CachedDataset(list(samples_gen_2()))
+
+        self.assertEqual(
+            dataset_1.union(dataset_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(dataset_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
+        )
+        self.assertIsInstance(dataset_1.union(cached_2), LazyDataset)
+        self.assertEqual(
+            dataset_1.union(cached_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(cached_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
+        )
+
 
 class CachedDatasetTests(TestCase):
     lazyDat: LazyDataset
@@ -360,6 +397,37 @@ class CachedDatasetTests(TestCase):
                 CachedDataset(self.lazyDat).asPandasDataset.labels[0].values
                 == [1, 2, 3, 4, 5, 6, 7, 8, 9]
             ).all()
+        )
+
+    @logTest
+    def test_union(self):
+        dataset = CachedDataset(samples)
+        dataset_1 = CachedDataset(samples[:2])
+        dataset_2 = CachedDataset(samples[2:])
+
+        def samples_gen_2():
+            for sample in samples[2:]:
+                if not any([np.isnan(x).any() for x in sample.features]):
+                    yield sample
+
+        lazy_2 = LazyDataset(IterGenerator(samples_gen_2))
+
+        self.assertEqual(
+            dataset_1.union(dataset_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(dataset_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
+        )
+        self.assertIsInstance(dataset_1.union(lazy_2), CachedDataset)
+        self.assertEqual(
+            dataset_1.union(lazy_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(lazy_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
         )
 
 
@@ -621,7 +689,7 @@ class PandasDatasetTests(TestCase):
             )
         )
 
-        self.assertTrue(isinstance(union, PandasDataset))
+        self.assertIsInstance(union, PandasDataset)
         self.assertEqual(
             union.features.reset_index(drop=True),
             pd.concat(
@@ -635,6 +703,12 @@ class PandasDatasetTests(TestCase):
         self.assertEqual(
             union.labels.Label.reset_index(drop=True),
             pd.Series([0, 0, 0, 1, 0, 0, 0, 1], name="Label"),
+        )
+        self.assertRaisesRegex(
+            TypeError,
+            "other's type (.*) is different from self's type (.*)",
+            self.dataset.union,
+            CachedDataset(samples),
         )
 
     @logTest

@@ -1,8 +1,9 @@
 """Module for specifying data-models to be used in modelling."""
 
 import sys
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import (
+    cast,
     Union,
     Sequence,
     Optional,
@@ -24,7 +25,6 @@ from typing_extensions import Literal
 
 from py4ai.core.typing import T
 from py4ai.core.data.model.core import (
-    BaseIterable,
     CachedIterable,
     IterGenerator,
     DillSerialization,
@@ -32,7 +32,7 @@ from py4ai.core.data.model.core import (
     LazyIterable,
     RegisterLazyCachedIterables,
 )
-from py4ai.core.utils.decorators import lazyproperty as lazy
+from py4ai.core.utils.decorators import lazyproperty as lazy, same_type
 from py4ai.core.utils.pandas import loc
 
 if sys.version_info[0] < 3:
@@ -41,6 +41,7 @@ else:
     from itertools import islice
 
 TPandasDataset = TypeVar("TPandasDataset", bound="PandasDataset")
+TDatasetUtilsMixin = TypeVar("TDatasetUtilsMixin", bound="DatasetUtilsMixin")
 
 FeatType = TypeVar(
     "FeatType", bound=Union[List[Any], Tuple[Any], np.ndarray, Dict[str, Any]]
@@ -292,28 +293,15 @@ class DatasetUtilsMixin(
         else:
             raise ValueError("Type %s not allowed" % type)
 
-    def union(
-        self, other: BaseIterable[Sample[FeatType, LabType]]
-    ) -> "DatasetUtilsMixin[FeatType, LabType]":
+    @abstractmethod
+    def union(self, other: TDatasetUtilsMixin) -> "DatasetUtilsMixin":
         """
         Return a union of datasets.
 
-        :param other: Dataset
-        :return: LazyDataset
-        :raises TypeError: other is not an instance of Dataset
+        :param other: other dataset to join
+        :return: union dataset
         """
-        if not isinstance(other, BaseIterable):
-            raise TypeError(
-                "Union can only be done between Datasets. Found %s" % str(type(other))
-            )
-
-        def _generator():
-            for sample in self:
-                yield sample
-            for sample in other:
-                yield sample
-
-        return LazyDataset(IterGenerator(_generator))
+        raise NotImplementedError
 
     @property
     def asPandasDataset(self) -> "PandasDataset":
@@ -345,6 +333,15 @@ class CachedDataset(
             },
             axis=1,
         )
+
+    def union(self, other: TDatasetUtilsMixin) -> "CachedDataset":
+        """
+        Perform union on CachedDatasets.
+
+        :param other: CachedDataset
+        :return: union of current and other CachedDataset
+        """
+        return CachedDataset([x for x in self.items] + [x for x in other.items])
 
 
 @RegisterLazyCachedIterables(CachedDataset)
@@ -444,6 +441,22 @@ class LazyDataset(
         :return: an object of the specified type containing the features
         """
         return super(LazyDataset, self).getLabelsAs(type)
+
+    def union(self, other: TDatasetUtilsMixin) -> "LazyDataset":
+        """
+        Perform union on LazyDatasets.
+
+        :param other: LazyDataset
+        :return: union of LazyDatasets
+        """
+
+        def _generator():
+            for sample in self:
+                yield sample
+            for sample in other:
+                yield sample
+
+        return LazyDataset(IterGenerator(_generator))
 
 
 @RegisterLazyCachedIterables(LazyDataset, unidirectional_link=True)
@@ -765,25 +778,21 @@ class PandasDataset(
         features = pd.concat(features_iter)
         return cls.createObject(features, labels)
 
-    def union(
-        self, other: BaseIterable[Sample[FeatType, LabType]]
-    ) -> DatasetUtilsMixin[FeatType, LabType]:
+    @same_type
+    def union(self, other: TPandasDataset) -> TPandasDataset:
         """
-        Return a union between datasets.
+        Return a union between PandasDatasets.
 
         :param other: Dataset to be merged
         :return: Dataset resulting from the merge
         """
-        if isinstance(other, self.__class__):
-            features = pd.concat([self.features, other.features])
-            labels = (
-                pd.concat([self.labels, other.labels])
-                if not (self.labels is None and other.labels is None)
-                else None
-            )
-            return self.createObject(features, labels)
-        else:
-            return super().union(other)  # type: ignore
+        features = pd.concat([self.features, other.features])
+        labels = (
+            pd.concat([self.labels, other.labels])
+            if not (self.labels is None and other.labels is None)
+            else None
+        )
+        return cast(TPandasDataset, self.createObject(features, labels))
 
 
 class PandasTimeIndexedDataset(PandasDataset):
