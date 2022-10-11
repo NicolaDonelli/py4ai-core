@@ -75,11 +75,13 @@ reqs_dev: requirements/requirements_dev.txt
 $(env_tag): requirements/requirements.txt
 	@echo "==Installing requirements.txt=="
 	pip-sync --quiet requirements/requirements.txt
+	rm $(install_tag)
 	touch $(env_tag)
 
 $(env_dev_tag): requirements/requirements_dev.txt
 	@echo "==Installing requirements_dev.txt=="
 	pip-sync --quiet requirements/requirements_dev.txt
+	rm $(install_tag)
 	touch $(env_dev_tag)
 
 setup: $(env_tag)
