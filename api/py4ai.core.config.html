@@ -341,14 +341,18 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.config.BaseConfig.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><span class="pre">py4ai.core.config.BaseConfig</span></a></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.update" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">cfg_load.Configuration</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><span class="pre">py4ai.core.config.BaseConfig</span></a></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.update" title="Permalink to this definition"></a></dt>
 <dd><p>Update the current configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>my_dict</strong> – dictionary containing the nodes of the configuration to be updated</p>
+<dd class="field-odd"><p><strong>other</strong> – dictionary or Configuration containing the nodes of the configuration to be updated.
+In case other is a Configuration also metadata will be updated to other’s metadata.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>new configuration with the updated nodes</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if other is not a dict or a Configuration</p>
 </dd>
 </dl>
 </dd></dl>
