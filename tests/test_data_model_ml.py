@@ -335,6 +335,7 @@ class LazyDatasetTests(TestCase):
                     yield sample
 
         dataset_2 = LazyDataset(IterGenerator(samples_gen_2))
+        cached_2 = CachedDataset(list(samples_gen_2()))
 
         self.assertEqual(
             dataset_1.union(dataset_2).getFeaturesAs("pandas"),
@@ -344,11 +345,14 @@ class LazyDatasetTests(TestCase):
             dataset_1.union(dataset_2).getLabelsAs("pandas"),
             dataset.getLabelsAs("pandas"),
         )
-        self.assertRaisesRegex(
-            TypeError,
-            "other's type (.*) is different from self's type (.*)",
-            dataset.union,
-            CachedDataset(samples),
+        self.assertIsInstance(dataset_1.union(cached_2), LazyDataset)
+        self.assertEqual(
+            dataset_1.union(cached_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(cached_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
         )
 
 
@@ -400,6 +404,14 @@ class CachedDatasetTests(TestCase):
         dataset = CachedDataset(samples)
         dataset_1 = CachedDataset(samples[:2])
         dataset_2 = CachedDataset(samples[2:])
+
+        def samples_gen_2():
+            for sample in samples[2:]:
+                if not any([np.isnan(x).any() for x in sample.features]):
+                    yield sample
+
+        lazy_2 = LazyDataset(IterGenerator(samples_gen_2))
+
         self.assertEqual(
             dataset_1.union(dataset_2).getFeaturesAs("pandas"),
             dataset.getFeaturesAs("pandas"),
@@ -408,11 +420,14 @@ class CachedDatasetTests(TestCase):
             dataset_1.union(dataset_2).getLabelsAs("pandas"),
             dataset.getLabelsAs("pandas"),
         )
-        self.assertRaisesRegex(
-            TypeError,
-            "other's type (.*) is different from self's type (.*)",
-            dataset.union,
-            self.lazyDat,
+        self.assertIsInstance(dataset_1.union(lazy_2), CachedDataset)
+        self.assertEqual(
+            dataset_1.union(lazy_2).getFeaturesAs("pandas"),
+            dataset.getFeaturesAs("pandas"),
+        )
+        self.assertEqual(
+            dataset_1.union(lazy_2).getLabelsAs("pandas"),
+            dataset.getLabelsAs("pandas"),
         )
 
 

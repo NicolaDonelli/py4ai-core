@@ -2,11 +2,9 @@
 
 import sys
 from abc import ABC, abstractmethod
-from functools import wraps
 from typing import (
     cast,
     Union,
-    Callable,
     Sequence,
     Optional,
     TypeVar,
@@ -34,7 +32,7 @@ from py4ai.core.data.model.core import (
     LazyIterable,
     RegisterLazyCachedIterables,
 )
-from py4ai.core.utils.decorators import lazyproperty as lazy
+from py4ai.core.utils.decorators import lazyproperty as lazy, same_type
 from py4ai.core.utils.pandas import loc
 
 if sys.version_info[0] < 3:
@@ -44,9 +42,6 @@ else:
 
 TPandasDataset = TypeVar("TPandasDataset", bound="PandasDataset")
 TDatasetUtilsMixin = TypeVar("TDatasetUtilsMixin", bound="DatasetUtilsMixin")
-A = TypeVar("A")
-B = TypeVar("B")
-
 
 FeatType = TypeVar(
     "FeatType", bound=Union[List[Any], Tuple[Any], np.ndarray, Dict[str, Any]]
@@ -96,25 +91,6 @@ def features_and_labels_to_dataset(
         return CachedDataset(
             [Sample(df["features"].loc[i].to_dict(), None, i) for i in df.index]
         )
-
-
-def same_type(f: Callable[[A, B], T]) -> Callable[[A, B], T]:
-    """
-    Check that both arguments of input function have the same type.
-
-    :param f: function
-    :return: function
-    """
-
-    @wraps(f)
-    def new_f(self, other):
-        if not isinstance(other, type(self)):
-            raise TypeError(
-                f"other's type ({type(other)}) is different from self's type ({type(self)})"
-            )
-        return f(self, other)
-
-    return new_f
 
 
 class Sample(DillSerialization, Generic[FeatType, LabType]):
@@ -358,7 +334,6 @@ class CachedDataset(
             axis=1,
         )
 
-    @same_type
     def union(self, other: TDatasetUtilsMixin) -> "CachedDataset":
         """
         Perform union on CachedDatasets.
@@ -467,7 +442,6 @@ class LazyDataset(
         """
         return super(LazyDataset, self).getLabelsAs(type)
 
-    @same_type
     def union(self, other: TDatasetUtilsMixin) -> "LazyDataset":
         """
         Perform union on LazyDatasets.
