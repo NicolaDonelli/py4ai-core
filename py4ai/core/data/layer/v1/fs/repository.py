@@ -1,12 +1,14 @@
+"""Module for Repository pattern for FileSystem persistence layers."""
+
 import asyncio
 import os
 from pathlib import Path
-from typing import Generic, List, Optional, cast, Sequence
+from typing import Generic, List, Optional, Sequence, cast
 
 from py4ai.core.data.layer.v1.common.repository import (
-    AbstractRepository,
     Paged,
     QueryOptions,
+    Repository,
     SearchCriteria,
 )
 from py4ai.core.data.layer.v1.fs import create_dir_if_not_exists
@@ -14,25 +16,46 @@ from py4ai.core.data.layer.v1.fs.criteria import (
     FileSystemCriteriaFactory,
     FileSystemSearchCriteria,
 )
-from py4ai.core.data.layer.v1.fs.serializer import KE, E, FileSerializer, IndexedIO
+from py4ai.core.data.layer.v1.fs.serializer import (
+    KE,
+    E,
+    FileSerializer,
+    IndexedIO,
+)
 
 
-class FileSystemRepository(
-    AbstractRepository[KE, str, E, IndexedIO, List[KE]], Generic[KE, E]
-):
+class FileSystemRepository(Repository[KE, str, E, IndexedIO, List[KE]], Generic[KE, E]):
+    """Class implementing MongoDB repository."""
+
     criteria: FileSystemCriteriaFactory
 
     def __init__(self, path: Path, serializer: FileSerializer[KE, E]):
+        """Return a FileSystem Repository Implementation.
+
+         The current implementation uses the Motor async framework.
+
+        :param path: location where objects are stored
+        :param serializer: Serializer to be used to serialize/deserialize FileSystem raw objects into domain objects
+        """
         self.path = create_dir_if_not_exists(path)
-        self._serializer = serializer.set_path(path)
+        self._serializer = serializer.with_path(path)
 
     @property
     def serializer(self) -> FileSerializer[KE, E]:
+        """Return the serializer.
+
+        :return: DataSerializer for serializing/deserializing FileSystem documents into domain objects
+        """
         return self._serializer
 
     async def create(self, entity: E) -> E:
-        ibuffer = self.serializer.to_document(entity)
-        path_to_file = self.serializer.to_document_key(ibuffer.name)
+        """Create the entity in the underlying persistence layer.
+
+        :param entity: Entity to be created
+        :returns: same entity provided as input, after creation. If creation fails, an error should be returned.
+        """
+        ibuffer = self.serializer.to_object(entity)
+        path_to_file = self.serializer.to_object_key(ibuffer.name)
         _ = create_dir_if_not_exists(os.path.dirname(path_to_file))
         with open(
             path_to_file, "w" + self.serializer.mode, encoding=self.serializer.encoding
@@ -42,12 +65,17 @@ class FileSystemRepository(
         return entity
 
     async def retrieve(self, key: KE) -> Optional[E]:
-        file_name = self.serializer.to_document_key(key)
+        """Return an entry corresponding to a determined Entity key. If no match is found, returns None.
+
+        :param key: Entity Key to be used for retrieving the entity.
+        :returns: Entity associated with the provided key. If no match is found, None is returned.
+        """
+        file_name = self.serializer.to_object_key(key)
         if os.path.exists(file_name):
             with open(
                 file_name, "r" + self.serializer.mode, encoding=self.serializer.encoding
             ) as fid:
-                x: E = self.serializer.to_model(IndexedIO(name=key, buffer=fid))
+                x: E = self.serializer.to_entity(IndexedIO(name=key, buffer=fid))
                 return x
         else:
             return None
@@ -55,6 +83,14 @@ class FileSystemRepository(
     async def retrieve_by_criteria(
         self, criteria: SearchCriteria[List[KE]], options: QueryOptions = QueryOptions()
     ) -> Paged[E]:
+        """Return a list of entities, matching the query provided.
+
+        :param criteria: query to be used for selecting items
+        :param options: query options to be used when retrieving data
+        :returns: Paged object for retrieved list of entities
+        :raises ValueError: when multiple sorting options are provided. Note that FileSystem repositories only
+            support one sorting option.
+        """
         if len(options.sorting_options) > 0:
             if len(options.sorting_options) > 1:
                 raise ValueError(
@@ -78,24 +114,44 @@ class FileSystemRepository(
         size = len(elements)
         return Paged(size, elements, options.page_start + size < len(selection))
 
-    async def update(self, entity: E) -> Optional[E]:
-        return await self.create(entity)
+    # async def update(self, entity: E) -> Optional[E]:
+    #    return await self.create(entity)
 
     async def save(self, entities: Sequence[E]) -> Sequence[E]:
+        """Create the entries in the persistence layer associated to a list of entities.
+
+        :param entities: list of entities to be created.
+        :returns: list of entities that have been successfully created in the persistence layer
+        """
         elements: List[Optional[E]] = await asyncio.gather(
-            *[self.update(entity) for entity in entities]
+            *[self.create(entity) for entity in entities]
         )
         return [element for element in elements if element is not None]
 
     async def delete(self, key: KE) -> bool:
+        """Delete the entry in the persisence layer associated to the provided entity key.
+
+        :param key: key identifying the entity.
+        :returns: boolean value indicating whether the deletion has completed successfully.
+        """
         try:
-            os.remove(self.serializer.to_document_key(key))
+            os.remove(self.serializer.to_object_key(key))
             return True
-        except Exception:
+        except FileNotFoundError:
             return False
 
     async def delete_by_criteria(self, criteria: SearchCriteria[List[KE]]) -> bool:
+        """Delete all entries matching a given query.
+
+        :param criteria: query to be used for deleting entries.
+        :returns: boolean value indicating whether the deletion has completed successfully.
+        """
         return all(await asyncio.gather(*[self.delete(key) for key in criteria.query]))
 
     async def list(self, options: QueryOptions = QueryOptions()) -> Paged[E]:
+        """Return a full list of entities stored in the persistence layer.
+
+        :param options: query options to be used when retrieving data
+        :returns: Paged object for retrieved list of entities
+        """
         return await self.retrieve_by_criteria(self.criteria.all(), options)

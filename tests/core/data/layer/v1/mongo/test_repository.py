@@ -1,20 +1,26 @@
 import os
 import unittest
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 import pandas as pd
 from bson import ObjectId
 from motor.motor_tornado import MotorClientSession, MotorCollection
 
-from py4ai.core.data.layer.v1.common.executors import AsyncExecutor
-from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
+from py4ai.core.data.layer.v1.common.repository import (
+    QueryOptions,
+    SortingDirection,
+)
 from py4ai.core.data.layer.v1.mongo.criteria import MongoSearchCriteria
 from py4ai.core.data.layer.v1.mongo.repository import MongoRepository
-from py4ai.core.data.layer.v1.mongo.serializer import MongoModel, create_mongo_id
+from py4ai.core.data.layer.v1.mongo.serializer import (
+    MongoModel,
+    create_mongo_id,
+)
+from py4ai.core.utils.executors import AsyncExecutor
 from tests import DATA_FOLDER
 from tests.core.data.layer.v1.base import (
-    Entity,
     CriteriaFactory,
+    Entity,
     EntityDataSerializer,
     EntityRepository,
 )
@@ -39,15 +45,15 @@ class MongoCriteriaFactory(CriteriaFactory[Dict[str, Any]]):
 
 
 class MongoEntitySerializer(EntityDataSerializer[ObjectId, dict]):
-    def to_document(self, entity: Entity) -> dict:
+    def to_object(self, entity: Entity) -> dict:
         doc = entity.dict()
-        doc["_id"] = self.to_document_key(self.get_key(entity))
+        doc["_id"] = self.to_object_key(self.get_key(entity))
         return doc
 
-    def to_model(self, document: dict) -> Entity:
+    def to_entity(self, document: dict) -> Entity:
         return Entity(**document)
 
-    def to_document_key(self, key: int) -> ObjectId:
+    def to_object_key(self, key: int) -> ObjectId:
         return create_mongo_id(str(key))
 
 
@@ -74,17 +80,17 @@ class TestRepository(unittest.TestCase):
     data = pd.read_csv(os.path.join(DATA_FOLDER, "donors.dummy.csv"), sep=";")
     entities = [Entity(**row) for _, row in data.iterrows()]
 
-    collection = _async.__execute__(init_mongo(DB_NAME, COLLECTION))
+    collection = _async.execute(init_mongo(DB_NAME, COLLECTION))
 
     repo = MongoEntityRepository(collection)
 
     def test_001_insert_dummies(self) -> None:
-        entities = self._async.__execute__(self.repo.save(self.entities))
+        entities = self._async.execute(self.repo.save(self.entities))
 
         self.assertEqual(len(entities), len(self.entities))
 
         self.assertEqual(
-            self._async.__execute__(self.repo.collection.count_documents({})),
+            self._async.execute(self.repo.collection.count_documents({})),
             len(self.entities),
         )
 
@@ -93,7 +99,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.DES)]
         )
 
-        entities = self._async.__execute__(self.repo.list(options))
+        entities = self._async.execute(self.repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -106,7 +112,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.ASC)]
         )
 
-        entities = self._async.__execute__(self.repo.list(options))
+        entities = self._async.execute(self.repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -115,39 +121,39 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(entity.birth_year, 1985)
 
     def test_004_retrieve_by_id(self):
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(00000)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(00000)))
 
-        self.assertIsNotNone(self._async.__execute__(self.repo.retrieve(1234)))
+        self.assertIsNotNone(self._async.execute(self.repo.retrieve(1234)))
 
     def test_005_create_and_delete_entity(self):
         new_entity = Entity(cai=9999, birth_year=2000)
 
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(9999)))
 
-        _ = self._async.__execute__(self.repo.create(new_entity))
+        _ = self._async.execute(self.repo.create(new_entity))
 
-        self.assertIsNotNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNotNone(self._async.execute(self.repo.retrieve(9999)))
 
-        self.assertTrue(self._async.__execute__(self.repo.delete(9999)))
+        self.assertTrue(self._async.execute(self.repo.delete(9999)))
 
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(9999)))
 
     def test_006_retrieve_by_criteria(self) -> None:
         criteria = self.repo.criteria.by_birth_year(1985)
 
-        entities = self._async.__execute__(self.repo.retrieve_by_criteria(criteria))
+        entities = self._async.execute(self.repo.retrieve_by_criteria(criteria))
 
         self.assertEqual(len(entities.items), 1)
 
         criteria2 = self.repo.criteria.by_birth_year(1989)
 
-        empty = self._async.__execute__(
+        empty = self._async.execute(
             self.repo.retrieve_by_criteria(criteria & criteria2)
         )
 
         self.assertEqual(len(empty.items), 0)
 
-        all_entities = self._async.__execute__(
+        all_entities = self._async.execute(
             self.repo.retrieve_by_criteria(criteria | criteria2)
         )
 
@@ -156,8 +162,8 @@ class TestRepository(unittest.TestCase):
     def test_007_delete_by_criteria(self):
         criteria = self.repo.criteria.by_birth_year(1985)
 
-        self.assertTrue(self._async.__execute__(self.repo.delete_by_criteria(criteria)))
+        self.assertTrue(self._async.execute(self.repo.delete_by_criteria(criteria)))
 
-        left_over = self._async.__execute__(self.repo.list())
+        left_over = self._async.execute(self.repo.list())
 
         self.assertEqual(len(left_over.items), 1)

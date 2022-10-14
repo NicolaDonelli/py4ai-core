@@ -1,5 +1,6 @@
 import os
 import unittest
+from shutil import rmtree
 from typing import Iterator, Sequence, TypeVar
 
 import pandas as pd
@@ -14,10 +15,9 @@ from py4ai.core.data.model.core import (
     Range,
     RegisterLazyCachedIterables,
 )
-from shutil import rmtree
-from py4ai.core.utils.fs import create_dir_if_not_exists
 from py4ai.core.logging.defaults import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
+from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import TMP_FOLDER
 
 T = TypeVar("T")

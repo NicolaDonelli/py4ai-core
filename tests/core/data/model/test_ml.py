@@ -1,14 +1,15 @@
 import os
 import unittest
-from typing import Iterator, Generator
+from shutil import rmtree
+from typing import Generator, Iterator
 
 import numpy as np
 import pandas as pd
 
 from py4ai.core.data.model.ml import (
     CachedDataset,
-    LazyDataset,
     IterGenerator,
+    LazyDataset,
     MultiFeatureSample,
     PandasDataset,
     PandasTimeIndexedDataset,
@@ -16,6 +17,7 @@ from py4ai.core.data.model.ml import (
     features_and_labels_to_dataset,
 )
 from py4ai.core.tests.core import TestCase, logTest
+from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import TMP_FOLDER
 
 samples = [

@@ -3,10 +3,10 @@ from typing import Generic
 
 from pydantic import BaseModel
 
-from py4ai.core.data.layer.v1.common import KD, D, Q
 from py4ai.core.data.layer.v1.common.criteria import SearchCriteria
-from py4ai.core.data.layer.v1.common.repository import AbstractRepository
+from py4ai.core.data.layer.v1.common.repository import Repository
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
+from py4ai.core.typing import KD, D, Q
 
 
 class Entity(BaseModel):
@@ -33,8 +33,6 @@ class CriteriaFactory(ABC, Generic[Q]):
         ...
 
 
-class EntityRepository(
-    AbstractRepository[int, KD, Entity, D, Q], Generic[KD, D, Q], ABC
-):
+class EntityRepository(Repository[int, KD, Entity, D, Q], Generic[KD, D, Q], ABC):
     criteria: CriteriaFactory[Q]
     # serializer: EntityDataSerializer[KD, D]

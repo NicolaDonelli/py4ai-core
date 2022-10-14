@@ -1,30 +1,30 @@
 import os
 import unittest
-from typing import Dict, Any
+from typing import Any, Dict
 
 import pandas as pd
-from sqlalchemy import MetaData
-from sqlalchemy import Table, Column, Integer, String
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy import Column, Integer, MetaData, String, Table, func, select
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.sql import Select
 
-from py4ai.core.utils.fs import create_dir_if_not_exists
-from py4ai.core.data.layer.v1.common.executors import AsyncExecutor
-from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
+from py4ai.core.data.layer.v1.common.repository import (
+    QueryOptions,
+    SortingDirection,
+)
 from py4ai.core.data.layer.v1.sqlalchemy.criteria import (
-    SqlAlchemySearchCriteria,
     SqlAlchemyQuery,
+    SqlAlchemySearchCriteria,
 )
 from py4ai.core.data.layer.v1.sqlalchemy.repository import SqlAlchemyRepository
 from py4ai.core.data.layer.v1.sqlalchemy.serializer import SqlAlchemySerializer
+from py4ai.core.utils.executors import AsyncExecutor
+from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import DATA_FOLDER, TMP_FOLDER
 from tests.core.data.layer.v1.base import (
+    CriteriaFactory,
     Entity,
     EntityDataSerializer,
     EntityRepository,
-    CriteriaFactory,
 )
 
 
@@ -48,15 +48,15 @@ class SqlEntitySerializer(
     def __init__(self, table: Table):
         super(SqlEntitySerializer, self).__init__(table)
 
-    def to_document(self, entity: Entity) -> dict:
+    def to_object(self, entity: Entity) -> dict:
         doc = entity.dict()
-        doc["id"] = self.to_document_key(self.get_key(entity))
+        doc["id"] = self.to_object_key(self.get_key(entity))
         return doc
 
-    def to_model(self, document: dict) -> Entity:
+    def to_entity(self, document: dict) -> Entity:
         return Entity(**document)
 
-    def to_document_key(self, key: int) -> int:
+    def to_object_key(self, key: int) -> int:
         return key
 
 
@@ -106,15 +106,15 @@ class TestRepository(unittest.TestCase):
 
     def count_elements(self):
         q = select([func.count()]).select_from(self.table)
-        return self._async.__execute__(self.execute_query(q)).all()[0][0]
+        return self._async.execute(self.execute_query(q)).all()[0][0]
 
     @classmethod
     def setUpClass(cls) -> None:
         create_dir_if_not_exists(TMP_FOLDER)
-        cls._async.__execute__(cls.init_models())
+        cls._async.execute(cls.init_models())
 
     def test_001_insert_dummies(self) -> None:
-        entities = self._async.__execute__(self.repo.save(self.entities))
+        entities = self._async.execute(self.repo.save(self.entities))
 
         self.assertEqual(len(entities), self.count_elements())
 
@@ -123,7 +123,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.DES)]
         )
 
-        entities = self._async.__execute__(self.repo.list(options))
+        entities = self._async.execute(self.repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -136,7 +136,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.ASC)]
         )
 
-        entities = self._async.__execute__(self.repo.list(options))
+        entities = self._async.execute(self.repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -145,39 +145,39 @@ class TestRepository(unittest.TestCase):
         self.assertEqual(entity.birth_year, 1985)
 
     def test_004_retrieve_by_id(self):
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(00000)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(00000)))
 
-        self.assertIsNotNone(self._async.__execute__(self.repo.retrieve(1234)))
+        self.assertIsNotNone(self._async.execute(self.repo.retrieve(1234)))
 
     def test_005_create_and_delete_entity(self):
         new_entity = Entity(cai=9999, birth_year=2000)
 
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(9999)))
 
-        _ = self._async.__execute__(self.repo.create(new_entity))
+        _ = self._async.execute(self.repo.create(new_entity))
 
-        self.assertIsNotNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNotNone(self._async.execute(self.repo.retrieve(9999)))
 
-        self.assertTrue(self._async.__execute__(self.repo.delete(9999)))
+        self.assertTrue(self._async.execute(self.repo.delete(9999)))
 
-        self.assertIsNone(self._async.__execute__(self.repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(self.repo.retrieve(9999)))
 
     def test_006_retrieve_by_criteria(self) -> None:
         criteria = self.repo.criteria.by_birth_year(1985)
 
-        entities = self._async.__execute__(self.repo.retrieve_by_criteria(criteria))
+        entities = self._async.execute(self.repo.retrieve_by_criteria(criteria))
 
         self.assertEqual(len(entities.items), 1)
 
         criteria2 = self.repo.criteria.by_birth_year(1989)
 
-        empty = self._async.__execute__(
+        empty = self._async.execute(
             self.repo.retrieve_by_criteria(criteria & criteria2)
         )
 
         self.assertEqual(len(empty.items), 0)
 
-        all_entities = self._async.__execute__(
+        all_entities = self._async.execute(
             self.repo.retrieve_by_criteria(criteria | criteria2)
         )
 
@@ -186,8 +186,8 @@ class TestRepository(unittest.TestCase):
     def test_007_delete_by_criteria(self):
         criteria = self.repo.criteria.by_birth_year(1985)
 
-        self.assertTrue(self._async.__execute__(self.repo.delete_by_criteria(criteria)))
+        self.assertTrue(self._async.execute(self.repo.delete_by_criteria(criteria)))
 
-        left_over = self._async.__execute__(self.repo.list())
+        left_over = self._async.execute(self.repo.list())
 
         self.assertEqual(len(left_over.items), 1)

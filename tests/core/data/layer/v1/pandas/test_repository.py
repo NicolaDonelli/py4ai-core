@@ -3,14 +3,17 @@ import unittest
 from shutil import copyfile, rmtree
 
 import pandas as pd
-from py4ai.core.utils.fs import create_dir_if_not_exists
 from pydantic import BaseModel
 
-from py4ai.core.data.layer.v1.common.executors import AsyncExecutor
-from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
+from py4ai.core.data.layer.v1.common.repository import (
+    QueryOptions,
+    SortingDirection,
+)
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
 from py4ai.core.data.layer.v1.pandas.criteria import PandasSearchCriteria
 from py4ai.core.data.layer.v1.pandas.repository import CsvRepository
+from py4ai.core.utils.executors import AsyncExecutor
+from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import DATA_FOLDER, TMP_FOLDER
 
 
@@ -20,13 +23,13 @@ class DummyEntity(BaseModel):
 
 
 class DummySerializer(DataSerializer[int, int, DummyEntity, pd.Series]):
-    def to_document(self, entity: DummyEntity) -> pd.Series:
+    def to_object(self, entity: DummyEntity) -> pd.Series:
         return pd.Series(entity.dict())
 
-    def to_model(self, document: pd.Series) -> DummyEntity:
+    def to_entity(self, document: pd.Series) -> DummyEntity:
         return DummyEntity(**document)
 
-    def to_document_key(self, key: int) -> int:
+    def to_object_key(self, key: int) -> int:
         return key
 
     def get_key(self, entity: DummyEntity) -> int:
@@ -49,7 +52,7 @@ class TestRepository(unittest.TestCase):
 
         repo = CsvRepository(filename, DummySerializer())
 
-        entities = self._async.__execute__(repo.list())
+        entities = self._async.execute(repo.list())
 
         self.assertEqual(len(entities.items), 2)
 
@@ -62,7 +65,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.DES)]
         )
 
-        entities = self._async.__execute__(repo.list(options))
+        entities = self._async.execute(repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -79,7 +82,7 @@ class TestRepository(unittest.TestCase):
             0, 1, sorting_options=[("birth_year", SortingDirection.ASC)]
         )
 
-        entities = self._async.__execute__(repo.list(options))
+        entities = self._async.execute(repo.list(options))
 
         self.assertEqual(len(entities.items), 1)
 
@@ -92,9 +95,9 @@ class TestRepository(unittest.TestCase):
 
         repo = CsvRepository(filename, DummySerializer())
 
-        self.assertIsNone(self._async.__execute__(repo.retrieve(00000)))
+        self.assertIsNone(self._async.execute(repo.retrieve(00000)))
 
-        self.assertIsNotNone(self._async.__execute__(repo.retrieve(1234)))
+        self.assertIsNotNone(self._async.execute(repo.retrieve(1234)))
 
     def test_create_and_delete_entity(self):
         copyfile(
@@ -106,17 +109,17 @@ class TestRepository(unittest.TestCase):
 
         repo = CsvRepository(filename, DummySerializer())
 
-        self.assertIsNone(self._async.__execute__(repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(repo.retrieve(9999)))
 
         new_entity = DummyEntity(cai=9999, birth_year=2000)
 
-        _ = self._async.__execute__(repo.create(new_entity))
+        _ = self._async.execute(repo.create(new_entity))
 
-        self.assertIsNotNone(self._async.__execute__(repo.retrieve(9999)))
+        self.assertIsNotNone(self._async.execute(repo.retrieve(9999)))
 
-        self.assertTrue(self._async.__execute__(repo.delete(9999)))
+        self.assertTrue(self._async.execute(repo.delete(9999)))
 
-        self.assertIsNone(self._async.__execute__(repo.retrieve(9999)))
+        self.assertIsNone(self._async.execute(repo.retrieve(9999)))
 
         os.remove(filename)
 
@@ -127,17 +130,17 @@ class TestRepository(unittest.TestCase):
 
         criteria = PandasSearchCriteria(lambda df: df["birth_year"] == 1985)
 
-        entities = self._async.__execute__(repo.retrieve_by_criteria(criteria))
+        entities = self._async.execute(repo.retrieve_by_criteria(criteria))
 
         self.assertEqual(len(entities.items), 1)
 
         criteria2 = PandasSearchCriteria(lambda df: df["birth_year"] == 1989)
 
-        empty = self._async.__execute__(repo.retrieve_by_criteria(criteria & criteria2))
+        empty = self._async.execute(repo.retrieve_by_criteria(criteria & criteria2))
 
         self.assertEqual(len(empty.items), 0)
 
-        all = self._async.__execute__(repo.retrieve_by_criteria(criteria | criteria2))
+        all = self._async.execute(repo.retrieve_by_criteria(criteria | criteria2))
 
         self.assertEqual(len(all.items), 2)
 
@@ -153,9 +156,9 @@ class TestRepository(unittest.TestCase):
 
         criteria = PandasSearchCriteria(lambda df: df["birth_year"] == 1985)
 
-        self.assertTrue(self._async.__execute__(repo.delete_by_criteria(criteria)))
+        self.assertTrue(self._async.execute(repo.delete_by_criteria(criteria)))
 
-        left_over = self._async.__execute__(repo.list())
+        left_over = self._async.execute(repo.list())
 
         self.assertEqual(len(left_over.items), 1)
 
@@ -166,7 +169,7 @@ class TestRepository(unittest.TestCase):
 
         repo = CsvRepository(filename, DummySerializer())
 
-        entities = self._async.__execute__(repo.list())
+        entities = self._async.execute(repo.list())
 
         self.assertEqual(len(entities.items), 0)
 
@@ -177,6 +180,6 @@ class TestRepository(unittest.TestCase):
 
         repo = CsvRepository(filename, DummySerializer())
 
-        entities = self._async.__execute__(repo.list())
+        entities = self._async.execute(repo.list())
 
         self.assertEqual(len(entities.items), 0)

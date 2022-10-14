@@ -1,36 +1,43 @@
 """Module with abstraction for accessing to data persistent in pickles, mimicking a ficticious database."""
 
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from functools import cached_property
-from typing import Optional, Tuple, TypeVar, Sequence
+from typing import Optional, Sequence, Tuple, TypeVar
 
 import pandas as pd
 from pandas.errors import EmptyDataError
 
+from py4ai.core.data.layer.v0.pandas.archivers import PandasArchiver
 from py4ai.core.data.layer.v1.common.criteria import SearchCriteria
 from py4ai.core.data.layer.v1.common.repository import (
-    AbstractRepository,
     KE,
     E,
+    Paged,
     Q,
     QueryOptions,
-    Paged,
+    Repository,
     SortingDirection,
 )
-from py4ai.core.data.layer.v0.pandas.archivers import PandasArchiver
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
-from py4ai.core.data.layer.v1.pandas.criteria import PandasSearchCriteria, PandasFilter
+from py4ai.core.data.layer.v1.pandas.criteria import (
+    PandasFilter,
+    PandasSearchCriteria,
+)
 from py4ai.core.typing import PathLike
 
 T = TypeVar("T", bound=PandasArchiver)
 KD = TypeVar("KD", str, int, Tuple)
 
 
-class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], ABC):
+class PandasRepository(Repository[KE, KD, E, pd.Series, PandasFilter], ABC):
     """Archiver based on persistent layers based on tabular files, represented in memory by a pandas DataFrame."""
 
     @cached_property
     def serializer(self) -> DataSerializer[KE, KD, E, pd.Series]:
+        """Return the serializer of the data repository.
+
+        :returns: data serializer
+        """
         return self._serializer
 
     @abstractmethod
@@ -88,9 +95,9 @@ class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], A
         :param key: row id
         :return: retrieved row parsed according to self.dao
         """
-        document_key = self.serializer.to_document_key(key)
+        document_key = self.serializer.to_object_key(key)
         try:
-            return self.serializer.to_model(self.data.loc[document_key])
+            return self.serializer.to_entity(self.data.loc[document_key])
         except KeyError:
             return None
 
@@ -124,13 +131,14 @@ class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], A
         )
 
         size = rows.shape[0]
+        end_page = (
+            (options.page_start + options.page_size)
+            if options.page_size != -1
+            else None
+        )
         elements = [
-            self.serializer.to_model(row)
-            for row_id, row in rows.iloc[
-                options.page_start : (options.page_start + options.page_size)
-                if options.page_size != -1
-                else None
-            ].iterrows()
+            self.serializer.to_entity(row)
+            for row_id, row in rows.iloc[options.page_start : end_page].iterrows()
         ]
 
         return Paged(size, elements, options.page_start + options.page_size < size)
@@ -141,22 +149,19 @@ class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], A
 
         :param obj: An instance of :class:`cgnal.data.model.text.Document, pd.DataFrame or pd.Series`
         :return: self i.e. an instance of ``PandasArchiver`` with updated self.data object
-
         """
         return (await self.save([obj]))[0]
 
     def __create_series_from_entity(self, entity: E) -> pd.Series:
-        serie = self.serializer.to_document(entity)
-        serie.name = self.serializer.to_document_key(self.serializer.get_key(entity))
+        serie = self.serializer.to_object(entity)
+        serie.name = self.serializer.to_object_key(self.serializer.get_key(entity))
         return serie
 
     async def save(self, entities: Sequence[E]) -> Sequence[E]:
-        """
-        Insert many objects of type Document/pd.DataFrame/pd.Series in a pd.DataFrame.
+        """Insert many objects of type Document/pd.DataFrame/pd.Series in a pd.DataFrame.
 
-        :param objs: List of objects to be inserted. The objects can be of the following class instances
-            :class:`cgnal.data.model.text.Document`, `pd.DataFrame` or `pd.Series`
-        :return: self i.e. an instance of ``PandasArchiver`` with updated self.data object
+        :param entities: List of objects to be inserted.
+        :returns: the entities inserted in the persistence layer.
 
         """
         new = pd.DataFrame(
@@ -169,15 +174,30 @@ class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], A
         return entities
 
     async def list(self, options: QueryOptions = QueryOptions()) -> Paged[E]:
+        """Return a full list of entities stored in the persistence layer.
+
+        :param options: query options to be used when retrieving data
+        :returns: Paged object for retrieved list of entities
+        """
         return await self.retrieve_by_criteria(PandasSearchCriteria.empty(), options)
 
     async def delete(self, key: KE) -> bool:
-        document_key = self.serializer.to_document_key(key)
+        """Delete the entry in the persisence layer associated to the provided entity key.
+
+        :param key: key identifying the entity.
+        :returns: boolean value indicating whether the deletion has completed successfully.
+        """
+        document_key = self.serializer.to_object_key(key)
         self.data = self.data.drop(document_key)
         self.commit()
         return True
 
     async def delete_by_criteria(self, criteria: SearchCriteria[Q]) -> bool:
+        """Delete all entries matching a given query.
+
+        :param criteria: query to be used for deleting entries.
+        :returns: boolean value indicating whether the deletion has completed successfully.
+        """
         rows = self.data[criteria.query(self.data)]
         self.data = self.data.drop(rows.index)
         self.commit()
@@ -185,7 +205,7 @@ class PandasRepository(AbstractRepository[KE, KD, E, pd.Series, PandasFilter], A
 
 
 class CsvRepository(PandasRepository[KE, KD, E]):
-    """Archiver based on persistent layers based on tabular files stored on csv."""
+    """Repository to be used with tabular files stored as csv files."""
 
     def __init__(
         self,

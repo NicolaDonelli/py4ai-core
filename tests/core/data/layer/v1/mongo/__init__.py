@@ -1,4 +1,4 @@
-from mongomock_motor import AsyncMongoMockCollection, AsyncMongoMockClient
+from mongomock_motor import AsyncMongoMockClient, AsyncMongoMockCollection
 
 
 async def init_mongo(

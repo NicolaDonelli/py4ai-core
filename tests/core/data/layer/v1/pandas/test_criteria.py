@@ -62,12 +62,12 @@ class TestConfig(unittest.TestCase):
 
     def test_query_or_invalid(self) -> None:
         self.assertRaises(
-            ValueError, lambda: self.filter_by_key_value("a", 5) | DummyCriteria()
+            TypeError, lambda: self.filter_by_key_value("a", 5) | DummyCriteria()
         )
 
     def test_query_and_invalid(self) -> None:
         self.assertRaises(
-            ValueError, lambda: self.filter_by_key_value("a", 5) & DummyCriteria()
+            TypeError, lambda: self.filter_by_key_value("a", 5) & DummyCriteria()
         )
 
     def test_query_and(self) -> None:

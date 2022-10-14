@@ -1,19 +1,35 @@
-from hashlib import md5
+"""Module for implementation of serializer objects for Mongo persistence layers."""
 
-# from typing import Any
+from hashlib import md5
 
 from bson import ObjectId
 from pydantic.main import ModelMetaclass
+
+# from typing import Any
+
 
 # from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
 
 
 def create_mongo_id(key: str) -> ObjectId:
+    """Create a MongoDB hash compatible key from a general string.
+
+    :param key: input string to be converted to a Mongo compatible hash
+    :returns: MongoDB compatible ObjectId
+    """
     return ObjectId(md5(str(key).encode("utf-8")).hexdigest()[:24])
 
 
 class MongoModel(ModelMetaclass):
+    """Class to convert pydantic model into MongoDB schema objects."""
+
     def __init__(cls, name, bases, dct):  # type: ignore
+        """Create a MongoDB schema object.
+
+        :param name: name of the class
+        :param bases: Bases for the class
+        :param dct: extra arguments
+        """
         super().__init__(name, bases, dct)
 
         path = dct.get("__mongo_path__", "")
@@ -40,6 +56,10 @@ class MongoModel(ModelMetaclass):
                 setattr(cls, k, field_name)
 
     def __str__(self) -> str:
+        """Return a string representation of the class.
+
+        :returns: string representation
+        """
         return str(self.__dict__["__mongo_path__"])
 
 

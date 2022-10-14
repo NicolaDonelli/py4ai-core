@@ -1,18 +1,9 @@
 """Module with abstraction for accessing to MongoDB persistent layers."""
 
 from collections.abc import Iterable
-from typing import (
-    Union,
-    Optional,
-    List,
-    Dict,
-    Any,
-    Sequence,
-    Tuple,
-    Iterator,
-    Iterable as IterableType,
-    TYPE_CHECKING,
-)
+from typing import TYPE_CHECKING, Any, Dict
+from typing import Iterable as IterableType
+from typing import Iterator, List, Mapping, Optional, Sequence, Tuple, Union
 
 from bson.objectid import ObjectId
 from pymongo.collection import Collection, UpdateResult
@@ -29,7 +20,7 @@ class MongoArchiver(Archiver[T]):
     """Archiver based on MongoDB persistent layers."""
 
     def __init__(
-            self, collection: Union[Collection, "MockCollection"], dao: MongoDAO
+        self, collection: Union[Collection, "MockCollection"], dao: MongoDAO
     ) -> None:
         """
         Return an instance of the archiver to access and modify Mongodb collections via a DAO object.
@@ -112,7 +103,7 @@ class MongoArchiver(Archiver[T]):
 
     # TODO this method's output type is not consistent with its' ancestor's return type (that should be 'MongoArchiver')
     def archive(
-            self, objs: Union[T, IterableType[T]]
+        self, objs: Union[T, IterableType[T]]
     ) -> Union[UpdateResult, List[UpdateResult]]:
         """
         Archive one or more documents in collection.
@@ -138,7 +129,7 @@ class MongoArchiver(Archiver[T]):
         return self.dao.parse(json)
 
     def aggregate(
-            self, pipeline: List[Dict[str, Dict[str, Any]]], allowDiskUse: bool = True
+        self, pipeline: List[Dict[str, Dict[str, Any]]], allowDiskUse: bool = True
     ) -> Iterator[T]:
         """
         Aggregate collection's documents using given aggregation steps.
