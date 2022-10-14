@@ -75,21 +75,21 @@ reqs_dev: requirements/requirements_dev.txt
 $(env_tag): requirements/requirements.txt
 	@echo "==Installing requirements.txt=="
 	pip-sync --quiet requirements/requirements.txt
-	rm $(install_tag)
+	rm -rf $(install_tag)
 	touch $(env_tag)
 
 $(env_dev_tag): requirements/requirements_dev.txt
 	@echo "==Installing requirements_dev.txt=="
 	pip-sync --quiet requirements/requirements_dev.txt
-	rm $(install_tag)
+	rm -rf $(install_tag)
 	touch $(env_dev_tag)
 
 setup: $(env_tag)
-	@echo "Setup"
+	@echo "==Setting up package environment=="
 	rm -f $(env_dev_tag)
 
 setup_dev: $(env_dev_tag)
-	@echo "Setup Dev"
+	@echo "==Setting up development environment=="
 	rm -f $(env_tag)
 
 dist/.build-tag: $(files) setup.cfg requirements/requirements.txt
@@ -125,7 +125,9 @@ mypy: setup_dev $(install_tag)
 tests: setup_dev $(install_tag)
 	${PYTHON} -m pytest tests
 
-checks: format lint mypy tests
+checks: lint mypy tests
+	${PYTHON} -m black --check $(folders)
+	${PYTHON} -m isort $(folders) -c
 
 docs: setup_dev $(install_tag) $(doc_files) setup.cfg
 	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
