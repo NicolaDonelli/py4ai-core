@@ -4,11 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from py4ai.core.data.layer.pandas.dao import (
-    DataFrameDAO,
-    DocumentDAO,
-    SeriesDAO,
-)
+from py4ai.core.data.layer.pandas.dao import DataFrameDAO, DocumentDAO, SeriesDAO
 from py4ai.core.data.model.text import Document
 from py4ai.core.logging.defaults import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest

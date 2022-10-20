@@ -3,7 +3,7 @@
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Any, Dict
 from typing import Iterable as IterableType
-from typing import Iterator, List, Optional, Union
+from typing import Iterator, List, Mapping, Optional, Sequence, Tuple, Union, cast
 
 from bson.objectid import ObjectId
 from pymongo.collection import Collection, UpdateResult
@@ -39,13 +39,18 @@ class MongoArchiver(Archiver[T]):
         :param uuid: document id
         :return: retrieved document parsed according to self.dao
         """
-        json = self.collection.find_one({"_id": ObjectId(uuid)})
+        json = cast(Dict[Any, Any], self.collection.find_one({"_id": ObjectId(uuid)}))
         return self.dao.parse(json)
 
     def retrieve(
         self,
         condition: Dict[str, Dict[str, Any]] = {},
-        sort_by: Optional[Union[str, List[str]]] = None,
+        sort_by: Optional[
+            Union[
+                str,
+                Union[str, Sequence[Tuple[str, Union[int, str, Mapping[str, Any]]]]],
+            ]
+        ] = None,
     ) -> Iterator[T]:
         """
         Retrieve documents satisfying condition, sorted according to given ordering.
@@ -78,7 +83,9 @@ class MongoArchiver(Archiver[T]):
         :return: an instance of :class:`pymongo.results.UpdateResult` with update operation's results
         """
         return self.collection.update_one(
-            self.dao.computeKey(obj), {"$set": self.dao.get(obj)}, upsert=True
+            cast(Mapping[str, Any], self.dao.computeKey(obj)),
+            {"$set": self.dao.get(obj)},
+            upsert=True,
         )
 
     def archiveMany(self, objs: IterableType[T]) -> List[UpdateResult]:
@@ -111,7 +118,7 @@ class MongoArchiver(Archiver[T]):
 
         :return: parsed document
         """
-        json = self.collection.find_one()
+        json = cast(Dict[Any, Any], self.collection.find_one())
         return self.dao.parse(json)
 
     def aggregate(

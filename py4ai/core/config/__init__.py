@@ -13,6 +13,7 @@ from yaml import (
     FullLoader,
     Loader,
     Node,
+    SequenceNode,
     UnsafeLoader,
     add_constructor,
     add_implicit_resolver,
@@ -61,7 +62,10 @@ def joinPath(loader: Union[Loader, FullLoader, UnsafeLoader], node: Node) -> Pat
     :param loader: YAML file loader
     :param node: YAML node
     :return: path
+    :raises TypeError: if node is not a SequenceNode
     """
+    if not isinstance(node, SequenceNode):
+        raise TypeError("node input must be a SequenceNode")
     seq = loader.construct_sequence(node)
     return os.path.join(*seq)
 

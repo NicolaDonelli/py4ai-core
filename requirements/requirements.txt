@@ -76,6 +76,10 @@ six==1.16.0
     #   -c requirements/requirements_dev.txt
     #   cfg-load
     #   python-dateutil
+tomli==2.0.1
+    # via
+    #   -c requirements/requirements_dev.txt
+    #   -r subset.in
 typeguard==2.13.3
     # via
     #   -c requirements/requirements_dev.txt

@@ -13,7 +13,7 @@ doc_files := $(shell find sphinx -name "*.*")
 # Uncomment to store cache installation in the environment
 # package_dir := $(shell python -c 'import site; print(site.getsitepackages()[0])')
 package_dir := .make_cache
-package_name=$(shell python -c "import configparser;config=configparser.ConfigParser();config.read('setup.cfg');print(config['metadata']['name'])")
+package_name=$(shell python -c "import tomli;from pathlib import Path;print(tomli.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']['name'])")
 
 $(shell mkdir -p $(package_dir))
 
@@ -54,6 +54,7 @@ help:
 $(pre_deps_tag):
 	@echo "==Installing pip-tools and black=="
 	grep "^pip-tools\|^black"  requirements/requirements_dev.in | xargs ${PYTHON} -m pip install
+	grep "^tomli"  requirements/requirements.in | xargs ${PYTHON} -m pip install
 	touch $(pre_deps_tag)
 
 requirements/requirements.txt: requirements/requirements_dev.txt
@@ -92,7 +93,7 @@ setup_dev: $(env_dev_tag)
 	@echo "==Setting up development environment=="
 	rm -f $(env_tag)
 
-dist/.build-tag: $(files) setup.cfg requirements/requirements.txt
+dist/.build-tag: $(files) pyproject.toml requirements/requirements.txt
 	@echo "==Building package distribution=="
 	${PYTHON} setup.py --quiet sdist
 	ls -rt  dist/* | tail -1 > dist/.build-tag
@@ -120,7 +121,7 @@ lint: setup_dev
 	${PYTHON} -m flake8 $(folders)
 
 mypy: setup_dev $(install_tag)
-	${PYTHON} -m mypy --install-types --non-interactive --follow-imports silent $(folders)
+	${PYTHON} -m mypy --install-types --non-interactive --package py4ai --package tests
 
 tests: setup_dev $(install_tag)
 	${PYTHON} -m pytest tests
@@ -129,7 +130,7 @@ checks: lint mypy tests
 	${PYTHON} -m black --check $(folders)
 	${PYTHON} -m isort $(folders) -c
 
-docs: setup_dev $(install_tag) $(doc_files) setup.cfg
+docs: setup_dev $(install_tag) $(doc_files) pyproject.toml
 	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
 	make --directory=sphinx --file=Makefile clean html
 

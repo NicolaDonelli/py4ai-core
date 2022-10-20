@@ -49,14 +49,14 @@ jobs:
         run: |
           tar -xzf $(ls -rt  dist/*.tar.gz | tail -1)
           DIR=$(python setup.py --fullname)
-          rm -rf $(find . -name "*.pyc") $(find . -name "__pycache__")
+          rm -rf $(find . -name "*.pyc") $(find . -name "__pycache__") $(find . -name "*.py.orig")
           files=(
             "requirements/requirements.in"
             "LICENSE"
             "MANIFEST.in"
             "PKG-INFO"
             "README.md"
-            "setup.cfg"
+            "pyproject.toml"
             "setup.py"
             "versioneer.py"
           )
@@ -74,9 +74,10 @@ jobs:
         run: |
           python -m pip install -r requirements/requirements_dev.txt
           python -m pip install $(ls -rt  dist/*.tar.gz | tail -1)
-          python -m black py4ai/core tests
-          flake8 py4ai/core tests
-          mypy --install-types --non-interactive --follow-imports silent py4ai/core tests
+          python -m black --check py4ai/core tests
+          python -m isort py4ai/core tests -c
+          python -m flake8 py4ai/core tests
+          python -m mypy --install-types --non-interactive --package py4ai --package tests
           python -m pytest
 
       - name: Release Notes

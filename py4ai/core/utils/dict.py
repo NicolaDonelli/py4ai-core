@@ -11,16 +11,7 @@ from collections.abc import Mapping
 from copy import deepcopy as copy
 from itertools import groupby, islice, tee
 from operator import add
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Tuple,
-)
+from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Tuple
 
 from py4ai.core.typing import SupportsLessThan, T
 

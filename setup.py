@@ -1,6 +1,6 @@
 import os
 import setuptools
-from versioneer import get_version, get_cmdclass
+import versioneer
 
 with open(os.path.join("requirements", "requirements.in"), "r") as fid:
     requirements = [
@@ -10,7 +10,7 @@ with open(os.path.join("requirements", "requirements.in"), "r") as fid:
     ]
 
 setuptools.setup(
-    version=get_version(),
-    cmdclass=get_cmdclass(),
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     install_requires=requirements,
 )

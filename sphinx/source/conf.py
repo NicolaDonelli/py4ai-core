@@ -10,24 +10,24 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
 import sys
-import configparser
+import tomli
+from pathlib import Path
 from datetime import date
 
-BASE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+BASE_FOLDER = Path(__file__).parent.parent.parent
 
-config = configparser.ConfigParser()
-config.read(os.path.join(BASE_FOLDER, 'setup.cfg'))
+with open(BASE_FOLDER / "pyproject.toml", 'rb') as fobj:
+    config = tomli.load(fobj)
 
 # -- Project information -----------------------------------------------------
 
-project = config['sphinx']['name']
-package_dir = config["sphinx"]["package_dir"]
-author = config['metadata']['author']
-copyright = str(date.today().year) + ', ' + author
+project = config['tool']['sphinx']['name']
+package_dir = config['tool']["sphinx"]["package_dir"]
+author_str = " & ".join([x['name'] for x in config['project']['authors']])
+copyright = str(date.today().year) + ', ' + author_str
 
-sys.path.insert(0, os.path.join(BASE_FOLDER))
+sys.path.insert(0, BASE_FOLDER.as_posix())
 
 # -- General configuration ---------------------------------------------------
 

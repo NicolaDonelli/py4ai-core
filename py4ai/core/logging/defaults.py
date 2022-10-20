@@ -3,14 +3,7 @@
 import os
 import sys
 from importlib import import_module
-from logging import (
-    FileHandler,
-    Logger,
-    basicConfig,
-    captureWarnings,
-    config,
-    getLogger,
-)
+from logging import FileHandler, Logger, basicConfig, captureWarnings, config, getLogger
 from types import TracebackType
 from typing import Any, Callable, List, Optional, Type, Union
 

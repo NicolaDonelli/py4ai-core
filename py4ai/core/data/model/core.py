@@ -4,17 +4,7 @@ import sys
 from abc import ABC, abstractmethod
 from functools import reduce
 from itertools import islice
-from typing import (
-    Any,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import Any, Iterable, Iterator, List, Optional, Tuple, Type, TypeVar, Union
 
 import dill
 import numpy as np

@@ -18,7 +18,7 @@ os.environ["TMP_LOG_FOLDER"] = str(
 
 DB_NAME = "db"
 
-client = MongoClient()
+client: MongoClient = MongoClient()
 
 db = client[DB_NAME]
 
