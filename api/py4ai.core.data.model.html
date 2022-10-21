@@ -851,6 +851,20 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="py4ai.core.data.model.ml.CachedDataset.union">
+<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">py4ai.core.data.model.ml.TDatasetUtilsMixin</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.data.model.ml.CachedDataset" title="py4ai.core.data.model.ml.CachedDataset"><span class="pre">py4ai.core.data.model.ml.CachedDataset</span></a></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.CachedDataset.union" title="Permalink to this definition"></a></dt>
+<dd><p>Perform union on CachedDatasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – CachedDataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>union of current and other CachedDataset</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -975,17 +989,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.data.model.ml.DatasetUtilsMixin.union">
-<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#py4ai.core.data.model.core.BaseIterable" title="py4ai.core.data.model.core.BaseIterable"><span class="pre">py4ai.core.data.model.core.BaseIterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#py4ai.core.data.model.ml.Sample" title="py4ai.core.data.model.ml.Sample"><span class="pre">py4ai.core.data.model.ml.Sample</span></a><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.data.model.ml.FeatType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">py4ai.core.data.model.ml.LabType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.data.model.ml.DatasetUtilsMixin" title="py4ai.core.data.model.ml.DatasetUtilsMixin"><span class="pre">py4ai.core.data.model.ml.DatasetUtilsMixin</span></a><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.data.model.ml.FeatType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">py4ai.core.data.model.ml.LabType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.DatasetUtilsMixin.union" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">py4ai.core.data.model.ml.TDatasetUtilsMixin</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.data.model.ml.DatasetUtilsMixin" title="py4ai.core.data.model.ml.DatasetUtilsMixin"><span class="pre">py4ai.core.data.model.ml.DatasetUtilsMixin</span></a></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.DatasetUtilsMixin.union" title="Permalink to this definition"></a></dt>
 <dd><p>Return a union of datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>other</strong> – Dataset</p>
+<dd class="field-odd"><p><strong>other</strong> – other dataset to join</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>LazyDataset</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>TypeError</strong> – other is not an instance of Dataset</p>
+<dd class="field-even"><p>union dataset</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1079,6 +1090,20 @@
 <dt class="sig sig-object py" id="py4ai.core.data.model.ml.LazyDataset.lazy_type">
 <span class="sig-name descname"><span class="pre">lazy_type</span></span><a class="headerlink" href="#py4ai.core.data.model.ml.LazyDataset.lazy_type" title="Permalink to this definition"></a></dt>
 <dd><p>alias of <a class="reference internal" href="#py4ai.core.data.model.ml.LazyDataset" title="py4ai.core.data.model.ml.LazyDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.data.model.ml.LazyDataset</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py4ai.core.data.model.ml.LazyDataset.union">
+<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">py4ai.core.data.model.ml.TDatasetUtilsMixin</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.data.model.ml.LazyDataset" title="py4ai.core.data.model.ml.LazyDataset"><span class="pre">py4ai.core.data.model.ml.LazyDataset</span></a></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.LazyDataset.union" title="Permalink to this definition"></a></dt>
+<dd><p>Perform union on LazyDatasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – LazyDataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>union of LazyDatasets</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1347,8 +1372,8 @@ dataframe, numpy array or a dictionary. For unsupervised learning tasks the labe
 
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.data.model.ml.PandasDataset.union">
-<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#py4ai.core.data.model.core.BaseIterable" title="py4ai.core.data.model.core.BaseIterable"><span class="pre">py4ai.core.data.model.core.BaseIterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#py4ai.core.data.model.ml.Sample" title="py4ai.core.data.model.ml.Sample"><span class="pre">py4ai.core.data.model.ml.Sample</span></a><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.data.model.ml.FeatType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">py4ai.core.data.model.ml.LabType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.data.model.ml.DatasetUtilsMixin" title="py4ai.core.data.model.ml.DatasetUtilsMixin"><span class="pre">py4ai.core.data.model.ml.DatasetUtilsMixin</span></a><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.data.model.ml.FeatType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">py4ai.core.data.model.ml.LabType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.PandasDataset.union" title="Permalink to this definition"></a></dt>
-<dd><p>Return a union between datasets.</p>
+<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">py4ai.core.data.model.ml.TPandasDataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">py4ai.core.data.model.ml.TPandasDataset</span></span></span><a class="headerlink" href="#py4ai.core.data.model.ml.PandasDataset.union" title="Permalink to this definition"></a></dt>
+<dd><p>Return a union between PandasDatasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>other</strong> – Dataset to be merged</p>
