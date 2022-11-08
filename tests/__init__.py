@@ -1,8 +1,6 @@
 import os
 import random
 
-from mongomock import MongoClient
-
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
 test_path = os.path.dirname(os.path.abspath(__file__))
@@ -17,12 +15,6 @@ TMP_FOLDER = str(
 os.environ["TMP_LOG_FOLDER"] = str(
     create_dir_if_not_exists(os.path.join(TMP_FOLDER, "logs"))
 )
-
-DB_NAME = "db"
-
-client: MongoClient = MongoClient()
-
-db = client[DB_NAME]
 
 
 def clean_tmp_folder():

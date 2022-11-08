@@ -1,14 +1,12 @@
 import os
 import unittest
-from typing import Dict, List
+from typing import List
 
 import pandas as pd
-from typeguard import typechecked
 
-from py4ai.core.logging.defaults import getDefaultLogger
+from py4ai.core.logging import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
 from py4ai.core.utils.decorators import lazyproperty as lazy
-from py4ai.core.utils.decorators import param_check
 from py4ai.core.utils.dict import (
     filterNones,
     flattenKeys,
@@ -229,38 +227,17 @@ class TestPandas(TestCase):
         )
 
 
-@typechecked
-class MyTestClass:
-    def __init__(self, param: str = "test"):
-        self.param = param
-
-    @lazy
-    def list_param(self) -> List:
-        return [1, 2, 3]
-
-    def dict_constructor(self, k_vals: List[str], v_vals: List[List[int]]) -> Dict:
-        return {k: v for k, v in zip(k_vals, v_vals)}
-
-
-class MyClass:
-    def __init__(self, param: str = "test"):
-        self.param = param
-
-    @lazy
-    def list_param(self) -> List:
-        return [1, 2, 3]
-
-    # TODO: param_check decorator breakes when specification of types contained within collections is present.
-    #  e.g. dict_constructor(self, k_vals: List[str], v_vals: List[List[int]])
-    #  generates "...TypeError: Parameterized generics cannot be used with class or instance checks"
-    @param_check(with_none=False)
-    def dict_constructor(self, k_vals: List, v_vals: List) -> Dict:
-        return {k: v for k, v in zip(k_vals, v_vals)}
-
-
 class TestDecorators(TestCase):
     @logTest
     def test_lazyproperty(self):
+        class MyClass:
+            def __init__(self, param: str = "test"):
+                self.param = param
+
+            @lazy
+            def list_param(self) -> List:
+                return [1, 2, 3]
+
         ex = MyClass()
 
         self.assertEqual(ex.__dict__, {"param": "test"})
@@ -270,38 +247,8 @@ class TestDecorators(TestCase):
 
         self.assertEqual(ex.__dict__, {"param": "test", "list_param": [1, 2, 3]})
 
-    @logTest
-    def test_param_check(self):
-        ex = MyClass()
-
-        self.assertEqual(
-            ex.dict_constructor(
-                k_vals=["a", "b", "c"], v_vals=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-            ),
-            {"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]},
-        )
-        self.assertRaises(TypeError, ex.dict_constructor, k_vals="a", v_vals=[1, 2, 3])
-        self.assertRaises(
-            ValueError, ex.dict_constructor, k_vals=None, v_vals=[1, 2, 3]
-        )
-
-    @logTest
-    def test_param_check_with_typeguard(self):
-        ex = MyTestClass()
-
-        self.assertEqual(
-            ex.dict_constructor(
-                k_vals=["a", "b", "c"], v_vals=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-            ),
-            {"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]},
-        )
-        self.assertRaises(TypeError, ex.dict_constructor, k_vals="a", v_vals=[1, 2, 3])
-        self.assertRaises(TypeError, ex.dict_constructor, k_vals=None, v_vals=[1, 2, 3])
-
     def test_cache_io(self):
         from py4ai.core.utils.decorators import Cached
-
-        # from time import sleep
 
         class A(Cached):
             def __init__(self, cnt):
@@ -332,79 +279,6 @@ class TestDecorators(TestCase):
         b.clear_cache()
         # This should compute the value
         self.assertEqual(b.my_long_computation, 2)
-
-
-class TestDocumentArchivers(TestCase):
-
-    url = "http://192.168.2.110:8686"
-
-    test_file = "tests/test.txt"
-
-    # @logTest
-    # def test_base_function(self):
-    #     sync = CloudSync(self.url, TMP_FOLDER)
-    #
-    #     namefile = sync.get_if_not_exists(self.test_file)
-    #
-    #     self.assertTrue(os.path.exists( namefile ))
-    #
-    #     os.remove( namefile )
-    #
-    #
-    # @logTest
-    # def test_decorator(self):
-    #
-    #     sync = CloudSync(self.url, TMP_FOLDER)
-    #
-    #     @sync.get_if_not_exists_decorator
-    #     def decorated_function(filename):
-    #         return filename
-    #
-    #     namefile = decorated_function(self.test_file)
-    #
-    #     self.assertTrue(os.path.exists( namefile ))
-    #
-    #     os.remove( namefile )
-    #
-    # @logTest
-    # def test_multiple(self):
-    #     sync = CloudSync(self.url, TMP_FOLDER)
-    #
-    #     namefile = sync.get_if_not_exists(self.test_file)
-    #
-    #     self.assertTrue(os.path.exists(namefile))
-    #
-    #     sleep(3)
-    #
-    #     time = os.path.getmtime(namefile)
-    #
-    #     namefile = sync.get_if_not_exists(self.test_file)
-    #
-    #     time2 = os.path.getmtime(namefile)
-    #
-    #     self.assertTrue(time==time2)
-    #
-    #     os.remove(namefile)
-    #
-    #
-    # @logTest
-    # def test_upload(self):
-    #
-    #     sync = CloudSync(self.url, TMP_FOLDER)
-    #
-    #     namefile = sync.get_if_not_exists(self.test_file)
-    #
-    #     upload = f"{self.test_file}.upload"
-    #
-    #     os.rename(namefile, sync.pathTo(upload))
-    #
-    #     sync.upload(upload)
-    #
-    #     os.remove(sync.pathTo(upload))
-    #
-    #     namefile_new = sync.get_if_not_exists(upload)
-    #
-    #     self.assertTrue(os.path.exists(namefile_new))
 
 
 if __name__ == "__main__":

@@ -5,9 +5,9 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from os.path import basename
-from typing import List, Optional, Union
+from typing import List, Literal, Optional, Union
 
-from py4ai.core.logging.defaults import WithLogging
+from py4ai.core.logging import WithLogging
 
 
 class EmailSender(WithLogging):
@@ -19,7 +19,7 @@ class EmailSender(WithLogging):
         username: str,
         password: str,
         smtp_address: str,
-        auth_protocol: str = "None",
+        auth_protocol: Optional[Literal["TLS", "SSL"]] = None,
         port: Optional[int] = None,
     ) -> None:
         """
@@ -77,7 +77,7 @@ class EmailSender(WithLogging):
             port = 587 if self.port is None else self.port
             server = smtplib.SMTP(self.smtp_address, port=port)
             server.starttls()
-        elif self.auth_protocol == "None":
+        elif self.auth_protocol is None:
             port = 25 if self.port is None else self.port
             server = smtplib.SMTP(self.smtp_address, port=port)
         else:

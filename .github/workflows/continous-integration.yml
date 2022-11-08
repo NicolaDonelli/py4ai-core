@@ -31,7 +31,9 @@ jobs:
           architecture: x64
 
       - name: Check typing, linting and formatting
-        run: make checks
+        run: |
+          rm requirements/*.txt 
+          make checks
 
       - name: Make documentation
         run: make docs

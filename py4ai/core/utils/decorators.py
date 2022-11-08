@@ -1,16 +1,13 @@
 """Module that gathers useful decorators."""
 
-import inspect
 import os
-from functools import partial, wraps
+from functools import wraps
 from glob import glob
 from typing import Any, Callable, Iterable, Tuple, TypeVar
 
 import pandas as pd
-from deprecated import deprecated
 
 from py4ai.core.types import PathLike, T
-from py4ai.core.utils.dict import union
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
 A = TypeVar("A")
@@ -159,90 +156,6 @@ class Cached(object):
             return os.path.basename(filename).replace(".p", "")
         else:
             return os.path.basename(filename)
-
-
-def paramCheck(function: Callable[..., T], allow_none: bool = True) -> Callable[..., T]:
-    """
-    Return a decorator that performs runtime checks on the input types.
-
-    :param function: function to be checked against its typing annotations
-    :param allow_none: whether None values are allowed
-    :return: wrapped function
-    """
-
-    @wraps(function)
-    def check(*arguments, **kwargs):
-
-        default_values = inspect.getfullargspec(function).defaults
-        annotations = inspect.getfullargspec(function).annotations
-        _args = (
-            inspect.getfullargspec(function).args[: -len(default_values)]
-            if default_values
-            else inspect.getfullargspec(function).args
-        )
-
-        non_default_args = [
-            arg for arg in _args if (arg in annotations.keys() and arg != "self")
-        ]
-        default_args = (
-            inspect.getfullargspec(function).args[-len(default_values) :]
-            if default_values
-            else []
-        )
-
-        arg_dict = union(
-            {
-                argument: {"type": annotations[argument], "value": None}
-                for argument in non_default_args
-            },
-            {
-                argument: {
-                    "type": annotations.get(argument)
-                    if annotations.get(argument)
-                    else type(default_values[index]),
-                    "value": default_values[index],
-                }
-                for index, argument in enumerate(default_args)
-            },
-        )
-
-        NoneType = type(None)
-
-        for index, arg in enumerate(inspect.getfullargspec(function).args):
-
-            if arg != "self":
-                argIn = (
-                    arguments[index]
-                    if index < len(arguments)
-                    else kwargs.get(arg, arg_dict[arg]["value"])
-                )
-                if argIn is None:
-                    if allow_none is False:
-                        raise ValueError(f"{arg} cannot be None")
-                else:
-                    if (not isinstance(argIn, arg_dict[arg]["type"])) and (
-                        arg_dict[arg]["type"] != NoneType
-                    ):
-                        raise TypeError(
-                            f"{arg} parameter must be of type {str(arg_dict[arg]['type'])}"
-                        )
-
-        return function(*arguments, **kwargs)
-
-    return check
-
-
-@deprecated(
-    "This decorator is deprecated and will be removed in future versions. Use typeguard library instead"
-)
-def param_check(with_none: bool) -> Callable[..., Any]:
-    """
-    Return a decorator that performs runtime checks on the typing of the inputs.
-
-    :param with_none: whether None values are allowed
-    :return: decorator
-    """
-    return partial(paramCheck, allow_none=with_none)
 
 
 def same_type(f: Callable[[A, B], T]) -> Callable[[A, B], T]:

@@ -33,7 +33,9 @@ jobs:
 
       - name: Build source distribution
         shell: bash -l {0}
-        run: make install
+        run: |
+          rm requirements/*.txt
+          make install
 
       - name: Check source package structure
         run: |
@@ -128,7 +130,7 @@ jobs:
           sleep 5m
           python -m pip download --index-url https://test.pypi.org/simple/ --no-deps --dest pkgs py4ai-core==${{env.PROJECT_VERSION}}
           python -m pip install $(ls -rt  pkgs/* | tail -1)
-          python -m pip install pytest pytest-cov mongomock
+          python -m pip install pytest pytest-cov
           python -m pytest
           rm -rf pkgs
 

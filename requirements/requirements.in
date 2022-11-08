@@ -1,14 +1,8 @@
 cfg-load>=0.8
 deprecated>=1.2.12
-dill>=0.3
-motor>=2.5
 pandas>=1.0
 pydantic>=1.9
-pymongo>=4.0
 scipy>=1.7.3
-setuptools>=47.1
-sqlalchemy>=1.4.39
-tornado>=6.1
+setuptools>=61.2
 tomli>=2.0.1
-typeguard>=2.13.0
 typing-extensions>=4.0

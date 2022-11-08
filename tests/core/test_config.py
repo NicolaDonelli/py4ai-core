@@ -2,17 +2,20 @@ import os
 import unittest
 
 from py4ai.core.config import (
+    Configuration,
+    get_confs_in_path,
+    load_from_file,
+    merge_confs,
+)
+from py4ai.core.config.configurations import (
     AuthConfig,
     AuthenticationServiceConfig,
     BaseConfig,
-    Configuration,
     FileSystemConfig,
+    LoggingConfig,
+    MongoConfig,
 )
-from py4ai.core.config import __this_dir__ as config_dir
-from py4ai.core.config import get_all_configuration_file, merge_confs
-from py4ai.core.data.layer.mongo import MongoConfig
-from py4ai.core.logging import LoggingConfig
-from py4ai.core.logging.defaults import configFromFiles, getDefaultLogger
+from py4ai.core.logging import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
 from tests import DATA_FOLDER
 
@@ -45,16 +48,16 @@ class TempConfig(BaseConfig):
 
 test_file = "defaults.yml"
 os.environ["CONFIG_FILE"] = os.path.join(TEST_DATA_PATH, test_file)
+conf_file = os.path.join(DATA_FOLDER, "specific.yml")
+os.environ["LOGS_PATH"] = "logs"
+os.environ["TEST_USER_VAR"] = "py4ai"
+
 
 root = os.path.join("this", "is", "a", "folder")
 credentials = os.path.join(root, "myfolder", "credentials.p")
 
 config = TempConfig(
-    BaseConfig(
-        merge_confs(
-            get_all_configuration_file(), os.path.join(config_dir, "defaults.yml")
-        )
-    ).sublevel("test")
+    BaseConfig(load_from_file(os.path.join(DATA_FOLDER, test_file))).sublevel("test")
 )
 
 
@@ -258,49 +261,132 @@ class TestMongoConfig(TestCase):
         self.assertEqual(config.mongo.authSource, "source")
 
 
-class TestDocumentArchivers(TestCase):
-    @logTest
-    def test_read_logging_config(self):
-        config_file = "logging.yml"
-
-        configFromFiles([os.path.join(TEST_DATA_PATH, config_file)])
-
-        logger.info("Example of logging!")
+class TestFunctions(TestCase):
+    maxDiff = None
 
     @logTest
-    def test_environ_variable(self):
-        test_file = "defaults.yml"
-
-        os.environ["CONFIG_FILE"] = os.path.join(TEST_DATA_PATH, test_file)
-
-        config = TempConfig(
-            BaseConfig(
-                merge_confs(
-                    get_all_configuration_file(),
-                    os.path.join(config_dir, "defaults.yml"),
-                )
-            ).sublevel("test")
-        )
-
-        user = config.getValue("user")
-        self.assertEqual(user, os.environ["USER"])
+    def test_environ_variable_resolver(self):
+        cfg = load_from_file(conf_file)
+        path = cfg["storage"]["fs"]["folders"]["logs"]
+        self.assertEqual(path, os.environ["LOGS_PATH"])
 
     @logTest
     def test_missing_environ_variable(self):
-        test_file = "defaults.yml"
-
-        os.environ["CONFIG_FILE"] = os.path.join(TEST_DATA_PATH, test_file)
-        user = os.environ.pop("USER")
-
+        value = os.environ.pop("LOGS_PATH")
         with self.assertRaises(KeyError) as context:
-            merge_confs(
-                get_all_configuration_file(),
-                os.path.join(config_dir, "defaults.yml"),
-            )
+            load_from_file(conf_file)
+        os.environ["LOGS_PATH"] = value
+        self.assertIn("LOGS_PATH", str(context.exception))
 
-        os.environ["USER"] = user
-        print(context.exception)
-        self.assertIn("USER", str(context.exception))
+    @logTest
+    def test_load_from_file(self):
+        cfg = load_from_file(conf_file)
+        to_check = {
+            "storage": {"fs": {"folders": {"logs": "logs"}}},
+            "log": {
+                "level": "DEBUG",
+                "filename": "logs/tests.log",
+                "default_config_file": "logs/confs/logConfDefaults.yaml",
+                "capture_warnings": True,
+            },
+        }
+
+        self.assertIsInstance(cfg, Configuration)
+        self.assertEqual(cfg.to_dict(), to_check)
+
+    @logTest
+    def test_get_confs_in_path(self):
+        self.assertEqual(
+            set(get_confs_in_path(DATA_FOLDER, filename="*.yml")),
+            {
+                os.path.join(DATA_FOLDER, "defaults.yml"),
+                os.path.join(DATA_FOLDER, "specific.yml"),
+                os.path.join(DATA_FOLDER, "logging.yml"),
+            },
+        )
+        self.assertEqual(
+            get_confs_in_path(DATA_FOLDER, filename="specific.*"),
+            [os.path.join(DATA_FOLDER, "specific.yml")],
+        )
+
+    @logTest
+    def test_merge_confs(self):
+        confs = merge_confs(
+            filenames=get_confs_in_path(DATA_FOLDER, filename="specific.*"),
+            default=get_confs_in_path(DATA_FOLDER, filename="defaults.yml")[0],
+        )
+        to_check = {
+            "test": {
+                "auth": {
+                    "filename": "this/is/a/folder/myfolder/credentials.p",
+                    "method": "file",
+                    "password": "passwordID",
+                    "user": "userID",
+                },
+                "authentication": {
+                    "ap_name": "cb",
+                    "auth_service": {
+                        "check": "/tokens/{tok}/check",
+                        "decode": "/tokens/{tok}/decode",
+                        "url": "http://0.0.0.0:10005",
+                    },
+                    "check_service": {
+                        "login": "/authentication/login",
+                        "logout": "/authentication/logout",
+                        "url": "http://0.0.0.0:10001",
+                    },
+                    "cors": "http://0.0.0.0:10001",
+                    "jwt_free_endpoints": [
+                        "/api/v1/health/",
+                        "/api/v1/auth/login",
+                        "/api/v1/apidocs",
+                        "/api/v1/swagger.json",
+                        "/api/v1/salesforce/",
+                        "/api/v1/openBanking/",
+                    ],
+                    "secured": True,
+                },
+                "fs": {
+                    "files": {"credentials": "this/is/a/folder/myfolder/credentials.p"},
+                    "folders": {"python": "myfolder"},
+                    "root": "this/is/a/folder",
+                },
+                "logging": {
+                    "capture_warnings": True,
+                    "default_config_file": "confs/logConfDefaults.yaml",
+                    "filename": "logs/tests.log",
+                    "level": "DEBUG",
+                },
+                "mongo": {
+                    "admin": {
+                        "filename": "this/is/a/folder/myfolder/credentials.admin.p",
+                        "method": "file",
+                        "password": "mongo.admin.db_psswd",
+                        "user": "mongo.admin.db_user",
+                    },
+                    "auth": {
+                        "filename": "this/is/a/folder/myfolder/credentials.auth.p",
+                        "method": "file",
+                        "password": "mongo.auth.db_psswd",
+                        "user": "mongo.auth.db_user",
+                    },
+                    "authSource": "source",
+                    "collections": {"coll_name": "coll_name"},
+                    "db_name": "database",
+                    "host": "0.0.0.0",
+                    "port": 202020,
+                },
+                "user": "py4ai",
+            },
+            "log": {
+                "capture_warnings": True,
+                "default_config_file": "logs/confs/logConfDefaults.yaml",
+                "filename": "logs/tests.log",
+                "level": "DEBUG",
+            },
+            "storage": {"fs": {"folders": {"logs": "logs"}}},
+        }
+        self.assertEqual(confs.to_dict(), to_check)
 
 
 if __name__ == "__main__":

@@ -1,30 +1,31 @@
 import os
 import unittest
-from logging import FileHandler, StreamHandler
+from logging import FileHandler, StreamHandler, getLogger
 
-from py4ai.core.logging.defaults import configFromFiles, logger
+from py4ai.core.logging import configFromFiles
 from py4ai.core.tests.core import TestCase, logTest
 from tests import DATA_FOLDER, TMP_FOLDER, clean_tmp_folder, unset_TMP_FOLDER
 
-configFromFiles(
-    config_files=[os.path.join(DATA_FOLDER, "logging.yml")],
-    capture_warnings=True,
-    catch_exceptions="except",
-)
-
 
 class TestSetupLogger(TestCase):
-    root_logger = logger()
-    py4ai_logger = logger(name="py4ai")
+    root_logger = getLogger()
+    py4ai_logger = getLogger(name="py4ai")
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        configFromFiles(
+            config_files=[os.path.join(DATA_FOLDER, "logging.yml")],
+            capture_warnings=True,
+            catch_exceptions="except",
+        )
 
     @logTest
     def test_console_logger(self):
         self.root_logger.info("Example of logging with root logger!")
         self.assertEqual(self.root_logger.name, "root")
         self.assertEqual(self.root_logger.level, 20)
-        self.assertTrue(
-            all([isinstance(h, StreamHandler) for h in self.root_logger.handlers])
-        )
+        for h in self.root_logger.handlers:
+            self.assertIsInstance(h, StreamHandler)
 
     @logTest
     def test_file_logger_name(self):
@@ -92,8 +93,8 @@ class TestSetupLogger(TestCase):
         self.assertEqual(lin.split(" - ")[-1], f"{error_msg}\n")
         self.assertEqual(lin.split(" - ")[-2], "ERROR")
 
-    # TODO: [ND] Cercare un modo di testare except_logger: so che funziona ma non riesco a fare emettere eccezioni senza
-    #  interrompere l'esecuzione (e mandare in errore il test)
+    # TODO: [ND] Find a way to test except_logger: I know it works fine but I cannot find a way to raise exceptions
+    #  without sopping the execution (and failing the test)
     # @logTest
     # def test_file_logger_catch_exceptions(self):
     #     except_logger = logger(name="except")

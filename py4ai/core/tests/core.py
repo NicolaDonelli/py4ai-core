@@ -7,7 +7,7 @@ from unittest import TestCase as CoreTestCase
 import numpy as np
 import pandas as pd
 
-from py4ai.core.logging.defaults import WithLogging
+from py4ai.core.logging import WithLogging
 
 
 class TestCase(CoreTestCase, WithLogging):

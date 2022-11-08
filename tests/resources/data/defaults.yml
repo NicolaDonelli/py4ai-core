@@ -13,7 +13,7 @@ test:
     files:
       credentials: &cred !joinPath [*root, *python, "credentials.p"]
 
-  user: ${USER}
+  user: ${TEST_USER_VAR}
 
   auth:
     method: 'file'

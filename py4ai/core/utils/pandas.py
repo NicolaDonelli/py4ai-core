@@ -18,7 +18,7 @@ def is_sparse(df: DataFrame) -> bool:
 
 def loc(df: DataFrame, idx: Union[Index, List[Any]]):
     """
-    Return a filtered dataframe based on an index list and it is designed to work propertly with sparse dataframe as well.
+    Return a filtered dataframe based on an index list: it is designed to work properly with sparse dataframe as well.
 
     :param df: DataFrame
     :param idx: index list

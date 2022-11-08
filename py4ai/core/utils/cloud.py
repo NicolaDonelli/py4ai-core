@@ -1,13 +1,13 @@
 """Module for providing interface to a cloud storage layer that persists files to be used in the application and downloaded on demand."""
 
 import cgi
-import http.server
 import os
+from http.server import SimpleHTTPRequestHandler
 from typing import Callable
 
 import requests
 
-from py4ai.core.logging.defaults import WithLogging
+from py4ai.core.logging import WithLogging
 from py4ai.core.types import PathLike
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
@@ -107,7 +107,7 @@ class CloudSync(WithLogging):
             return requests.post(f"{self.url}/{filename}", files=files)
 
 
-class HTTPRequestHandler(WithLogging, http.server.SimpleHTTPRequestHandler):
+class HTTPRequestHandler(WithLogging, SimpleHTTPRequestHandler):
     """Performs POST operation."""
 
     def do_POST(self) -> None:

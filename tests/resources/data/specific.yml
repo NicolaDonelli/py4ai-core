@@ -1,0 +1,10 @@
+storage:
+  fs:
+    folders:
+        logs: &logs ${LOGS_PATH}
+
+log:
+  level: "DEBUG"
+  filename: !joinPath [*logs, "tests.log"]
+  default_config_file: !joinPath [*logs, "confs", "logConfDefaults.yaml"]
+  capture_warnings: True
