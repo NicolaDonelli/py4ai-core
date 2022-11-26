@@ -1,5 +1,4 @@
 import os
-import unittest
 from shutil import copyfile, rmtree
 
 import pandas as pd
@@ -9,6 +8,7 @@ from py4ai.core.data.layer.common.repository import QueryOptions, SortingDirecti
 from py4ai.core.data.layer.common.serialiazer import DataSerializer
 from py4ai.core.data.layer.pandas.criteria import PandasSearchCriteria
 from py4ai.core.data.layer.pandas.repository import CsvRepository
+from py4ai.core.tests.core import TestCase
 from py4ai.core.utils.executors import AsyncExecutor
 from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import DATA_FOLDER, TMP_FOLDER
@@ -33,7 +33,7 @@ class DummySerializer(DataSerializer[int, int, DummyEntity, pd.Series]):
         return entity.cai
 
 
-class TestRepository(unittest.TestCase):
+class TestRepository(TestCase):
     _async = AsyncExecutor()
 
     @classmethod

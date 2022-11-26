@@ -1,5 +1,4 @@
 import os
-import unittest
 from typing import Any, Dict
 
 import pandas as pd
@@ -14,6 +13,7 @@ from py4ai.core.data.layer.sqlalchemy.criteria import (
 )
 from py4ai.core.data.layer.sqlalchemy.repository import SqlAlchemyRepository
 from py4ai.core.data.layer.sqlalchemy.serializer import SqlAlchemySerializer
+from py4ai.core.tests.core import TestCase
 from py4ai.core.utils.executors import AsyncExecutor
 from py4ai.core.utils.fs import create_dir_if_not_exists
 from tests import DATA_FOLDER, TMP_FOLDER
@@ -68,7 +68,7 @@ class SqlEntityRepository(
         self.criteria = SqlCriteriaFactory(self.table)
 
 
-class TestRepository(unittest.TestCase):
+class TestRepository(TestCase):
     _async = AsyncExecutor()
 
     DB_NAME = "db"

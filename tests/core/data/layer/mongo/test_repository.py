@@ -1,5 +1,4 @@
 import os
-import unittest
 from typing import Any, Dict, Optional
 
 import pandas as pd
@@ -10,6 +9,7 @@ from py4ai.core.data.layer.common.repository import QueryOptions, SortingDirecti
 from py4ai.core.data.layer.mongo.criteria import MongoSearchCriteria
 from py4ai.core.data.layer.mongo.repository import MongoRepository
 from py4ai.core.data.layer.mongo.serializer import MongoModel, create_mongo_id
+from py4ai.core.tests.core import TestCase
 from py4ai.core.utils.executors import AsyncExecutor
 from tests import DATA_FOLDER
 from tests.core.data.layer.base import (
@@ -65,7 +65,7 @@ class MongoEntityRepository(
         super().__init__(collection, MongoEntitySerializer(), session)
 
 
-class TestRepository(unittest.TestCase):
+class TestRepository(TestCase):
     _async = AsyncExecutor()
 
     DB_NAME = "db"

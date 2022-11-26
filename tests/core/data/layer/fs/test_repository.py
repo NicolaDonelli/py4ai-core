@@ -1,7 +1,6 @@
 import os
 import pickle
 import shutil
-import unittest
 from glob import glob
 from io import BytesIO
 from pathlib import Path
@@ -20,6 +19,7 @@ from py4ai.core.data.layer.fs.serializer import (
     FileSerializerMode,
     IndexedIO,
 )
+from py4ai.core.tests.core import TestCase
 from py4ai.core.utils.executors import AsyncExecutor
 from tests import DATA_FOLDER, TMP_FOLDER
 from tests.core.data.layer.base import CriteriaFactory, Entity, EntityRepository
@@ -75,7 +75,7 @@ class PickleEntityRepository(
         self.criteria = FileSystemEntityCriteriaFactory(path)
 
 
-class TestRepository(unittest.TestCase):
+class TestRepository(TestCase):
     _async = AsyncExecutor()
 
     data = pd.read_csv(os.path.join(DATA_FOLDER, "donors.dummy.csv"), sep=";")
