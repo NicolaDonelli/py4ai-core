@@ -19,10 +19,7 @@ from py4ai.core.data.layer.v1.common.repository import (
     SortingDirection,
 )
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
-from py4ai.core.data.layer.v1.pandas.criteria import (
-    PandasFilter,
-    PandasSearchCriteria,
-)
+from py4ai.core.data.layer.v1.pandas.criteria import PandasFilter, PandasSearchCriteria
 from py4ai.core.typing import PathLike
 
 T = TypeVar("T", bound=PandasArchiver)

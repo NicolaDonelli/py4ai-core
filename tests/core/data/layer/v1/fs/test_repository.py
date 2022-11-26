@@ -9,10 +9,7 @@ from typing import Any, Dict, List
 
 import pandas as pd
 
-from py4ai.core.data.layer.v1.common.repository import (
-    QueryOptions,
-    SortingDirection,
-)
+from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
 from py4ai.core.data.layer.v1.fs.criteria import (
     FileSystemCriteriaFactory,
     FileSystemSearchCriteria,
@@ -25,11 +22,7 @@ from py4ai.core.data.layer.v1.fs.serializer import (
 )
 from py4ai.core.utils.executors import AsyncExecutor
 from tests import DATA_FOLDER, TMP_FOLDER
-from tests.core.data.layer.v1.base import (
-    CriteriaFactory,
-    Entity,
-    EntityRepository,
-)
+from tests.core.data.layer.v1.base import CriteriaFactory, Entity, EntityRepository
 
 
 class PickleEntitySerializer(FileSerializer[int, Entity]):

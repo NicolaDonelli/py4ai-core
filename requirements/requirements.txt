@@ -93,11 +93,11 @@ sqlalchemy==1.4.39
     # via
     #   -c requirements/requirements_dev.txt
     #   -r subset.in
-tornado==6.2
+tomli==2.0.1
     # via
     #   -c requirements/requirements_dev.txt
     #   -r subset.in
-tomli==2.0.1
+tornado==6.2
     # via
     #   -c requirements/requirements_dev.txt
     #   -r subset.in

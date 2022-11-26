@@ -5,10 +5,7 @@ from shutil import copyfile, rmtree
 import pandas as pd
 from pydantic import BaseModel
 
-from py4ai.core.data.layer.v1.common.repository import (
-    QueryOptions,
-    SortingDirection,
-)
+from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
 from py4ai.core.data.layer.v1.pandas.criteria import PandasSearchCriteria
 from py4ai.core.data.layer.v1.pandas.repository import CsvRepository

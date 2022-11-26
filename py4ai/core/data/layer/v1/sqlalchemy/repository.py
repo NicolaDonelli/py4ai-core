@@ -18,9 +18,7 @@ from py4ai.core.data.layer.v1.common.repository import (
     SortingDirection,
 )
 from py4ai.core.data.layer.v1.common.serialiazer import DataSerializer
-from py4ai.core.data.layer.v1.sqlalchemy.criteria import (
-    SqlAlchemySearchCriteria,
-)
+from py4ai.core.data.layer.v1.sqlalchemy.criteria import SqlAlchemySearchCriteria
 from py4ai.core.data.layer.v1.sqlalchemy.serializer import SqlAlchemySerializer
 from py4ai.core.logging.defaults import WithLogging
 

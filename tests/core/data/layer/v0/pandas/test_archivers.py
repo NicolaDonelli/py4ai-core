@@ -10,11 +10,7 @@ from py4ai.core.data.layer.v0.pandas.archivers import (
     PickleArchiver,
     TableArchiver,
 )
-from py4ai.core.data.layer.v0.pandas.dao import (
-    DataFrameDAO,
-    DocumentDAO,
-    SeriesDAO,
-)
+from py4ai.core.data.layer.v0.pandas.dao import DataFrameDAO, DocumentDAO, SeriesDAO
 from py4ai.core.data.layer.v0.pandas.databases import Database
 from py4ai.core.data.model.core import IterGenerator
 from py4ai.core.logging.defaults import getDefaultLogger

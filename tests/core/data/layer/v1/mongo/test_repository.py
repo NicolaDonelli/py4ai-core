@@ -6,16 +6,10 @@ import pandas as pd
 from bson import ObjectId
 from motor.motor_tornado import MotorClientSession, MotorCollection
 
-from py4ai.core.data.layer.v1.common.repository import (
-    QueryOptions,
-    SortingDirection,
-)
+from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
 from py4ai.core.data.layer.v1.mongo.criteria import MongoSearchCriteria
 from py4ai.core.data.layer.v1.mongo.repository import MongoRepository
-from py4ai.core.data.layer.v1.mongo.serializer import (
-    MongoModel,
-    create_mongo_id,
-)
+from py4ai.core.data.layer.v1.mongo.serializer import MongoModel, create_mongo_id
 from py4ai.core.utils.executors import AsyncExecutor
 from tests import DATA_FOLDER
 from tests.core.data.layer.v1.base import (

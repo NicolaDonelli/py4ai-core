@@ -7,10 +7,7 @@ from sqlalchemy import Column, Integer, MetaData, String, Table, func, select
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.sql import Select
 
-from py4ai.core.data.layer.v1.common.repository import (
-    QueryOptions,
-    SortingDirection,
-)
+from py4ai.core.data.layer.v1.common.repository import QueryOptions, SortingDirection
 from py4ai.core.data.layer.v1.sqlalchemy.criteria import (
     SqlAlchemyQuery,
     SqlAlchemySearchCriteria,

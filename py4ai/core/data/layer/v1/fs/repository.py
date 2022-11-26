@@ -16,12 +16,7 @@ from py4ai.core.data.layer.v1.fs.criteria import (
     FileSystemCriteriaFactory,
     FileSystemSearchCriteria,
 )
-from py4ai.core.data.layer.v1.fs.serializer import (
-    KE,
-    E,
-    FileSerializer,
-    IndexedIO,
-)
+from py4ai.core.data.layer.v1.fs.serializer import KE, E, FileSerializer, IndexedIO
 
 
 class FileSystemRepository(Repository[KE, str, E, IndexedIO, List[KE]], Generic[KE, E]):
