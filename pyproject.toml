@@ -131,6 +131,6 @@ module = ["bson.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["pymongo.*", "motor.*"]
+module = ["pymongo.*", "motor.*", "mongomock_motor.*"]
 ignore_missing_imports = true
 

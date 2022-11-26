@@ -10,7 +10,7 @@ from py4ai.core.config import (
 )
 from py4ai.core.config import __this_dir__ as config_dir
 from py4ai.core.config import get_all_configuration_file, merge_confs
-from py4ai.core.data.layer.v0.mongo import MongoConfig
+from py4ai.core.data.layer.mongo import MongoConfig
 from py4ai.core.logging import LoggingConfig
 from py4ai.core.logging.defaults import configFromFiles, getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
