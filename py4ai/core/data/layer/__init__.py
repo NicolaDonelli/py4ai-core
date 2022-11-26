@@ -1,1 +1,1 @@
-"""Module for persistence layer abstractions and functionalities."""
+"""Module containing V1 abstraction and implementation for persistence layers."""
