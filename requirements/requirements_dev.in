@@ -1,5 +1,4 @@
-Sphinx<4.4; python_version <= '3.7'
-Sphinx>4.1; python_version > '3.7'
+Sphinx>4.1
 aiosqlite>=0.17
 black>=21.12b0
 darglint>=1.8.1

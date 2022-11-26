@@ -2,12 +2,11 @@
 Test config files
 """
 
-import unittest
-
 from py4ai.core.data.layer.common.repository import QueryOptions
+from py4ai.core.tests.core import TestCase
 
 
-class TestConfig(unittest.TestCase):
+class TestConfig(TestCase):
     query = QueryOptions(0, 10)
 
     def test_query_options_copy(self) -> None:

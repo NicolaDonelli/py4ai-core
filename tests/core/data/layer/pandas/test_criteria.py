@@ -2,7 +2,6 @@
 Test criteria files
 """
 
-import unittest
 from typing import Any, Callable
 
 import numpy as np
@@ -10,6 +9,7 @@ import pandas as pd
 
 from py4ai.core.data.layer.common.criteria import SearchCriteria
 from py4ai.core.data.layer.pandas.criteria import PandasSearchCriteria
+from py4ai.core.tests.core import TestCase
 
 
 class DummyCriteria(SearchCriteria[dict]):
@@ -23,7 +23,7 @@ class DummyCriteria(SearchCriteria[dict]):
         return DummyCriteria()
 
 
-class TestConfig(unittest.TestCase):
+class TestConfig(TestCase):
     df = pd.DataFrame({"a": np.arange(0, 10)})
 
     @staticmethod
