@@ -6,8 +6,8 @@ pandas>=1.0
 pydantic>=1.9
 pymongo>=4.0
 scipy>=1.7.3
-setuptools>=47.1
-sqlalchemy==1.4.39
+setuptools>=61.2.0
+sqlalchemy>=1.4.39
 tornado>=6.1
 tomli>=2.0.1
 typeguard>=2.13.0

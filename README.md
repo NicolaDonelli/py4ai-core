@@ -2,7 +2,7 @@ py4ai core
 ====
 
 [![PyPI](https://img.shields.io/pypi/v/py4ai-core.svg)](https://pypi.python.org/pypi/py4ai-core)
-[![Python version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://pypi.python.org/pypi/py4ai-core)
+[![Python version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://pypi.python.org/pypi/py4ai-core)
 [![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://py4ai.github.io/py4ai-core/)
 ![Python package](https://github.com/NicolaDonelli/py4ai-core/workflows/CI%20-%20Build%20and%20Test/badge.svg)
 
