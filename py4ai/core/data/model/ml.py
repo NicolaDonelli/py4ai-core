@@ -138,7 +138,7 @@ class MultiFeatureSample(Sample[List[np.ndarray], LabType]):
         self,
         features: List[np.ndarray],
         label: Optional[LabType] = None,
-        name: str = None,
+        name: Optional[str] = None,
     ) -> None:
         """
         Object representing a single sample of a training or test set.
