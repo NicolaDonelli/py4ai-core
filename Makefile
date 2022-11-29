@@ -53,8 +53,9 @@ help:
 
 $(pre_deps_tag):
 	@echo "==Installing pip-tools and black=="
-	grep "^pip-tools\|^black"  requirements/requirements_dev.in | xargs ${PYTHON} -m pip install
-	grep "^tomli"  requirements/requirements.in | xargs ${PYTHON} -m pip install
+	${PYTHON} -m pip install --upgrade --quiet pip
+	grep "^pip-tools\|^black"  requirements/requirements_dev.in | xargs ${PYTHON} -m pip install --quiet
+	grep "^tomli\|^setuptools"  requirements/requirements.in | xargs ${PYTHON} -m pip install --upgrade --quiet
 	touch $(pre_deps_tag)
 
 requirements/requirements.txt: requirements/requirements_dev.txt
