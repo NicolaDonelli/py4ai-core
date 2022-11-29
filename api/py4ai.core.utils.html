@@ -47,7 +47,7 @@
 <p class="caption" role="heading"><span class="caption-text">Developer Guide:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">py4ai</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="py4ai.html">py4ai namespace</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="py4ai.html">py4ai package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="py4ai.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="py4ai.core.html">py4ai.core package</a><ul class="current">
 <li class="toctree-l5 current"><a class="reference internal" href="py4ai.core.html#subpackages">Subpackages</a><ul class="current">
@@ -65,6 +65,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="py4ai.html#module-py4ai">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,7 +87,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="modules.html">py4ai</a> &raquo;</li>
-          <li><a href="py4ai.html">py4ai namespace</a> &raquo;</li>
+          <li><a href="py4ai.html">py4ai package</a> &raquo;</li>
           <li><a href="py4ai.core.html">py4ai.core package</a> &raquo;</li>
       <li>py4ai.core.utils package</li>
       <li class="wy-breadcrumbs-aside">
@@ -536,6 +537,37 @@ The keys are joined by the given separator.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>NotImplementedError</strong> – if given protocol is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-py4ai.core.utils.executors">
+<span id="py4ai-core-utils-executors-module"></span><h2>py4ai.core.utils.executors module<a class="headerlink" href="#module-py4ai.core.utils.executors" title="Permalink to this headline"></a></h2>
+<p>Module with helpers to be used in async programming.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="py4ai.core.utils.executors.AsyncExecutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.utils.executors.</span></span><span class="sig-name descname"><span class="pre">AsyncExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">asyncio.events.AbstractEventLoop</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.utils.executors.AsyncExecutor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper class for computing async execution as sync.</p>
+<p>Instantiate the helper class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loop</strong> – EventLoop to be used to resolving co-routines. If None, the running EventLoop will be taken.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="py4ai.core.utils.executors.AsyncExecutor.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Coroutine</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">py4ai.core.utils.executors.T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">py4ai.core.utils.executors.T</span></span></span><a class="headerlink" href="#py4ai.core.utils.executors.AsyncExecutor.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Execute co-routing synchronously.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> – co-routine to be executed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>output of the co-routine.</p>
 </dd>
 </dl>
 </dd></dl>

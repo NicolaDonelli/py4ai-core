@@ -4,18 +4,26 @@ py4ai.core.data.layer.mongo package
 Submodules
 ----------
 
-py4ai.core.data.layer.mongo.archivers module
---------------------------------------------
+py4ai.core.data.layer.mongo.criteria module
+-------------------------------------------
 
-.. automodule:: py4ai.core.data.layer.mongo.archivers
+.. automodule:: py4ai.core.data.layer.mongo.criteria
    :members:
    :undoc-members:
    :show-inheritance:
 
-py4ai.core.data.layer.mongo.dao module
---------------------------------------
+py4ai.core.data.layer.mongo.repository module
+---------------------------------------------
 
-.. automodule:: py4ai.core.data.layer.mongo.dao
+.. automodule:: py4ai.core.data.layer.mongo.repository
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+py4ai.core.data.layer.mongo.serializer module
+---------------------------------------------
+
+.. automodule:: py4ai.core.data.layer.mongo.serializer
    :members:
    :undoc-members:
    :show-inheritance:

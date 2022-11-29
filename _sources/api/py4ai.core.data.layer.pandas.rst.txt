@@ -4,26 +4,18 @@ py4ai.core.data.layer.pandas package
 Submodules
 ----------
 
-py4ai.core.data.layer.pandas.archivers module
----------------------------------------------
+py4ai.core.data.layer.pandas.criteria module
+--------------------------------------------
 
-.. automodule:: py4ai.core.data.layer.pandas.archivers
+.. automodule:: py4ai.core.data.layer.pandas.criteria
    :members:
    :undoc-members:
    :show-inheritance:
 
-py4ai.core.data.layer.pandas.dao module
----------------------------------------
+py4ai.core.data.layer.pandas.repository module
+----------------------------------------------
 
-.. automodule:: py4ai.core.data.layer.pandas.dao
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-py4ai.core.data.layer.pandas.databases module
----------------------------------------------
-
-.. automodule:: py4ai.core.data.layer.pandas.databases
+.. automodule:: py4ai.core.data.layer.pandas.repository
    :members:
    :undoc-members:
    :show-inheritance:

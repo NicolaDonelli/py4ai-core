@@ -36,6 +36,14 @@ py4ai.core.utils.email module
    :undoc-members:
    :show-inheritance:
 
+py4ai.core.utils.executors module
+---------------------------------
+
+.. automodule:: py4ai.core.utils.executors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 py4ai.core.utils.fs module
 --------------------------
 

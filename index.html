@@ -89,7 +89,10 @@
 <li class="toctree-l2"><a class="reference internal" href="intro/readme.html#tests">Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intro/readme.html#checks">Checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intro/readme.html#examples">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="intro/readme.html#id1">Data Layers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/readme.html#id1">Data Layers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intro/readme.html#abstracting-data-querying">Abstracting Data Querying</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="intro/readme.html#id2">Data Model</a></li>
 </ul>
 </li>
@@ -117,7 +120,7 @@
 <p class="caption" role="heading"><span class="caption-text">Developer Guide:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">py4ai</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/py4ai.html">py4ai namespace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/py4ai.html">py4ai package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/py4ai.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/py4ai.core.html">py4ai.core package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="api/py4ai.core.html#subpackages">Subpackages</a><ul>
@@ -129,19 +132,44 @@
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.data.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="api/py4ai.core.data.layer.html">py4ai.core.data.layer package</a><ul>
 <li class="toctree-l9"><a class="reference internal" href="api/py4ai.core.data.layer.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="api/py4ai.core.data.layer.common.html">py4ai.core.data.layer.common package</a><ul>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.common.html#submodules">Submodules</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.common.html#module-py4ai.core.data.layer.common.criteria">py4ai.core.data.layer.common.criteria module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.common.html#module-py4ai.core.data.layer.common.repository">py4ai.core.data.layer.common.repository module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.common.html#module-py4ai.core.data.layer.common.serialiazer">py4ai.core.data.layer.common.serialiazer module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.common.html#module-py4ai.core.data.layer.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l10"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html">py4ai.core.data.layer.fs package</a><ul>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#submodules">Submodules</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#module-py4ai.core.data.layer.fs.criteria">py4ai.core.data.layer.fs.criteria module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#module-py4ai.core.data.layer.fs.repository">py4ai.core.data.layer.fs.repository module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#module-py4ai.core.data.layer.fs.serializer">py4ai.core.data.layer.fs.serializer module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#module-py4ai.core.data.layer.fs.tables">py4ai.core.data.layer.fs.tables module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.fs.html#module-py4ai.core.data.layer.fs">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l10"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html">py4ai.core.data.layer.mongo package</a><ul>
 <li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#submodules">Submodules</a></li>
-<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo.archivers">py4ai.core.data.layer.mongo.archivers module</a></li>
-<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo.dao">py4ai.core.data.layer.mongo.dao module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo.criteria">py4ai.core.data.layer.mongo.criteria module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo.repository">py4ai.core.data.layer.mongo.repository module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo.serializer">py4ai.core.data.layer.mongo.serializer module</a></li>
 <li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.mongo.html#module-py4ai.core.data.layer.mongo">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l10"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html">py4ai.core.data.layer.pandas package</a><ul>
 <li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#submodules">Submodules</a></li>
-<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas.archivers">py4ai.core.data.layer.pandas.archivers module</a></li>
-<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas.dao">py4ai.core.data.layer.pandas.dao module</a></li>
-<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas.databases">py4ai.core.data.layer.pandas.databases module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas.criteria">py4ai.core.data.layer.pandas.criteria module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas.repository">py4ai.core.data.layer.pandas.repository module</a></li>
 <li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.pandas.html#module-py4ai.core.data.layer.pandas">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l10"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html">py4ai.core.data.layer.sqlalchemy package</a><ul>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html#submodules">Submodules</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html#module-py4ai.core.data.layer.sqlalchemy.criteria">py4ai.core.data.layer.sqlalchemy.criteria module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html#module-py4ai.core.data.layer.sqlalchemy.repository">py4ai.core.data.layer.sqlalchemy.repository module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html#module-py4ai.core.data.layer.sqlalchemy.serializer">py4ai.core.data.layer.sqlalchemy.serializer module</a></li>
+<li class="toctree-l11"><a class="reference internal" href="api/py4ai.core.data.layer.sqlalchemy.html#module-py4ai.core.data.layer.sqlalchemy">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -190,6 +218,7 @@
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.decorators">py4ai.core.utils.decorators module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.dict">py4ai.core.utils.dict module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.email">py4ai.core.utils.email module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.executors">py4ai.core.utils.executors module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.fs">py4ai.core.utils.fs module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils.pandas">py4ai.core.utils.pandas module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/py4ai.core.utils.html#module-py4ai.core.utils">Module contents</a></li>
@@ -202,6 +231,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="api/py4ai.html#module-py4ai">Module contents</a></li>
 </ul>
 </li>
 </ul>
