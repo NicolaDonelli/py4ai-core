@@ -56,7 +56,10 @@ tag_prefix = "v"
 parentdir_prefix = "py4ai-core"
 
 [tool.pytest.ini_options]
-addopts = "--doctest-modules --cov=./py4ai/core"
+addopts = "--doctest-modules --cov=./py4ai/core --cov-config=./pyproject.toml --cov-report term"
+
+[tool.coverage.run]
+concurrency = ["greenlet"]
 
 [tool.flake8]
 exclude = "versioneer.py,py4ai/core/_version.py"
