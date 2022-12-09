@@ -1,5 +1,7 @@
-py4ai package
-=============
+py4ai namespace
+===============
+
+.. py:module:: py4ai
 
 Subpackages
 -----------
@@ -8,11 +10,3 @@ Subpackages
    :maxdepth: 4
 
    py4ai.core
-
-Module contents
----------------
-
-.. automodule:: py4ai
-   :members:
-   :undoc-members:
-   :show-inheritance:
