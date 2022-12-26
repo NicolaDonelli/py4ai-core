@@ -31,7 +31,7 @@ from py4ai.core.data.model.core import (
     LazyIterable,
     RegisterLazyCachedIterables,
 )
-from py4ai.core.typing import T
+from py4ai.core.types import T
 from py4ai.core.utils.decorators import lazyproperty as lazy
 from py4ai.core.utils.decorators import same_type
 from py4ai.core.utils.pandas import loc

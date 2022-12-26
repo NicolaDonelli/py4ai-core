@@ -9,7 +9,7 @@ from typing import Any, Callable, Iterable, Tuple, TypeVar
 import pandas as pd
 from deprecated import deprecated
 
-from py4ai.core.typing import PathLike, T
+from py4ai.core.types import PathLike, T
 from py4ai.core.utils.dict import union
 from py4ai.core.utils.fs import create_dir_if_not_exists
 

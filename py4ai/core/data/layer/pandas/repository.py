@@ -19,7 +19,7 @@ from py4ai.core.data.layer.common.repository import (
 )
 from py4ai.core.data.layer.common.serialiazer import DataSerializer
 from py4ai.core.data.layer.pandas.criteria import PandasFilter, PandasSearchCriteria
-from py4ai.core.typing import PathLike
+from py4ai.core.types import PathLike
 
 KD = TypeVar("KD", str, int, Tuple)
 

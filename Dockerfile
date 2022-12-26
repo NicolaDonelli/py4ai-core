@@ -1,24 +1,33 @@
 # syntax=docker/dockerfile:1
 
-ARG  PY_VERSION=3.7
-FROM python:${PY_VERSION}-buster
+ARG  PY_VERSION=3.10
+FROM python:${PY_VERSION}-buster as builder
 
 WORKDIR /py4ai-core
 
 RUN apt-get update && apt-get upgrade -y
 
-COPY requirements/requirements.in requirements/requirements.in
-COPY requirements/requirements_dev.in requirements/requirements_dev.in
 COPY LICENSE MANIFEST.in versioneer.py setup.py pyproject.toml README.md Makefile ./
-COPY .git .git
+COPY requirements requirements
 COPY py4ai py4ai
 COPY tests tests
 
 RUN addgroup --system tester && adduser --system --group tester
 RUN chown -R tester:tester /py4ai-core
+ENV PATH ${PATH}:/home/tester/.local/bin
+USER tester
 
 # change to the tester user: switch to a non-root user is a best practice.
-USER tester
-ENV PATH ${PATH}:/home/tester/.local/bin
+RUN make checks
 
-CMD make checks
+FROM python:${PY_VERSION}-slim-buster
+WORKDIR /py4ai-core
+COPY --from=builder /py4ai-core/dist /py4ai-core/dist
+
+RUN addgroup --system runner && adduser --system --group runner
+RUN chown -R runner:runner /py4ai-core
+ENV PATH ${PATH}:/home/runner/.local/bin
+USER runner
+
+RUN ls -t ./dist/*.tar.gz | xargs pip install
+ENTRYPOINT ["python"]

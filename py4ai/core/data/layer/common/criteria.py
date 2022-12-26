@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from typing import Generic
 
-from py4ai.core.typing import Q
+from py4ai.core.types import Q
 
 
 class BaseCriteria(Generic[Q], ABC):

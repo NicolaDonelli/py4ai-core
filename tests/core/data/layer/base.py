@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from py4ai.core.data.layer.common.criteria import SearchCriteria
 from py4ai.core.data.layer.common.repository import Repository
 from py4ai.core.data.layer.common.serialiazer import DataSerializer
-from py4ai.core.typing import KD, D, Q
+from py4ai.core.types import KD, D, Q
 
 
 class Entity(BaseModel):

@@ -15,7 +15,7 @@ from py4ai.core.logging import (
     StrLevelTypes,
     WithLoggingABC,
 )
-from py4ai.core.typing import PathLike
+from py4ai.core.types import PathLike
 from py4ai.core.utils.fs import create_dir_if_not_exists
 
 levels: LevelsDict = {

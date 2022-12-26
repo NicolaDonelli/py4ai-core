@@ -11,16 +11,21 @@ files := $(shell find . -name "*.py")
 doc_files := $(shell find sphinx -name "*.*")
 
 # Uncomment to store cache installation in the environment
-# package_dir := $(shell python -c 'import site; print(site.getsitepackages()[0])')
-package_dir := .make_cache
+# cache_dir := $(shell python -c 'import site; print(site.getsitepackages()[0])')
+cache_dir := .make_cache
 package_name=$(shell python -c "import tomli;from pathlib import Path;print(tomli.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']['name'])")
 
-$(shell mkdir -p $(package_dir))
+$(shell mkdir -p $(cache_dir))
 
-pre_deps_tag := $(package_dir)/.pre_deps
-env_tag := $(package_dir)/.env_tag
-env_dev_tag := $(package_dir)/.env_dev_tag
-install_tag := $(package_dir)/.install_tag
+pre_deps_tag := $(cache_dir)/.pre_deps
+env_tag := $(cache_dir)/.env_tag
+env_dev_tag := $(cache_dir)/.env_dev_tag
+install_tag := $(cache_dir)/.install_tag
+docker_build_tag := $(cache_dir)/.docker_build_tag
+
+project_name := py4ai-core
+registry := ghcr.io
+image_name := $(registry)/nicoladonelli/$(project_name)
 
 # ======================
 # Rules and Dependencies
@@ -145,3 +150,19 @@ clean:
 	rm -rf sphinx/source/api
 	rm -rf $(shell find . -name "*.pyc") $(shell find . -name "__pycache__")
 	rm -rf *.egg-info .mypy_cache .pytest_cache .make_cache $(env_tag) $(env_dev_tag) $(install_tag)
+
+$(docker_build_tag): Dockerfile requirements/requirements.txt py4ai pyproject.toml
+	@echo "==Building docker container=="
+	TAG=$$(${PYTHON} py4ai/core/_version.py); \
+	PYTHON_VERSION=$$(python --version); \
+	PYTHON_VERSION="$${PYTHON_VERSION#Python }"; \
+	PYTHON_VERSION="$${PYTHON_VERSION%.*}"; \
+	docker build -t $(image_name):"$${TAG}" --build-arg PY_VERSION=$${PYTHON_VERSION} .; \
+	VERSION=$$(cat $(docker_build_tag)); \
+	if [[ "$${VERSION}" != "$${TAG}" ]]; then echo "==Updating docker version tag=="; echo "$${TAG}" > $(docker_build_tag); fi
+
+docker_build: $(docker_build_tag)
+
+docker_run: $(docker_build_tag)
+	@echo "==Run detached docker image '$(project_name)' from '$(image_name):$$(cat $(docker_build_tag))' container=="
+	docker run --rm -it --name $(project_name) $(image_name):$$(cat $(docker_build_tag))

@@ -13,7 +13,7 @@ from itertools import groupby, islice, tee
 from operator import add
 from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Tuple
 
-from py4ai.core.typing import SupportsLessThan, T
+from py4ai.core.types import SupportsLessThan, T
 
 
 def groupIterable(iterable: Iterable[T], batch_size: int = 10000) -> Iterator[List[T]]:

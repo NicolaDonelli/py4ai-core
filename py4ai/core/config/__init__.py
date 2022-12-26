@@ -19,7 +19,7 @@ from yaml import (
     add_implicit_resolver,
 )
 
-from py4ai.core.typing import PathLike
+from py4ai.core.types import PathLike
 from py4ai.core.utils.dict import union
 
 __this_dir__, __this_filename__ = os.path.split(__file__)
