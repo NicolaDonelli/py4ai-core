@@ -93,6 +93,9 @@ skip_gitignore = true
 package_dir = "py4ai/core"
 name = "py4ai-core"
 
+[tool.bandit]
+targets = ["py4ai/core"]
+
 [tool.mypy]
 namespace_packages = true
 follow_imports = "silent"

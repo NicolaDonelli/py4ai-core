@@ -1,5 +1,6 @@
 Sphinx>4.1
 aiosqlite>=0.17
+bandit[toml]>=1.7.4
 black>=21.12b0
 darglint>=1.8.1
 flake8-docstrings>=1.6

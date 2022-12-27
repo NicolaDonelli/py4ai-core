@@ -26,7 +26,7 @@ db = client[DB_NAME]
 
 
 def clean_tmp_folder():
-    os.system(f"rm -rf {TMP_FOLDER}/*")
+    os.rmdir(TMP_FOLDER)
 
 
 def unset_TMP_FOLDER():

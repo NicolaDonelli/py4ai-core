@@ -127,7 +127,10 @@ mypy: setup_dev $(install_tag)
 tests: setup_dev $(install_tag)
 	${PYTHON} -m pytest tests
 
-checks: lint mypy tests
+bandit: setup_dev
+	${PYTHON} -m bandit -r -c pyproject.toml --severity-level high --confidence-level high .
+
+checks: lint mypy bandit tests
 	${PYTHON} -m black --check $(folders)
 	${PYTHON} -m isort $(folders) -c
 
