@@ -1,10 +1,10 @@
-py4ai.core.typing package
-=========================
+py4ai.core.types package
+========================
 
 Module contents
 ---------------
 
-.. automodule:: py4ai.core.typing
+.. automodule:: py4ai.core.types
    :members:
    :undoc-members:
    :show-inheritance:
