@@ -16,11 +16,37 @@ import os
 import re
 import subprocess
 import sys
-from typing import Callable, Dict
+import tomli
+from pathlib import Path
+from py4ai.core.types import PathLike
+from typing import Callable, Dict, Optional, List, Any, Tuple, Union
+from typing_extensions import TypedDict
 
 
-def get_keywords():
-    """Get the keywords needed to look up the version information."""
+class KeywordsDict(TypedDict):
+    refnames: str
+    full: str
+    date: str
+
+
+class VersionDict(TypedDict):
+    version: str
+    full_revisionid: Optional[str]
+    dirty: Optional[bool]
+    error: Optional[str]
+    date: Optional[str]
+
+
+class MissingConfigFileError(Exception):
+    """The project root directory is unknown or missing key files."""
+
+
+def get_keywords() -> KeywordsDict:
+    """
+    Get the keywords needed to look up the version information.
+
+    :return: dictionary of keywords
+    """
     # these strings will be replaced by git during git-archive.
     # setup.py/versioneer.py will grep for the variable names, so they must
     # each be defined on a line of their own. _version.py will just call
@@ -28,25 +54,73 @@ def get_keywords():
     git_refnames = "$Format:%d$"
     git_full = "$Format:%H$"
     git_date = "$Format:%ci$"
-    keywords = {"refnames": git_refnames, "full": git_full, "date": git_date}
+    keywords = KeywordsDict(refnames=git_refnames, full=git_full, date=git_date)
     return keywords
 
 
 class VersioneerConfig:
     """Container for Versioneer configuration parameters."""
 
+    def __init__(
+        self,
+        vcs: str,
+        style: str,
+        tag_prefix: str,
+        parentdir_prefix: str,
+        versionfile_source: str,
+        verbose: bool,
+    ):
+        """
+        Instantiate Versioneer configuration class
+        :param vcs: version control system
+        :param style: style
+        :param tag_prefix: tag_prefix
+        :param parentdir_prefix: parentdir prefix
+        :param versionfile_source: version-file source
+        :param verbose: whether to be verbose
+        """
+        self.VCS = vcs
+        self.style = style
+        self.tag_prefix = tag_prefix
+        self.parentdir_prefix = parentdir_prefix
+        self.versionfile_source = versionfile_source
+        self.verbose = verbose
 
-def get_config():
+
+def get_pyproject_toml() -> Path:
+    """
+    Get path to pyproject.toml
+
+    :return: path to pyproject.toml file
+    :raises MissingConfigFileError: if pyproject.toml is missing in parent folder.
+    """
+    pyproject_toml = Path(__file__).absolute().parent.parent.parent / "pyproject.toml"
+    if not pyproject_toml.is_file():
+        raise MissingConfigFileError(
+            f"Versioneer was unable to locate the pyproject.toml file. "
+            f"{pyproject_toml} does not exists or is not a file."
+        )
+    return pyproject_toml
+
+
+def get_config() -> VersioneerConfig:
     """Create, populate and return the VersioneerConfig() object."""
     # these strings are filled in when 'setup.py versioneer' creates
     # _version.py
-    cfg = VersioneerConfig()
-    cfg.VCS = "git"
-    cfg.style = "pep440"
-    cfg.tag_prefix = "v"
-    cfg.parentdir_prefix = "py4ai-core"
-    cfg.versionfile_source = "py4ai/core/_version.py"
-    cfg.verbose = False
+    pyproject_toml = get_pyproject_toml()
+    with open(pyproject_toml, "rb") as fobj:
+        pp = tomli.load(fobj)
+    section = pp["tool"]["versioneer"]
+    cfg = VersioneerConfig(
+        vcs=section["VCS"],
+        style=section.get("style", ""),
+        tag_prefix=section.get("tag_prefix")
+        if section.get("tag_prefix") not in ("''", '""', None)
+        else "",
+        parentdir_prefix=section.get("parentdir_prefix"),
+        versionfile_source=section.get("versionfile_source"),
+        verbose=section.get("verbose"),
+    )
     return cfg
 
 
@@ -58,8 +132,14 @@ LONG_VERSION_PY: Dict[str, str] = {}
 HANDLERS: Dict[str, Dict[str, Callable]] = {}
 
 
-def register_vcs_handler(vcs, method):  # decorator
-    """Create decorator to mark a method as the handler of a VCS."""
+def register_vcs_handler(vcs: str, method: str) -> Callable:  # decorator
+    """
+    Create decorator to mark a method as the handler of a VCS.
+
+    :param vcs: version control system
+    :param method: method name
+    :return: decorated method
+    """
 
     def decorate(f):
         """Store f in HANDLERS[vcs][method]."""
@@ -71,8 +151,25 @@ def register_vcs_handler(vcs, method):  # decorator
     return decorate
 
 
-def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=None):
-    """Call the given command(s)."""
+def run_command(
+    commands: List[str],
+    args: List[str],
+    cwd: Optional[str] = None,
+    verbose: bool = False,
+    hide_stderr: bool = False,
+    env: Optional[Dict[str, Any]] = None,
+) -> Tuple[Optional[str], Optional[int]]:
+    """
+    Call the given command(s).
+
+    :param commands: list of commands to call
+    :param args: list of arguments to pass to each command
+    :param cwd: current working directory
+    :param verbose: whether to be verbose
+    :param hide_stderr: whether to hide standard error
+    :param env: dictionary of environment variables
+    :return: command outputs
+    """
     assert isinstance(commands, list)
     process = None
 
@@ -117,7 +214,9 @@ def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=
     return stdout, process.returncode
 
 
-def versions_from_parentdir(parentdir_prefix, root, verbose):
+def versions_from_parentdir(
+    parentdir_prefix: str, root: PathLike, verbose: bool
+) -> VersionDict:
     """Try to determine the version from the parent directory name.
 
     Source tarballs conventionally unpack into a directory that includes both
@@ -127,11 +226,11 @@ def versions_from_parentdir(parentdir_prefix, root, verbose):
     rootdirs = []
 
     for _ in range(3):
-        dirname = os.path.basename(root)
+        dirname = str(os.path.basename(root))
         if dirname.startswith(parentdir_prefix):
             return {
                 "version": dirname[len(parentdir_prefix) :],
-                "full-revisionid": None,
+                "full_revisionid": None,
                 "dirty": False,
                 "error": None,
                 "date": None,
@@ -176,8 +275,18 @@ def git_get_keywords(versionfile_abs):
 
 
 @register_vcs_handler("git", "keywords")
-def git_versions_from_keywords(keywords, tag_prefix, verbose):
-    """Get version information from git keywords."""
+def git_versions_from_keywords(
+    keywords: KeywordsDict, tag_prefix: str, verbose: bool
+) -> VersionDict:
+    """
+    Get version information from git keywords.
+
+    :param keywords: dictionary of keywords to use
+    :param tag_prefix: prefix to use to identify version tags
+    :param verbose: whether to be verbose
+    :return: dictionary with version information
+    :raises NotThisMethod: if this is not the method to use to retrieve version information
+    """
     if "refnames" not in keywords:
         raise NotThisMethod("Short version file found")
     date = keywords.get("date")
@@ -187,7 +296,7 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
         date = date.splitlines()[-1]
 
         # git-2.2.0 added "%cI", which expands to an ISO-8601 -compliant
-        # datestamp. However we prefer "%ci" (which expands to an "ISO-8601
+        # datestamp. However, we prefer "%ci" (which expands to an "ISO-8601
         # -like" string, which we must then edit to make compliant), because
         # it's been around since git-1.5.3, and it's too difficult to
         # discover which version we're using, or to work around using an
@@ -229,7 +338,7 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
                 print("picking %s" % r)
             return {
                 "version": r,
-                "full-revisionid": keywords["full"].strip(),
+                "full_revisionid": keywords["full"].strip(),
                 "dirty": False,
                 "error": None,
                 "date": date,
@@ -239,7 +348,7 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
         print("no suitable tags, using unknown + full revision id")
     return {
         "version": "0+unknown",
-        "full-revisionid": keywords["full"].strip(),
+        "full_revisionid": keywords["full"].strip(),
         "dirty": False,
         "error": "no suitable tags",
         "date": None,
@@ -247,12 +356,22 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
 
 
 @register_vcs_handler("git", "pieces_from_vcs")
-def git_pieces_from_vcs(tag_prefix, root, verbose, runner=run_command):
-    """Get version from 'git describe' in the root of the source tree.
+def git_pieces_from_vcs(
+    tag_prefix: str, root: PathLike, verbose: bool, runner=run_command
+) -> Dict[str, Optional[Union[str, int]]]:
+    """
+    Get version from 'git describe' in the root of the source tree.
 
     This only gets called if the git-archive 'subst' keywords were *not*
     expanded, and _version.py hasn't already been rewritten with a short
     version string, meaning we're inside a checked out source tree.
+
+    :param tag_prefix: prefix to use to identify version tags
+    :param root: root path
+    :param verbose: whether to be verbose
+    :param runner: runner to use
+    :return: dictionary with version information
+    :raises NotThisMethod: if this is not the method to use
     """
     GITS = ["git"]
     if sys.platform == "win32":
@@ -387,14 +506,14 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, runner=run_command):
     return pieces
 
 
-def plus_or_dot(pieces):
+def plus_or_dot(pieces: Dict[str, Optional[str]]) -> str:
     """Return a + if we don't already have one, else return a ."""
     if "+" in pieces.get("closest-tag", ""):
         return "."
     return "+"
 
 
-def render_pep440(pieces):
+def render_pep440(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """Build up version string, with post-release "local version identifier".
 
     Our goal: TAG[+DISTANCE.gHEX[.dirty]] . Note that if you
@@ -418,7 +537,7 @@ def render_pep440(pieces):
     return rendered
 
 
-def render_pep440_branch(pieces):
+def render_pep440_branch(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[[.dev0]+DISTANCE.gHEX[.dirty]] .
 
     The ".dev0" means not master branch. Note that .dev0 sorts backwards
@@ -447,7 +566,7 @@ def render_pep440_branch(pieces):
     return rendered
 
 
-def pep440_split_post(ver):
+def pep440_split_post(ver: str) -> Tuple[str, Optional[int]]:
     """Split pep440 version string at the post-release segment.
 
     Returns the release segments before the post-release and the
@@ -457,7 +576,7 @@ def pep440_split_post(ver):
     return vc[0], int(vc[1] or 0) if len(vc) == 2 else None
 
 
-def render_pep440_pre(pieces):
+def render_pep440_pre(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[.postN.devDISTANCE] -- No -dirty.
 
     Exceptions:
@@ -481,7 +600,7 @@ def render_pep440_pre(pieces):
     return rendered
 
 
-def render_pep440_post(pieces):
+def render_pep440_post(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[.postDISTANCE[.dev0]+gHEX] .
 
     The ".dev0" means dirty. Note that .dev0 sorts backwards
@@ -508,7 +627,7 @@ def render_pep440_post(pieces):
     return rendered
 
 
-def render_pep440_post_branch(pieces):
+def render_pep440_post_branch(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[.postDISTANCE[.dev0]+gHEX[.dirty]] .
 
     The ".dev0" means not master branch.
@@ -537,7 +656,7 @@ def render_pep440_post_branch(pieces):
     return rendered
 
 
-def render_pep440_old(pieces):
+def render_pep440_old(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[.postDISTANCE[.dev0]] .
 
     The ".dev0" means dirty.
@@ -559,7 +678,7 @@ def render_pep440_old(pieces):
     return rendered
 
 
-def render_git_describe(pieces):
+def render_git_describe(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG[-DISTANCE-gHEX][-dirty].
 
     Like 'git describe --tags --dirty --always'.
@@ -579,7 +698,7 @@ def render_git_describe(pieces):
     return rendered
 
 
-def render_git_describe_long(pieces):
+def render_git_describe_long(pieces: Dict[str, Optional[Union[str, int]]]) -> str:
     """TAG-DISTANCE-gHEX[-dirty].
 
     Like 'git describe --tags --dirty --always -long'.
@@ -599,12 +718,12 @@ def render_git_describe_long(pieces):
     return rendered
 
 
-def render(pieces, style):
+def render(pieces: Dict[str, Optional[str]], style: str) -> VersionDict:
     """Render the given version pieces into the requested style."""
     if pieces["error"]:
         return {
             "version": "unknown",
-            "full-revisionid": pieces.get("long"),
+            "full_revisionid": pieces.get("long"),
             "dirty": None,
             "error": pieces["error"],
             "date": None,
@@ -634,14 +753,14 @@ def render(pieces, style):
 
     return {
         "version": rendered,
-        "full-revisionid": pieces["long"],
+        "full_revisionid": pieces["long"],
         "dirty": pieces["dirty"],
         "error": None,
         "date": pieces.get("date"),
     }
 
 
-def get_versions():
+def get_versions() -> VersionDict:
     """Get version information or return default if unable to do so."""
     # I am in _version.py, which lives at ROOT/VERSIONFILE_SOURCE. If we have
     # __file__, we can work backwards from there to the root. Some
@@ -666,7 +785,7 @@ def get_versions():
     except NameError:
         return {
             "version": "0+unknown",
-            "full-revisionid": None,
+            "full_revisionid": None,
             "dirty": None,
             "error": "unable to find root of source tree",
             "date": None,
@@ -686,7 +805,7 @@ def get_versions():
 
     return {
         "version": "0+unknown",
-        "full-revisionid": None,
+        "full_revisionid": None,
         "dirty": None,
         "error": "unable to compute version",
         "date": None,
