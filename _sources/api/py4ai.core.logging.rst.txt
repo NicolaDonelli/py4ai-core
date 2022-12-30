@@ -1,17 +1,6 @@
 py4ai.core.logging package
 ==========================
 
-Submodules
-----------
-
-py4ai.core.logging.defaults module
-----------------------------------
-
-.. automodule:: py4ai.core.logging.defaults
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

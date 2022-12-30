@@ -14,11 +14,13 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="py4ai.core.data package" href="py4ai.core.data.html" />
+    <link rel="next" title="py4ai.core.logging package" href="py4ai.core.logging.html" />
     <link rel="prev" title="py4ai.core package" href="py4ai.core.html" /> 
 </head>
 
@@ -53,8 +55,6 @@
 <li class="toctree-l4 current"><a class="reference internal" href="py4ai.core.html">py4ai.core package</a><ul class="current">
 <li class="toctree-l5 current"><a class="reference internal" href="py4ai.core.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l6 current"><a class="current reference internal" href="#">py4ai.core.config package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="py4ai.core.data.html">py4ai.core.data package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="py4ai.core.datasets.html">py4ai.core.datasets package</a></li>
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.logging.html">py4ai.core.logging package</a></li>
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.tests.html">py4ai.core.tests package</a></li>
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.types.html">py4ai.core.types package</a></li>
@@ -85,11 +85,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">py4ai</a> &raquo;</li>
-          <li><a href="py4ai.html">py4ai namespace</a> &raquo;</li>
-          <li><a href="py4ai.core.html">py4ai.core package</a> &raquo;</li>
-      <li>py4ai.core.config package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">py4ai</a></li>
+          <li class="breadcrumb-item"><a href="py4ai.html">py4ai namespace</a></li>
+          <li class="breadcrumb-item"><a href="py4ai.core.html">py4ai.core package</a></li>
+      <li class="breadcrumb-item active">py4ai.core.config package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/py4ai.core.config.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,14 +100,17 @@
            <div itemprop="articleBody">
              
   <section id="py4ai-core-config-package">
-<h1>py4ai.core.config package<a class="headerlink" href="#py4ai-core-config-package" title="Permalink to this headline"></a></h1>
-<section id="module-py4ai.core.config">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-py4ai.core.config" title="Permalink to this headline"></a></h2>
-<p>Implementation of classes that parse configuration files.</p>
+<h1>py4ai.core.config package<a class="headerlink" href="#py4ai-core-config-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-py4ai.core.config.configurations">
+<span id="py4ai-core-config-configurations-module"></span><h2>py4ai.core.config.configurations module<a class="headerlink" href="#module-py4ai.core.config.configurations" title="Permalink to this heading"></a></h2>
+<p>Configuration classes.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">AuthConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.AuthConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.config.BaseConfig</span></code></a></p>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">AuthConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.AuthConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
 <p>Authetication configuration.</p>
 <p>Class instance initializer.</p>
 <dl class="field-list simple">
@@ -116,8 +119,8 @@
 </dd>
 </dl>
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthConfig.filename">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.AuthConfig.filename" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthConfig.filename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthConfig.filename" title="Permalink to this definition"></a></dt>
 <dd><p>Return the name of the file containing the authentication details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -127,8 +130,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthConfig.method">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthConfig.method" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthConfig.method">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthConfig.method" title="Permalink to this definition"></a></dt>
 <dd><p>Return the authentication method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -138,8 +141,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthConfig.password">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthConfig.password" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthConfig.password">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthConfig.password" title="Permalink to this definition"></a></dt>
 <dd><p>Return the password.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -149,8 +152,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthConfig.user">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthConfig.user" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthConfig.user">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthConfig.user" title="Permalink to this definition"></a></dt>
 <dd><p>Return the user name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -162,9 +165,9 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthService">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">AuthService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.AuthService" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.config.BaseConfig</span></code></a></p>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">AuthService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.AuthService" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
 <p>Configuration for the authentication data.</p>
 <p>Class instance initializer.</p>
 <dl class="field-list simple">
@@ -173,8 +176,8 @@
 </dd>
 </dl>
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthService.check">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthService.check" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthService.check">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthService.check" title="Permalink to this definition"></a></dt>
 <dd><p>Return check.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -184,8 +187,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthService.decode">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthService.decode" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthService.decode">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthService.decode" title="Permalink to this definition"></a></dt>
 <dd><p>Return decode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -195,8 +198,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthService.url">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthService.url" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthService.url">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthService.url" title="Permalink to this definition"></a></dt>
 <dd><p>Return the url of the authentication service.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -208,9 +211,9 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">AuthenticationServiceConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.config.BaseConfig</span></code></a></p>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">AuthenticationServiceConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
 <p>Configuration of the authentication service.</p>
 <p>Class instance initializer.</p>
 <dl class="field-list simple">
@@ -219,8 +222,8 @@
 </dd>
 </dl>
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.ap_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ap_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.ap_name" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.ap_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ap_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.ap_name" title="Permalink to this definition"></a></dt>
 <dd><p>Return the ap name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -230,8 +233,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.auth_service">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth_service</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.AuthService" title="py4ai.core.config.AuthService"><span class="pre">py4ai.core.config.AuthService</span></a></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.auth_service" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.auth_service">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth_service</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.configurations.AuthService" title="py4ai.core.config.configurations.AuthService"><span class="pre">AuthService</span></a></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.auth_service" title="Permalink to this definition"></a></dt>
 <dd><p>Return the authentication data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -241,8 +244,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.check_service">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_service</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.CheckService" title="py4ai.core.config.CheckService"><span class="pre">py4ai.core.config.CheckService</span></a></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.check_service" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.check_service">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_service</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.configurations.CheckService" title="py4ai.core.config.configurations.CheckService"><span class="pre">CheckService</span></a></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.check_service" title="Permalink to this definition"></a></dt>
 <dd><p>Return the check service configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -252,8 +255,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.cors">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.cors" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.cors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.cors" title="Permalink to this definition"></a></dt>
 <dd><p>Return the cors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -263,8 +266,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.jwt_free_endpoints">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jwt_free_endpoints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.jwt_free_endpoints" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.jwt_free_endpoints">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jwt_free_endpoints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.jwt_free_endpoints" title="Permalink to this definition"></a></dt>
 <dd><p>Return the jwt free endpoints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -274,8 +277,8 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.AuthenticationServiceConfig.secured">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">secured</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#py4ai.core.config.AuthenticationServiceConfig.secured" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.AuthenticationServiceConfig.secured">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">secured</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#py4ai.core.config.configurations.AuthenticationServiceConfig.secured" title="Permalink to this definition"></a></dt>
 <dd><p>Return the secured flag.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -287,8 +290,8 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.BaseConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">BaseConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.BaseConfig" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.BaseConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">BaseConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.BaseConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base configuration class.</p>
 <p>Class instance initializer.</p>
@@ -298,8 +301,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.BaseConfig.getValue">
-<span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.getValue" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.BaseConfig.getValue">
+<span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.BaseConfig.getValue" title="Permalink to this definition"></a></dt>
 <dd><p>Get the value of a configuration node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -312,8 +315,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.BaseConfig.safeGetValue">
-<span class="sig-name descname"><span class="pre">safeGetValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.safeGetValue" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.BaseConfig.safeGetValue">
+<span class="sig-name descname"><span class="pre">safeGetValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.BaseConfig.safeGetValue" title="Permalink to this definition"></a></dt>
 <dd><p>Get the value of a configuration node, gracefully returning None if the node does not exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -326,8 +329,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.BaseConfig.sublevel">
-<span class="sig-name descname"><span class="pre">sublevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cfg_load.Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.sublevel" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.BaseConfig.sublevel">
+<span class="sig-name descname"><span class="pre">sublevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.BaseConfig.sublevel" title="Permalink to this definition"></a></dt>
 <dd><p>Return a sublevel of the main configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -340,8 +343,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.BaseConfig.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">cfg_load.Configuration</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><span class="pre">py4ai.core.config.BaseConfig</span></a></span></span><a class="headerlink" href="#py4ai.core.config.BaseConfig.update" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.BaseConfig.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Configuration</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><span class="pre">BaseConfig</span></a></span></span><a class="headerlink" href="#py4ai.core.config.configurations.BaseConfig.update" title="Permalink to this definition"></a></dt>
 <dd><p>Update the current configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -360,9 +363,9 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.CheckService">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">CheckService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.CheckService" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.config.BaseConfig</span></code></a></p>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.CheckService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">CheckService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.CheckService" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
 <p>Configuration for the check service.</p>
 <p>Class instance initializer.</p>
 <dl class="field-list simple">
@@ -371,8 +374,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd>
 </dl>
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.CheckService.login">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">login</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.CheckService.login" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.CheckService.login">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">login</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.CheckService.login" title="Permalink to this definition"></a></dt>
 <dd><p>Return the login url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -382,8 +385,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.CheckService.logout">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.CheckService.logout" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.CheckService.logout">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.CheckService.logout" title="Permalink to this definition"></a></dt>
 <dd><p>Return the logout url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -393,8 +396,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.CheckService.url">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.CheckService.url" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.CheckService.url">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.CheckService.url" title="Permalink to this definition"></a></dt>
 <dd><p>Return the url of the check service.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -406,9 +409,9 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="py4ai.core.config.FileSystemConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">FileSystemConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cfg_load.Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.FileSystemConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.BaseConfig" title="py4ai.core.config.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.config.BaseConfig</span></code></a></p>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.FileSystemConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">FileSystemConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.FileSystemConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
 <p>Configuration for file system paths.</p>
 <p>Class instance initializer.</p>
 <dl class="field-list simple">
@@ -417,8 +420,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.FileSystemConfig.getFile">
-<span class="sig-name descname"><span class="pre">getFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.FileSystemConfig.getFile" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.FileSystemConfig.getFile">
+<span class="sig-name descname"><span class="pre">getFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.FileSystemConfig.getFile" title="Permalink to this definition"></a></dt>
 <dd><p>Return the file name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -431,8 +434,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="py4ai.core.config.FileSystemConfig.getFolder">
-<span class="sig-name descname"><span class="pre">getFolder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.FileSystemConfig.getFolder" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.FileSystemConfig.getFolder">
+<span class="sig-name descname"><span class="pre">getFolder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.FileSystemConfig.getFolder" title="Permalink to this definition"></a></dt>
 <dd><p>Return the folder name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -445,8 +448,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="py4ai.core.config.FileSystemConfig.root">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.FileSystemConfig.root" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.FileSystemConfig.root">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.configurations.FileSystemConfig.root" title="Permalink to this definition"></a></dt>
 <dd><p>Return the root node value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -457,26 +460,181 @@ In case other is a Configuration also metadata will be updated to other’s meta
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.LoggingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">LoggingConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.LoggingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
+<p>Logging configuration.</p>
+<p>Class instance initializer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – configuration</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.LoggingConfig.capture_warnings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">capture_warnings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#py4ai.core.config.configurations.LoggingConfig.capture_warnings" title="Permalink to this definition"></a></dt>
+<dd><p>Flag that determines whether waring are captured.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>capture warnings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.LoggingConfig.default_config_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_config_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.configurations.LoggingConfig.default_config_file" title="Permalink to this definition"></a></dt>
+<dd><p>Return default logging configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>default config file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.LoggingConfig.filename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#py4ai.core.config.configurations.LoggingConfig.filename" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the file where logs are stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filename</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.LoggingConfig.level">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.LoggingConfig.level" title="Permalink to this definition"></a></dt>
+<dd><p>Returnn logging level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>level</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.config.configurations.</span></span><span class="sig-name descname"><span class="pre">MongoConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py4ai.core.config.configurations.BaseConfig" title="py4ai.core.config.configurations.BaseConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseConfig</span></code></a></p>
+<p>Configuration for a Mongo DB.</p>
+<p>Class instance initializer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – configuration</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.admin">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">admin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.configurations.AuthConfig" title="py4ai.core.config.configurations.AuthConfig"><span class="pre">AuthConfig</span></a></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.admin" title="Permalink to this definition"></a></dt>
+<dd><p>Return administrator authentication config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>administrator authentication config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.auth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py4ai.core.config.configurations.AuthConfig" title="py4ai.core.config.configurations.AuthConfig"><span class="pre">AuthConfig</span></a></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.auth" title="Permalink to this definition"></a></dt>
+<dd><p>Return authetication config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>authetication config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.authSource">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authSource</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.authSource" title="Permalink to this definition"></a></dt>
+<dd><p>Return the authentication source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>authentication source</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.db_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">db_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.db_name" title="Permalink to this definition"></a></dt>
+<dd><p>Return database name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>database name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.getCollection">
+<span class="sig-name descname"><span class="pre">getCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.getCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Return collection name at a given configuration node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – configuration node name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collection name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.host">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">host</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.host" title="Permalink to this definition"></a></dt>
+<dd><p>Return ost name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>host name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py4ai.core.config.configurations.MongoConfig.port">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#py4ai.core.config.configurations.MongoConfig.port" title="Permalink to this definition"></a></dt>
+<dd><p>Return port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>port</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-py4ai.core.config">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-py4ai.core.config" title="Permalink to this heading"></a></h2>
+<p>Implementation of classes that parse configuration files.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="py4ai.core.config.get_all_configuration_file">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">get_all_configuration_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'application.yml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'CONFIG_FILE'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.get_all_configuration_file" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.get_confs_in_path">
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">get_confs_in_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'*.yml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.get_confs_in_path" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve all configuration files from system path, including the one in environment variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>application_file</strong> – name of the configuration file to retrieve</p></li>
-<li><p><strong>name_env</strong> – environment variable specifying the path to a specific configuration file</p></li>
+<li><p><strong>path</strong> – path to search</p></li>
+<li><p><strong>filename</strong> – filename can be either absolute (like /usr/src/Python-1.5/Makefile) or
+relative (like ../../Tools/<em>/</em>.gif), and can contain shell-style wildcards</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list of retrieved paths</p>
+<dd class="field-even"><p>list of retrieved configuration files paths</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="py4ai.core.config.joinPath">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">joinPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">yaml.loader.Loader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">yaml.loader.FullLoader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">yaml.loader.UnsafeLoader</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">yaml.nodes.Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.joinPath" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">joinPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Loader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FullLoader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UnsafeLoader</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.joinPath" title="Permalink to this definition"></a></dt>
 <dd><p>Join pieces of a file system path. Can be used as a custom tag handler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -495,8 +653,8 @@ In case other is a Configuration also metadata will be updated to other’s meta
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="py4ai.core.config.load">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cfg_load.Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.load" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="py4ai.core.config.load_from_file">
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.load_from_file" title="Permalink to this definition"></a></dt>
 <dd><p>Load configuration reading given filename.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -510,7 +668,7 @@ In case other is a Configuration also metadata will be updated to other’s meta
 
 <dl class="py function">
 <dt class="sig sig-object py" id="py4ai.core.config.merge_confs">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">merge_confs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'defaults.yml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cfg_load.Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.merge_confs" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">merge_confs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'defaults.yml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Configuration</span></span></span><a class="headerlink" href="#py4ai.core.config.merge_confs" title="Permalink to this definition"></a></dt>
 <dd><p>Merge configurations in given files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -527,7 +685,7 @@ In case other is a Configuration also metadata will be updated to other’s meta
 
 <dl class="py function">
 <dt class="sig sig-object py" id="py4ai.core.config.path_constructor">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">path_constructor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">yaml.loader.Loader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">yaml.loader.FullLoader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">yaml.loader.UnsafeLoader</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">yaml.nodes.Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.path_constructor" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.config.</span></span><span class="sig-name descname"><span class="pre">path_constructor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Loader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FullLoader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UnsafeLoader</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.config.path_constructor" title="Permalink to this definition"></a></dt>
 <dd><p>Extract the matched value, expand env variable, and replace the match.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -556,7 +714,7 @@ In case other is a Configuration also metadata will be updated to other’s meta
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="py4ai.core.html" class="btn btn-neutral float-left" title="py4ai.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="py4ai.core.data.html" class="btn btn-neutral float-right" title="py4ai.core.data package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="py4ai.core.logging.html" class="btn btn-neutral float-right" title="py4ai.core.logging package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

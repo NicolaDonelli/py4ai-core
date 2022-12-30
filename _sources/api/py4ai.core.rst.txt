@@ -8,8 +8,6 @@ Subpackages
    :maxdepth: 4
 
    py4ai.core.config
-   py4ai.core.data
-   py4ai.core.datasets
    py4ai.core.logging
    py4ai.core.tests
    py4ai.core.types

@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -53,8 +55,6 @@
 <li class="toctree-l4 current"><a class="reference internal" href="py4ai.core.html">py4ai.core package</a><ul class="current">
 <li class="toctree-l5 current"><a class="reference internal" href="py4ai.core.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.config.html">py4ai.core.config package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="py4ai.core.data.html">py4ai.core.data package</a></li>
-<li class="toctree-l6"><a class="reference internal" href="py4ai.core.datasets.html">py4ai.core.datasets package</a></li>
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.logging.html">py4ai.core.logging package</a></li>
 <li class="toctree-l6 current"><a class="current reference internal" href="#">py4ai.core.tests package</a></li>
 <li class="toctree-l6"><a class="reference internal" href="py4ai.core.types.html">py4ai.core.types package</a></li>
@@ -85,11 +85,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">py4ai</a> &raquo;</li>
-          <li><a href="py4ai.html">py4ai namespace</a> &raquo;</li>
-          <li><a href="py4ai.core.html">py4ai.core package</a> &raquo;</li>
-      <li>py4ai.core.tests package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">py4ai</a></li>
+          <li class="breadcrumb-item"><a href="py4ai.html">py4ai namespace</a></li>
+          <li class="breadcrumb-item"><a href="py4ai.core.html">py4ai.core package</a></li>
+      <li class="breadcrumb-item active">py4ai.core.tests package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/py4ai.core.tests.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,24 +100,24 @@
            <div itemprop="articleBody">
              
   <section id="py4ai-core-tests-package">
-<h1>py4ai.core.tests package<a class="headerlink" href="#py4ai-core-tests-package" title="Permalink to this headline"></a></h1>
+<h1>py4ai.core.tests package<a class="headerlink" href="#py4ai-core-tests-package" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-py4ai.core.tests.core">
-<span id="py4ai-core-tests-core-module"></span><h2>py4ai.core.tests.core module<a class="headerlink" href="#module-py4ai.core.tests.core" title="Permalink to this headline"></a></h2>
+<span id="py4ai-core-tests-core-module"></span><h2>py4ai.core.tests.core module<a class="headerlink" href="#module-py4ai.core.tests.core" title="Permalink to this heading"></a></h2>
 <p>Basic testing functionalities to be used in unittests.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="py4ai.core.tests.core.TestCase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py4ai.core.tests.core.</span></span><span class="sig-name descname"><span class="pre">TestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py4ai.core.tests.core.TestCase" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code>, <a class="reference internal" href="py4ai.core.logging.html#py4ai.core.logging.defaults.WithLogging" title="py4ai.core.logging.defaults.WithLogging"><code class="xref py py-class docutils literal notranslate"><span class="pre">py4ai.core.logging.defaults.WithLogging</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code>, <a class="reference internal" href="py4ai.core.logging.html#py4ai.core.logging.WithLogging" title="py4ai.core.logging.WithLogging"><code class="xref py py-class docutils literal notranslate"><span class="pre">WithLogging</span></code></a></p>
 <p>Tests class with basis functionalities.</p>
 <p>Create an instance of the class that will use the named test
 method when executed. Raises a ValueError if the instance does
 not have a method with the specified name.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.tests.core.TestCase.compareArrays">
-<span class="sig-name descname"><span class="pre">compareArrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareArrays" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compareArrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareArrays" title="Permalink to this definition"></a></dt>
 <dd><p>Compare arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -135,7 +135,7 @@ not have a method with the specified name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.tests.core.TestCase.compareDataFrames">
-<span class="sig-name descname"><span class="pre">compareDataFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareDataFrames" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compareDataFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareDataFrames" title="Permalink to this definition"></a></dt>
 <dd><p>Compare dataframes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -198,7 +198,7 @@ not have a method with the specified name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="py4ai.core.tests.core.TestCase.compareSeries">
-<span class="sig-name descname"><span class="pre">compareSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.series.Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.series.Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareSeries" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compareSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#py4ai.core.tests.core.TestCase.compareSeries" title="Permalink to this definition"></a></dt>
 <dd><p>Compare series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -224,7 +224,7 @@ not have a method with the specified name.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="py4ai.core.tests.core.logTest">
-<span class="sig-prename descclassname"><span class="pre">py4ai.core.tests.core.</span></span><span class="sig-name descname"><span class="pre">logTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.tests.core.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">py4ai.core.tests.core.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.tests.core.logTest" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py4ai.core.tests.core.</span></span><span class="sig-name descname"><span class="pre">logTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py4ai.core.tests.core.logTest" title="Permalink to this definition"></a></dt>
 <dd><p>Return a function to be used to decorate every test for adding logs on name of the tests and timings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -238,7 +238,7 @@ not have a method with the specified name.</p>
 
 </section>
 <section id="module-py4ai.core.tests">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-py4ai.core.tests" title="Permalink to this headline"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-py4ai.core.tests" title="Permalink to this heading"></a></h2>
 <p>Test utils module.</p>
 </section>
 </section>

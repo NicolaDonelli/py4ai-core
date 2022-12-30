@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -87,8 +89,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>py4ai core</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">py4ai core</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/intro/readme.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -99,7 +101,7 @@
            <div itemprop="articleBody">
              
   <section id="py4ai-core">
-<h1>py4ai core<a class="headerlink" href="#py4ai-core" title="Permalink to this headline"></a></h1>
+<h1>py4ai core<a class="headerlink" href="#py4ai-core" title="Permalink to this heading"></a></h1>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/py4ai-core"><img alt="PyPI" src="https://img.shields.io/pypi/v/py4ai-core.svg" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/py4ai-core"><img alt="Python version" src="https://img.shields.io/badge/python-3.8+-blue.svg" /></a>
 <a class="reference external image-reference" href="https://py4ai.github.io/py4ai-core/"><img alt="Documentation" src="https://img.shields.io/badge/docs-latest-brightgreen.svg" /></a>
@@ -107,7 +109,7 @@
 <hr class="docutils" />
 <p>A Python library defining data structures optimized for machine learning pipelines</p>
 <section id="what-is-it">
-<h2>What is it ?<a class="headerlink" href="#what-is-it" title="Permalink to this headline"></a></h2>
+<h2>What is it ?<a class="headerlink" href="#what-is-it" title="Permalink to this heading"></a></h2>
 <p><strong>py4ai-core</strong> is a Python package with modular design that provides powerful abstractions to build data
 ingestion pipelines and run end to end machine learning pipelines.
 The library offers lightweight object-oriented interface to MongoDB as well as Pandas based data structures.
@@ -115,10 +117,10 @@ The aim of the library is to provide extensive support for developing machine le
 with a focus on practicing clean code and modular design.</p>
 </section>
 <section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h2>
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
 <p>Some cool features that we are proud to mention are:</p>
 <section id="data-layers">
-<h3>Data layers<a class="headerlink" href="#data-layers" title="Permalink to this headline"></a></h3>
+<h3>Data layers<a class="headerlink" href="#data-layers" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Archiver: Offers an object-oriented design to perform ETL on Mongodb collections as well as Pandas DataFrames.</p></li>
 <li><p>DAO: Data Access Object to allow archivers to serialize domain objects into the proper persistence layer support
@@ -130,7 +132,7 @@ a Document while tabular data will be parsed in a pandas DataFrame).</p></li>
 </ol>
 </section>
 <section id="data-model">
-<h3>Data Model<a class="headerlink" href="#data-model" title="Permalink to this headline"></a></h3>
+<h3>Data Model<a class="headerlink" href="#data-model" title="Permalink to this heading"></a></h3>
 <p>Offers the following data structures:</p>
 <ol class="arabic simple">
 <li><p>Document : Data structure specifically designed to work with NLP applications that parses a json-like document
@@ -143,7 +145,7 @@ of samples.</p></li>
 </section>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>From pypi server</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">py4ai</span><span class="o">-</span><span class="n">core</span>
 </pre></div>
@@ -156,22 +158,22 @@ of samples.</p></li>
 </div>
 </section>
 <section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline"></a></h2>
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">tests</span>
 </pre></div>
 </div>
 </section>
 <section id="checks">
-<h2>Checks<a class="headerlink" href="#checks" title="Permalink to this headline"></a></h2>
+<h2>Checks<a class="headerlink" href="#checks" title="Permalink to this heading"></a></h2>
 <p>To run predefined checks (unit-tests, linting checks, formatting checks and static typing checks):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">checks</span>
 </pre></div>
 </div>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <section id="id1">
-<h3>Data Layers<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3>Data Layers<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <p>The Data Layer abstractions are designed to decouple the business layers from
 the detail of the persistence layer implementation. The basic abstraction that will
 make this possible is the <code class="docutils literal notranslate"><span class="pre">Repository</span></code>.</p>
@@ -257,7 +259,7 @@ in python by a dictionary):</p>
 <p>This repository is compatible with the previous and can be used in place of the
 previous one, having the same signatures.</p>
 <section id="abstracting-data-querying">
-<h4>Abstracting Data Querying<a class="headerlink" href="#abstracting-data-querying" title="Permalink to this headline"></a></h4>
+<h4>Abstracting Data Querying<a class="headerlink" href="#abstracting-data-querying" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Repository</span></code> abstraction also allow to retrieve data based on certain query/filters:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">retrieve_by_criteria</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span>
 </pre></div>
@@ -304,7 +306,7 @@ needs to be specified</p>
 </section>
 </section>
 <section id="id2">
-<h3>Data Model<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3>Data Model<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>Creating a PandasDataset object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -345,16 +347,16 @@ needs to be specified</p>
 </section>
 </section>
 <section id="how-to-contribute">
-<h2>How to contribute ?<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline"></a></h2>
+<h2>How to contribute ?<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading"></a></h2>
 <p>We are very much willing to welcome any kind of contribution whether it is bug report, bug fixes, contributions to the
 existing codebase or improving the documentation.</p>
 <section id="where-to-start">
-<h3>Where to start ?<a class="headerlink" href="#where-to-start" title="Permalink to this headline"></a></h3>
+<h3>Where to start ?<a class="headerlink" href="#where-to-start" title="Permalink to this heading"></a></h3>
 <p>Please look at the <a class="reference external" href="https://github.com/NicolaDonelli/py4ai-core/issues">Github issues tab</a> to start working on open
 issues</p>
 </section>
 <section id="contributing-to-py4ai-core">
-<h3>Contributing to py4ai-core<a class="headerlink" href="#contributing-to-py4ai-core" title="Permalink to this headline"></a></h3>
+<h3>Contributing to py4ai-core<a class="headerlink" href="#contributing-to-py4ai-core" title="Permalink to this heading"></a></h3>
 <p>Please make sure the general guidelines for contributing to the code base are respected</p>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://docs.github.com/en/get-started/quickstart/contributing-to-projects">Fork</a> the py4ai-core repository.</p></li>
