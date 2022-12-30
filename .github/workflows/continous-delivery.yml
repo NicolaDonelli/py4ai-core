@@ -1,4 +1,4 @@
-name: CI - Create a Release
+name: CD - Create a Release
 
 on:
   push:
@@ -34,8 +34,8 @@ jobs:
       - name: Build source distribution
         shell: bash -l {0}
         run: |
-          rm requirements/*.txt
-          make install
+          grep "^tomli\|^setuptools"  requirements/requirements.in | xargs python -m pip install --upgrade --quiet
+          python setup.py --quiet sdist
 
       - name: Check source package structure
         run: |
@@ -85,6 +85,7 @@ jobs:
       - name: Build source and binary distributions
         shell: bash -l {0}
         run: |
+          grep "^tomli\|^setuptools"  requirements/requirements.in | xargs python -m pip install --upgrade --quiet
           python -m pip install build wheel
           python setup.py sdist bdist_wheel
 
@@ -130,7 +131,7 @@ jobs:
           sleep 5m
           python -m pip download --index-url https://test.pypi.org/simple/ --no-deps --dest pkgs py4ai-core==${{env.PROJECT_VERSION}}
           python -m pip install $(ls -rt  pkgs/* | tail -1)
-          python -m pip install pytest pytest-cov
+          python -m pip install pytest pytest-cov greenlet
           python -m pytest
           rm -rf pkgs
 
