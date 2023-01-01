@@ -85,7 +85,7 @@ def load_from_file(filename: PathLike) -> Configuration:
 
 def get_confs_in_path(path: PathLike, filename: str = "*.yml") -> Sequence[str]:
     """
-    Retrieve all configuration files from system path, including the one in environment variable.
+    Retrieve all configuration files from system path.
 
     :param path: path to search
     :param filename: filename can be either absolute (like /usr/src/Python-1.5/Makefile) or
