@@ -62,7 +62,7 @@ jobs:
 
           rm -rf $DIR
 
-      - name: Check typing, linting and formatting
+      - name: Check formatting, linting, static typing, security issues, licenses and unit-tests
         run: make checks
 
   autorelease:

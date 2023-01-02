@@ -65,8 +65,7 @@ concurrency = ["greenlet"]
 exclude = "versioneer.py,py4ai/core/_version.py"
 per-file-ignores = [
     '__init__.py:F401',
-    'tests/*: D',
-    'tests/test_utils.py: D, F601'
+    'tests/*: D'
 ]
 ignore = [
 # Ignored by black
@@ -140,3 +139,5 @@ ignore_missing_imports = true
 module = ["pymongo.*", "motor.*", "mongomock_motor.*"]
 ignore_missing_imports = true
 
+[tool.licensecheck]
+using = "requirements:requirements/requirements.txt"

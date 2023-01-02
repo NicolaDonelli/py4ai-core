@@ -37,23 +37,25 @@ help:
 	@echo " "
 	@echo "Type 'make' followed by one of these keywords:"
 	@echo " "
-	@echo "  - setup for installing base requirements"
-	@echo "  - setup_dev for installing requirements for development"
-	@echo "  - format for reformatting files to adhere to PEP8 standards"
-	@echo "  - dist for building a tar.gz distribution"
-	@echo "  - install for installing the package"
-	@echo "  - install_dev for installing the package with development environment"
-	@echo "  - reinstall for deleting and reinstalling the package"
-	@echo "  - reinstall_dev for deleting and reinstalling the package with development environment"
-	@echo "  - uninstall for uninstalling the environment"
-	@echo "  - tests for running unittests"
-	@echo "  - lint for performing linting"
-	@echo "  - mypy for performing static type checking"
-	@echo "  - docs for producing documentation in html format"
-	@echo "  - checks for running format, mypy, lint and tests altogether"
-	@echo "  - clean for removing cache file"
-	@echo "  - publish_test for publishing package on TestPyPI"
-	@echo "  - publish for publishing package on PyPI"
+	@echo "  - reqs_dev to build closed development requirements, requirements/requirements_dev.txt, from requirements/requirements_dev.in and requirements/requirements.in"
+	@echo "  - reqs to build closed minimal requirements, requirements/requirements.txt, from requirements/requirements.in"
+	@echo "  - setup to install minimal requirements"
+	@echo "  - setup_dev to install development requirements"
+	@echo "  - format to reformat files to adhere to PEP8 standards"
+	@echo "  - dist to build a tar.gz distribution"
+	@echo "  - install to install the package with minimal requirements"
+	@echo "  - install_dev to install the package with development environment"
+	@echo "  - uninstall to uninstall the package and its dependencies"
+	@echo "  - tests to run unittests using pytest as configured in pyproject.toml"
+	@echo "  - lint to perform linting using flake8 as configured in pyproject.toml"
+	@echo "  - mypy to perform static type checking using mypy as configured in pyproject.toml"
+	@echo "  - bandit to find security issues in app code using bandit as configured in pyproject.toml"
+	@echo "  - licensecheck to check dependencies licences compatibility with application license using licensecheck as configured in pyproject.toml"
+	@echo "  - docs to produce documentation in html format using sphinx as configured in pyproject.toml"
+	@echo "  - checks to run mypy, lint, bandit, licensecheck, tests and check formatting altogether"
+	@echo "  - clean to remove cache file"
+	@echo "  - docker_build to build docker image according to Dockerfile, tagged with app version"
+	@echo "  - docker_run to run latest built docker image"
 	@echo "------------------------------------"
 
 $(pre_deps_tag):
@@ -135,7 +137,10 @@ tests: setup_dev $(install_tag)
 bandit: setup_dev
 	${PYTHON} -m bandit -r -c pyproject.toml --severity-level high --confidence-level high .
 
-checks: lint mypy bandit tests
+licensecheck: setup_dev
+	${PYTHON} -m licensecheck --zero
+
+checks: lint mypy bandit licensecheck tests
 	${PYTHON} -m black --check $(folders)
 	${PYTHON} -m isort $(folders) -c
 
