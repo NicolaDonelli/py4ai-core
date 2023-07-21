@@ -1,15 +1,22 @@
 """Configuration classes."""
+from abc import ABC
 from datetime import datetime
-from typing import Any, Hashable, List, Union
+from typing import Any, Callable, Dict, Hashable, List, Optional, TypeVar, Union
 
 import pytz
 from cfg_load import Configuration
+from typing_extensions import Concatenate, ParamSpec
 
 from py4ai.core.types import PathLike
 from py4ai.core.utils.dict import union
 
+TBaseConfig = TypeVar("TBaseConfig", bound="BaseConfig")
+TWithConfig = TypeVar("TWithConfig", bound="WithConfig")
+Param = ParamSpec("Param")
+RetType = TypeVar("RetType")
 
-class BaseConfig(object):
+
+class BaseConfig(ABC):
     """Base configuration class."""
 
     def __init__(self, config: Configuration):
@@ -49,7 +56,7 @@ class BaseConfig(object):
         """
         return self.config.get(name, None)
 
-    def update(self, other: Union[dict, Configuration]) -> "BaseConfig":
+    def update(self, other: Union[Dict[Any, Any], Configuration]) -> "BaseConfig":
         """
         Update the current configuration.
 
@@ -354,7 +361,7 @@ class MongoConfig(BaseConfig):
         """
         return self.getValue("db_name")
 
-    def getCollection(self, name) -> str:
+    def getCollection(self, name: str) -> str:
         """
         Return collection name at a given configuration node.
 
@@ -389,3 +396,35 @@ class MongoConfig(BaseConfig):
         :return: authentication source
         """
         return self.safeGetValue("authSource")
+
+
+class WithConfig(ABC):
+    """Object with config attribute defined in constructor."""
+
+    def __init__(self, config: Optional[TBaseConfig] = None) -> None:
+        """
+        Instantiate object with config attribute.
+
+        :param config: base configuration instance
+        """
+        self.config = config
+
+
+def confdefaults(
+    method: Callable[Concatenate[TWithConfig, Param], RetType]
+) -> Callable[Concatenate[TWithConfig, Param], RetType]:
+    """
+    Wrap input method to overwrite keyword arguments with configurations.
+
+    :param method: method to wrap
+    :return: wrapped method
+    """
+
+    def wrapper(self: TWithConfig, *args: Any, **kwargs: Any) -> Any:
+        return (
+            method(self, *args, **dict(self.config.config, **kwargs))
+            if self.config is not None
+            else method(self, *args, **kwargs)
+        )
+
+    return wrapper

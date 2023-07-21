@@ -89,7 +89,7 @@ class CloudSync(WithLogging):
         :return: wrapped function
         """
 
-        def wrap(filename):
+        def wrap(filename: PathLike) -> PathLike:
             return f(self.get_if_not_exists(filename))
 
         return wrap

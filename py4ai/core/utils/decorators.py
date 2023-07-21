@@ -3,7 +3,7 @@
 import os
 from functools import wraps
 from glob import glob
-from typing import Any, Callable, Iterable, Tuple, TypeVar
+from typing import Any, Callable, Dict, Iterable, Tuple, TypeVar
 
 import pandas as pd
 
@@ -12,6 +12,7 @@ from py4ai.core.utils.fs import create_dir_if_not_exists
 
 A = TypeVar("A")
 B = TypeVar("B")
+TCached = TypeVar("TCached", bound="Cached")
 
 
 def cache(func: Callable[..., T]) -> Callable[..., T]:
@@ -23,7 +24,7 @@ def cache(func: Callable[..., T]) -> Callable[..., T]:
     """
 
     @wraps(func)
-    def _wrap(obj):
+    def _wrap(obj: Any) -> Any:
         try:
             return obj.__dict__[func.__name__]
         except KeyError:
@@ -49,7 +50,7 @@ class Cached(object):
     """Class to cache results and export them as pickle to be later reloaded."""
 
     @property
-    def _cache(self):
+    def _cache(self) -> Any:
         """
         Hidden property that stores the custom cache that can be exported and imported.
 
@@ -58,11 +59,11 @@ class Cached(object):
         try:
             return self._cache_data
         except AttributeError:
-            self._cache_data = {}
+            self._cache_data: Dict[Any, Any] = {}
             return self._cache
 
     @staticmethod
-    def cache(func: Callable[["Cached"], T]) -> property:
+    def cache(func: Callable[[TCached], T]) -> property:
         """
         Return a decorator to cache function return values.
 
@@ -71,7 +72,7 @@ class Cached(object):
         """
 
         @wraps(func)
-        def _wrap(obj: "Cached"):
+        def _wrap(obj: TCached) -> Any:
             try:
                 return obj._cache[func.__name__]
             except KeyError:
@@ -167,7 +168,7 @@ def same_type(f: Callable[[A, B], T]) -> Callable[[A, B], T]:
     """
 
     @wraps(f)
-    def new_f(self, other):
+    def new_f(self: Any, other: Any) -> T:
         if not isinstance(other, type(self)):
             raise TypeError(
                 f"other's type ({type(other)}) is different from self's type ({type(self)})"

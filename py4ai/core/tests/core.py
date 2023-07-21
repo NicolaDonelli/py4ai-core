@@ -1,11 +1,12 @@
 """Basic testing functionalities to be used in unittests."""
 
 from time import time
-from typing import Callable, Dict, TypeVar
+from typing import Any, Callable, Dict, List, TypeVar
 from unittest import TestCase as CoreTestCase
 
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 
 from py4ai.core.logging import WithLogging
 
@@ -13,7 +14,9 @@ from py4ai.core.logging import WithLogging
 class TestCase(CoreTestCase, WithLogging):
     """Tests class with basis functionalities."""
 
-    def compareLists(self, first: list, second: list, strict: bool = False) -> None:
+    def compareLists(
+        self, first: List[Any], second: List[Any], strict: bool = False
+    ) -> None:
         """
         Compare lists.
 
@@ -27,7 +30,9 @@ class TestCase(CoreTestCase, WithLogging):
         else:
             self.assertTrue(len(set(first).intersection(second)) == len(set(first)))
 
-    def compareDicts(self, first: dict, second: dict, strict: bool = False) -> None:
+    def compareDicts(
+        self, first: Dict[Any, Any], second: Dict[Any, Any], strict: bool = False
+    ) -> None:
         """
         Compare dictionaries.
 
@@ -45,7 +50,7 @@ class TestCase(CoreTestCase, WithLogging):
 
     def compareDictsAlmostEqual(
         self, first: Dict[str, float], second: Dict[str, float], delta: float = 1e-12
-    ):
+    ) -> None:
         """
         Compare dictionaries and check if they are almost equal.
 
@@ -88,7 +93,9 @@ class TestCase(CoreTestCase, WithLogging):
         except AssertionError as e:
             raise self.failureException("Input series are different") from e
 
-    def compareArrays(self, first: np.ndarray, second: np.ndarray, msg: str) -> None:
+    def compareArrays(
+        self, first: NDArray[Any], second: NDArray[Any], msg: str
+    ) -> None:
         """
         Compare arrays.
 

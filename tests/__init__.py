@@ -17,9 +17,9 @@ os.environ["TMP_LOG_FOLDER"] = str(
 )
 
 
-def clean_tmp_folder():
+def clean_tmp_folder() -> None:
     os.rmdir(TMP_FOLDER)
 
 
-def unset_TMP_FOLDER():
+def unset_TMP_FOLDER() -> None:
     del os.environ["TMP_LOG_FOLDER"]

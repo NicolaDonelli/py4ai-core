@@ -29,7 +29,7 @@ logger = getDefaultLogger()
 
 class TestUtilsDict(TestCase):
     @logTest
-    def test_groupIterable(self):
+    def test_groupIterable(self) -> None:
         self.assertEqual(
             [
                 el
@@ -60,7 +60,7 @@ class TestUtilsDict(TestCase):
         )
 
     @logTest
-    def test_pairwise(self):
+    def test_pairwise(self) -> None:
         self.assertEqual(
             [el for el in pairwise({"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6})],
             [("a", "b"), ("b", "c"), ("c", "d"), ("d", "e"), ("e", "f")],
@@ -68,7 +68,7 @@ class TestUtilsDict(TestCase):
         self.assertEqual([el for el in pairwise({"a": 1})], [])
 
     @logTest
-    def test_union(self):
+    def test_union(self) -> None:
         self.assertEqual(
             union({"1": {"a": 1}}, filterNones({"1": {"a": None}, "b": 1})),
             {"1": {"a": 1}, "b": 1},
@@ -85,7 +85,7 @@ class TestUtilsDict(TestCase):
         )
 
     @logTest
-    def test_flattenKeys(self):
+    def test_flattenKeys(self) -> None:
         self.assertEqual(
             flattenKeys({"a": {"b": {"c": 2}}, "d": 2, "e": 3}, sep="."),
             {"a.b.c": 2, "d": 2, "e": 3},
@@ -97,7 +97,7 @@ class TestUtilsDict(TestCase):
         )
 
     @logTest
-    def test_unflattenKeys(self):
+    def test_unflattenKeys(self) -> None:
         self.assertEqual(
             unflattenKeys({"a.b.c": 2, "d": 2, "e": 3}, sep="."),
             {"a": {"b": {"c": 2}}, "d": 2, "e": 3},
@@ -109,11 +109,11 @@ class TestUtilsDict(TestCase):
         )
 
     @logTest
-    def test_filterNones(self):
+    def test_filterNones(self) -> None:
         self.assertEqual(filterNones({"a": 1, "b": None}), {"a": 1})
 
     @logTest
-    def test_groupBy(self):
+    def test_groupBy(self) -> None:
         self.assertEqual(
             [(k, v) for k, v in groupBy(["abc", "ab", "bcd", "c"], key=len)],
             [(1, ["c"]), (2, ["ab"]), (3, ["abc", "bcd"])],
@@ -122,7 +122,7 @@ class TestUtilsDict(TestCase):
 
 class TestUtilsFs(TestCase):
     @logTest
-    def test_mkdir(self):
+    def test_mkdir(self) -> None:
         directory = os.path.join("/tmp", "test_utils_fs")
         mkdir(directory)
 
@@ -130,7 +130,7 @@ class TestUtilsFs(TestCase):
         os.rmdir(directory)
 
     @logTest
-    def test_create_dir_if_not_exists(self):
+    def test_create_dir_if_not_exists(self) -> None:
         directory = os.path.join("/tmp", "test_utils_fs")
         create_dir_if_not_exists(directory)
 
@@ -138,7 +138,7 @@ class TestUtilsFs(TestCase):
         os.rmdir(directory)
 
     @logTest
-    def test_get_lexicographic_dirname(self):
+    def test_get_lexicographic_dirname(self) -> None:
         create_dir_if_not_exists(os.path.join("/tmp", "zzz"))
 
         self.assertEqual(get_lexicographic_dirname("/tmp", first=False), "zzz")
@@ -147,7 +147,7 @@ class TestUtilsFs(TestCase):
 
 class TestPandas(TestCase):
     @logTest
-    def test_is_sparse(self):
+    def test_is_sparse(self) -> None:
         self.assertTrue(
             is_sparse(
                 pd.DataFrame(
@@ -173,7 +173,7 @@ class TestPandas(TestCase):
         )
 
     @logTest
-    def test_loc(self):
+    def test_loc(self) -> None:
         res = pd.DataFrame({"v1": [0], "v2": [1], "v3": [1]})
         self.assertTrue(
             (
@@ -229,13 +229,13 @@ class TestPandas(TestCase):
 
 class TestDecorators(TestCase):
     @logTest
-    def test_lazyproperty(self):
+    def test_lazyproperty(self) -> None:
         class MyClass:
             def __init__(self, param: str = "test"):
                 self.param = param
 
             @lazy
-            def list_param(self) -> List:
+            def list_param(self) -> List[int]:
                 return [1, 2, 3]
 
         ex = MyClass()
@@ -247,15 +247,15 @@ class TestDecorators(TestCase):
 
         self.assertEqual(ex.__dict__, {"param": "test", "list_param": [1, 2, 3]})
 
-    def test_cache_io(self):
+    def test_cache_io(self) -> None:
         from py4ai.core.utils.decorators import Cached
 
         class A(Cached):
-            def __init__(self, cnt):
+            def __init__(self, cnt: int) -> None:
                 self.cnt = cnt
 
             @Cached.cache
-            def my_long_computation(self):
+            def my_long_computation(self) -> int:
                 # _ = sleep(1)
                 self.cnt = self.cnt + 1
                 return self.cnt

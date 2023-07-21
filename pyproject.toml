@@ -57,9 +57,22 @@ parentdir_prefix = "py4ai-core"
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --cov=./py4ai/core --cov-config=./pyproject.toml --cov-report term"
+testpaths = "tests"
 
 [tool.coverage.run]
+branch = true
 concurrency = ["greenlet"]
+omit = [
+    "py4ai/core/__init__.py",
+    "py4ai/core/_version.py",
+    "py4ai/core/utils/cloud.py",
+    "py4ai/core/utils/email.py",
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
 
 [tool.flake8]
 exclude = "versioneer.py,py4ai/core/_version.py"
@@ -95,49 +108,25 @@ name = "py4ai-core"
 [tool.bandit]
 targets = ["py4ai/core"]
 
-[tool.mypy]
-namespace_packages = true
-follow_imports = "silent"
-
-[[tool.mypy.overrides]]
-module = ["pandas.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["sqlalchemy.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["matplotlib.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["sklearn.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["seaborn.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["scipy.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["dill.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["cfg_load.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["bson.*"]
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = ["pymongo.*", "motor.*", "mongomock_motor.*"]
-ignore_missing_imports = true
-
 [tool.licensecheck]
 using = "requirements:requirements/requirements.txt"
+zero = true
+
+[tool.mypy]
+packages = [ "py4ai", "tests" ]
+namespace_packages = true
+follow_imports = "silent"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_any_generics = true
+warn_redundant_casts = true
+strict_equality = true
+exclude = ['py4ai/core/_version\.py$']
+
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*", "sqlalchemy.*", "matplotlib.*", "sklearn.*", "seaborn.*", "scipy.*", "dill.*", "cfg_load.*",
+    "bson.*", "pymongo.*", "motor.*", "mongomock_motor.*"
+]
+ignore_missing_imports = true
+

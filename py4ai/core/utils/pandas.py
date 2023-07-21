@@ -15,7 +15,7 @@ def is_sparse(df: DataFrame) -> bool:
     return all([isinstance(v, SparseDtype) for k, v in df.dtypes.items()])
 
 
-def loc(df: DataFrame, idx: Union[Index, List[Any]]):
+def loc(df: DataFrame, idx: Union[Index, List[Any]]) -> Any:
     """
     Return a filtered dataframe based on an index list: it is designed to work properly with sparse dataframe as well.
 

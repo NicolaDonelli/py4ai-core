@@ -1,14 +1,8 @@
 """Module for basic dictionary functionalities."""
 
-import sys
-
-if sys.version_info[0] < 3:
-    from itertools import izip as zip
-else:
-    from functools import reduce
-
 from collections.abc import Mapping
 from copy import deepcopy as copy
+from functools import reduce
 from itertools import groupby, islice, tee
 from operator import add
 from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Tuple
@@ -28,7 +22,7 @@ def groupIterable(iterable: Iterable[T], batch_size: int = 10000) -> Iterator[Li
     return iter(lambda: list(islice(iterable, batch_size)), [])
 
 
-def pairwise(iterable: Iterable[T]) -> zip:
+def pairwise(iterable: Iterable[T]) -> Iterable[Tuple[T, T]]:
     """
     Return a pairing of elements of an iterable.
 
@@ -42,7 +36,7 @@ def pairwise(iterable: Iterable[T]) -> zip:
     return zip(a, b)
 
 
-def union(*dicts: dict) -> dict:
+def union(*dicts: Dict[Any, Any]) -> Dict[Any, Any]:
     """
     Return a dictionary that results from the recursive merge of the input dictionaries.
 
@@ -50,7 +44,7 @@ def union(*dicts: dict) -> dict:
     :return: merged dict
     """
 
-    def __dict_merge(dct: dict, merge_dct: dict):
+    def __dict_merge(dct: Dict[Any, Any], merge_dct: Dict[Any, Any]) -> Dict[Any, Any]:
         """
         Recursive dict merge.
 

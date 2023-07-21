@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import Dict
 
 from py4ai.core.config import (
     Configuration,
@@ -14,6 +15,8 @@ from py4ai.core.config.configurations import (
     FileSystemConfig,
     LoggingConfig,
     MongoConfig,
+    WithConfig,
+    confdefaults,
 )
 from py4ai.core.logging import getDefaultLogger
 from py4ai.core.tests.core import TestCase, logTest
@@ -26,23 +29,23 @@ logger = getDefaultLogger()
 
 class TempConfig(BaseConfig):
     @property
-    def logging(self):
+    def logging(self) -> LoggingConfig:
         return LoggingConfig(self.sublevel("logging"))
 
     @property
-    def fs(self):
+    def fs(self) -> FileSystemConfig:
         return FileSystemConfig(self.sublevel("fs"))
 
     @property
-    def auth(self):
+    def auth(self) -> AuthConfig:
         return AuthConfig(self.sublevel("auth"))
 
     @property
-    def authentication(self):
+    def authentication(self) -> AuthenticationServiceConfig:
         return AuthenticationServiceConfig(self.sublevel("authentication"))
 
     @property
-    def mongo(self):
+    def mongo(self) -> MongoConfig:
         return MongoConfig(self.sublevel("mongo"))
 
 
@@ -61,31 +64,66 @@ config = TempConfig(
 )
 
 
+class TmpClass(WithConfig):
+    @confdefaults
+    def auth(
+        self, method: str, filename: str, user: str, password: str
+    ) -> Dict[str, str]:
+        return {
+            "method": method,
+            "filename": filename,
+            "user": user,
+            "password": password,
+        }
+
+
+class TestWithConfig(TestCase):
+    def test_confdefaults(self) -> None:
+        tmp = TmpClass(config=config.auth)
+        self.assertEqual(
+            tmp.auth(method="mario", filename="giovanni"),  # type: ignore
+            {
+                "method": "mario",
+                "filename": "giovanni",
+                "user": "userID",
+                "password": "passwordID",
+            },
+        )
+
+    def test_confdefaults_empty(self) -> None:
+        tmp = TmpClass(config=None)
+        self.assertRaises(TypeError, tmp.auth, method="mario", filename="giovanni")
+
+    def test_confdefaults_wrong(self) -> None:
+        tmp = TmpClass(config=config.logging)
+        self.assertRaises(TypeError, tmp.auth)
+
+
 class TestLoggingConfig(TestCase):
     @logTest
-    def test_level(self):
+    def test_level(self) -> None:
         logger.info(f"Logging: {config.logging.level}")
         self.assertEqual(config.logging.level, "DEBUG")
 
     @logTest
-    def test_filename(self):
+    def test_filename(self) -> None:
         self.assertEqual(config.logging.filename, os.path.join("logs", "tests.log"))
 
     @logTest
-    def test_default_config_file(self):
+    def test_default_config_file(self) -> None:
         self.assertEqual(
             config.logging.default_config_file,
             os.path.join("confs", "logConfDefaults.yaml"),
         )
 
     @logTest
-    def test_capture_warnings(self):
+    def test_capture_warnings(self) -> None:
         self.assertTrue(config.logging.capture_warnings)
 
 
 class TestBaseConfig(TestCase):
     @logTest
-    def test_sublevel(self):
+    def test_sublevel(self) -> None:
         self.assertEqual(
             config.sublevel("fs").to_dict(),
             {
@@ -96,17 +134,17 @@ class TestBaseConfig(TestCase):
         )
 
     @logTest
-    def test_getValue(self):
+    def test_getValue(self) -> None:
         self.assertEqual(config.getValue("fs")["root"], root)
         self.assertRaises(KeyError, config.getValue, "folders")
 
     @logTest
-    def test_safeGetValue(self):
+    def test_safeGetValue(self) -> None:
         self.assertEqual(config.safeGetValue("fs")["root"], root)
         self.assertIsNone(config.safeGetValue("folders"))
 
     @logTest
-    def test_update_dict(self):
+    def test_update_dict(self) -> None:
         new_config = config.update({"test": {"fs": {"root": "new_folder"}}})
 
         self.assertEqual(new_config.getValue("test")["fs"]["root"], "new_folder")
@@ -116,7 +154,7 @@ class TestBaseConfig(TestCase):
         )
 
     @logTest
-    def test_update_conf(self):
+    def test_update_conf(self) -> None:
         new_config = config.update(
             Configuration(
                 cfg_dict={"test": {"fs": {"root": "new_folder"}}},
@@ -138,52 +176,52 @@ class TestBaseConfig(TestCase):
 
 class TestFileSystemConfig(TestCase):
     @logTest
-    def test_root(self):
+    def test_root(self) -> None:
         self.assertEqual(config.fs.root, root)
 
     @logTest
-    def test_getFolder(self):
+    def test_getFolder(self) -> None:
         self.assertEqual(config.fs.getFolder("python"), "myfolder")
 
     @logTest
-    def test_getFile(self):
+    def test_getFile(self) -> None:
         logger.info(f"Get File: {config.fs.getFile('credentials')}")
         self.assertEqual(config.fs.getFile("credentials"), credentials)
 
 
 class TestAuthConfig(TestCase):
     @logTest
-    def test_method(self):
+    def test_method(self) -> None:
         self.assertEqual(config.auth.method, "file")
 
     @logTest
-    def test_filename(self):
+    def test_filename(self) -> None:
         self.assertEqual(config.auth.filename, credentials)
 
     @logTest
-    def test_user(self):
+    def test_user(self) -> None:
         self.assertEqual(config.auth.user, "userID")
 
     @logTest
-    def test_password(self):
+    def test_password(self) -> None:
         self.assertEqual(config.auth.password, "passwordID")
 
 
 class TestAuthenticationServiceConfig(TestCase):
     @logTest
-    def test_secured(self):
+    def test_secured(self) -> None:
         self.assertTrue(config.authentication.secured, "passwordID")
 
     @logTest
-    def test_ap_name(self):
+    def test_ap_name(self) -> None:
         self.assertEqual(config.authentication.ap_name, "cb")
 
     @logTest
-    def test_cors(self):
+    def test_cors(self) -> None:
         self.assertEqual(config.authentication.cors, "http://0.0.0.0:10001")
 
     @logTest
-    def test_jwt_free_endpoints(self):
+    def test_jwt_free_endpoints(self) -> None:
         self.assertEqual(
             config.authentication.jwt_free_endpoints,
             [
@@ -197,7 +235,7 @@ class TestAuthenticationServiceConfig(TestCase):
         )
 
     @logTest
-    def test_auth_service(self):
+    def test_auth_service(self) -> None:
         self.assertEqual(config.authentication.auth_service.url, "http://0.0.0.0:10005")
         self.assertEqual(
             config.authentication.auth_service.check, "/tokens/{tok}/check"
@@ -207,7 +245,7 @@ class TestAuthenticationServiceConfig(TestCase):
         )
 
     @logTest
-    def test_check_service(self):
+    def test_check_service(self) -> None:
         self.assertEqual(
             config.authentication.check_service.url, "http://0.0.0.0:10001"
         )
@@ -221,23 +259,23 @@ class TestAuthenticationServiceConfig(TestCase):
 
 class TestMongoConfig(TestCase):
     @logTest
-    def test_host(self):
+    def test_host(self) -> None:
         self.assertEqual(config.mongo.host, "0.0.0.0")
 
     @logTest
-    def test_port(self):
+    def test_port(self) -> None:
         self.assertEqual(config.mongo.port, 202020)
 
     @logTest
-    def test_db_name(self):
+    def test_db_name(self) -> None:
         self.assertEqual(config.mongo.db_name, "database")
 
     @logTest
-    def test_getCollection(self):
+    def test_getCollection(self) -> None:
         self.assertEqual(config.mongo.getCollection("coll_name"), "coll_name")
 
     @logTest
-    def test_auth(self):
+    def test_auth(self) -> None:
         self.assertEqual(config.mongo.auth.method, "file")
         self.assertEqual(
             config.mongo.auth.filename,
@@ -247,7 +285,7 @@ class TestMongoConfig(TestCase):
         self.assertEqual(config.mongo.auth.password, "mongo.auth.db_psswd")
 
     @logTest
-    def test_admin(self):
+    def test_admin(self) -> None:
         self.assertEqual(config.mongo.admin.method, "file")
         self.assertEqual(
             config.mongo.admin.filename,
@@ -257,7 +295,7 @@ class TestMongoConfig(TestCase):
         self.assertEqual(config.mongo.admin.password, "mongo.admin.db_psswd")
 
     @logTest
-    def test_authSource(self):
+    def test_authSource(self) -> None:
         self.assertEqual(config.mongo.authSource, "source")
 
 
@@ -265,13 +303,13 @@ class TestFunctions(TestCase):
     maxDiff = None
 
     @logTest
-    def test_environ_variable_resolver(self):
+    def test_environ_variable_resolver(self) -> None:
         cfg = load_from_file(conf_file)
         path = cfg["storage"]["fs"]["folders"]["logs"]
         self.assertEqual(path, os.environ["LOGS_PATH"])
 
     @logTest
-    def test_missing_environ_variable(self):
+    def test_missing_environ_variable(self) -> None:
         value = os.environ.pop("LOGS_PATH")
         with self.assertRaises(KeyError) as context:
             load_from_file(conf_file)
@@ -279,7 +317,7 @@ class TestFunctions(TestCase):
         self.assertIn("LOGS_PATH", str(context.exception))
 
     @logTest
-    def test_load_from_file(self):
+    def test_load_from_file(self) -> None:
         cfg = load_from_file(conf_file)
         to_check = {
             "storage": {"fs": {"folders": {"logs": "logs"}}},
@@ -295,7 +333,7 @@ class TestFunctions(TestCase):
         self.assertEqual(cfg.to_dict(), to_check)
 
     @logTest
-    def test_get_confs_in_path(self):
+    def test_get_confs_in_path(self) -> None:
         self.assertEqual(
             set(get_confs_in_path(DATA_FOLDER, filename="*.yml")),
             {
@@ -310,7 +348,7 @@ class TestFunctions(TestCase):
         )
 
     @logTest
-    def test_merge_confs(self):
+    def test_merge_confs(self) -> None:
         confs = merge_confs(
             filenames=get_confs_in_path(DATA_FOLDER, filename="specific.*"),
             default=get_confs_in_path(DATA_FOLDER, filename="defaults.yml")[0],

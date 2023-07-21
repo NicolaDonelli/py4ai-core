@@ -128,17 +128,17 @@ format: setup_dev
 lint: setup_dev
 	${PYTHON} -m flake8 $(folders)
 
-mypy: setup_dev $(install_tag)
-	${PYTHON} -m mypy --install-types --non-interactive --package py4ai --package tests
+mypy: setup_dev
+	${PYTHON} -m mypy --install-types --non-interactive
 
-tests: setup_dev $(install_tag)
+tests: setup_dev
 	${PYTHON} -m pytest tests
 
 bandit: setup_dev
 	${PYTHON} -m bandit -r -c pyproject.toml --severity-level high --confidence-level high .
 
-licensecheck: setup_dev
-	${PYTHON} -m licensecheck --zero
+licensecheck: setup_dev requirements/requirements.txt
+	${PYTHON} -m licensecheck
 
 checks: lint mypy bandit licensecheck tests
 	${PYTHON} -m black --check $(folders)
