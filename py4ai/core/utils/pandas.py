@@ -2,8 +2,7 @@
 
 from typing import Any, List, Union
 
-from pandas import DataFrame, Index
-from pandas.core.arrays.sparse.dtype import SparseDtype
+from pandas import DataFrame, Index, SparseDtype
 
 
 def is_sparse(df: DataFrame) -> bool:

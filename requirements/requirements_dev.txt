@@ -120,7 +120,7 @@ pbr==5.11.0
     # via stevedore
 pep517==0.13.0
     # via build
-pip-tools==6.12.1
+pip-tools==7.3.0
     # via -r requirements/requirements_dev.in
 pkginfo==1.9.2
     # via twine
@@ -225,6 +225,7 @@ tomli==2.0.1
     #   flake8-pyproject
     #   mypy
     #   pep517
+    #   pip-tools
     #   pytest
 twine==4.0.2
     # via -r requirements/requirements_dev.in
