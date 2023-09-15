@@ -30,10 +30,8 @@ jobs:
           python-version: ${{matrix.python-version}}
           architecture: x64
 
-      - name: Check formatting, linting, static typing, security issues, licenses and unit-tests
-        run: |
-          rm requirements/*.txt 
-          make checks
+      - name: Check typing, linting and formatting
+        run: make checks
 
       - name: Make documentation
         run: make docs

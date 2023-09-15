@@ -65,19 +65,23 @@ $(pre_deps_tag):
 	grep "^tomli\|^setuptools"  requirements/requirements.in | xargs ${PYTHON} -m pip install --upgrade --quiet
 	touch $(pre_deps_tag)
 
+requirements/requirements_dev.txt: requirements/requirements_dev.in requirements/requirements.in $(pre_deps_tag)
+	@echo "==Compiling requirements_dev.txt=="
+	pip-compile --output-file requirements/tmp.txt --quiet --no-emit-index-url --resolver=backtracking requirements/requirements.in requirements/requirements_dev.in
+	cat requirements/tmp.txt > requirements/requirements_dev.txt
+	rm requirements/tmp.txt
+
 requirements/requirements.txt: requirements/requirements_dev.txt
 	@echo "==Compiling requirements.txt=="
 	cat requirements/requirements.in > subset.in
 	echo "" >> subset.in
 	echo "-c requirements/requirements_dev.txt" >> subset.in
-	pip-compile --output-file "requirements/requirements.txt" --quiet --no-emit-index-url subset.in
+	pip-compile --output-file "requirements/tmp.txt" --quiet --no-emit-index-url --resolver=backtracking subset.in
 	rm subset.in
+	cat requirements/tmp.txt > requirements/requirements.txt
+	rm requirements/tmp.txt
 
 reqs: requirements/requirements.txt
-
-requirements/requirements_dev.txt: requirements/requirements_dev.in requirements/requirements.in $(pre_deps_tag)
-	@echo "==Compiling requirements_dev.txt=="
-	pip-compile --output-file requirements/requirements_dev.txt --quiet --no-emit-index-url requirements/requirements.in requirements/requirements_dev.in
 
 reqs_dev: requirements/requirements_dev.txt
 
