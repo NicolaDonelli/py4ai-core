@@ -81,7 +81,8 @@ $(setup_tag): $(pre_deps_tag) pyproject.toml
 	touch $(setup_tag)
 
 requirements/requirements.txt: poetry.lock pyproject.toml
-	poetry export -f requirements.txt --output requirements.txt --without dev
+	mkdir -p requirements
+	poetry export -f requirements.txt --output requirements/requirements.txt --without dev
 
 reqs: requirements/requirements.txt
 
@@ -149,6 +150,7 @@ clean:
 	rm -rf docs
 	rm -rf build
 	rm -rf sphinx/source/api
+	rm -rf requirements
 	rm -rf $(shell find . -name "*.pyc") $(shell find . -name "__pycache__")
 	rm -rf *.egg-info .mypy_cache .pytest_cache .make_cache $(env_tag) $(env_dev_tag) $(install_tag)
 
