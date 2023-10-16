@@ -82,7 +82,7 @@ $(setup_tag): $(pre_deps_tag) pyproject.toml
 
 requirements/requirements.txt: poetry.lock pyproject.toml
 	mkdir -p requirements
-	poetry export -f requirements.txt --output requirements/requirements.txt --without dev
+	poetry export -f requirements.txt --output requirements/requirements.txt --without dev --without-hashes
 
 reqs: requirements/requirements.txt
 
