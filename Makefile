@@ -80,7 +80,7 @@ $(setup_tag): $(pre_deps_tag) pyproject.toml
 	poetry install --with unit --no-cache
 	touch $(setup_tag)
 
-requirements.txt: poetry.lock pyproject.toml
+requirements/requirements.txt: poetry.lock pyproject.toml
 	poetry export -f requirements.txt --output requirements.txt --without dev
 
 reqs: requirements/requirements.txt
