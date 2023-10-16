@@ -1,8 +1,0 @@
-cfg-load>=0.8
-deprecated>=1.2.12
-pandas>=1.0
-pydantic>=1.9
-scipy>=1.7.3
-setuptools>=61.2
-tomli>=2.0.1
-typing-extensions>=4.0
