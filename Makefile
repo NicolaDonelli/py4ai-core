@@ -102,7 +102,7 @@ dist/.build-tag: $(files) pyproject.toml requirements/requirements.txt
 	poetry build
 	ls -rt  dist/* | tail -1 > dist/.build-tag
 
-dist: dist/.build-tag setup.py
+dist: dist/.build-tag
 
 $(install_tag): $(files) pyproject.toml requirements/requirements.txt
 	@echo "==Installing package=="

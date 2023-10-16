@@ -32,7 +32,6 @@ jobs:
 
       - name: Check formatting, linting, static typing, security issues, licenses and unit-tests
         run: |
-          rm requirements/*.txt 
           make checks
 
       - name: Make documentation

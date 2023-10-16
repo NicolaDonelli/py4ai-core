@@ -34,8 +34,7 @@ jobs:
       - name: Build source distribution
         shell: bash -l {0}
         run: |
-          grep "^tomli\|^setuptools"  requirements/requirements.in | xargs python -m pip install --upgrade --quiet
-          python setup.py --quiet sdist
+          make dist
 
       - name: Check source package structure
         run: |
@@ -43,7 +42,7 @@ jobs:
           DIR=$(python setup.py --fullname)
           rm -rf $(find . -name "*.pyc") $(find . -name "__pycache__") $(find . -name "*.py.orig")
           files=(
-            "requirements/requirements.in"
+            "requirements/requirements.txt"
             "LICENSE"
             "MANIFEST.in"
             "PKG-INFO"
@@ -85,9 +84,7 @@ jobs:
       - name: Build source and binary distributions
         shell: bash -l {0}
         run: |
-          grep "^tomli\|^setuptools"  requirements/requirements.in | xargs python -m pip install --upgrade --quiet
-          python -m pip install build wheel
-          python setup.py sdist bdist_wheel
+          make dist
 
       - name: Add version to environment vars
         run: |
