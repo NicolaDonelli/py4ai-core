@@ -1,6 +1,6 @@
 # Signifies our desired python version
 # Makefile macros (or variables) are defined a little bit differently than traditional bash, keep in mind that in the Makefile there's top-level Makefile-only syntax, and everything else is bash script syntax.
-PYTHON = python
+PYTHON = poetry run
 
 # .PHONY defines parts of the makefile that are not dependant on any specific file
 # This is most often used to store functions
@@ -13,13 +13,15 @@ doc_files := $(shell find sphinx -name "*.*")
 # Uncomment to store cache installation in the environment
 # cache_dir := $(shell python -c 'import site; print(site.getsitepackages()[0])')
 cache_dir := .make_cache
-package_name=$(shell python -c "import tomli;from pathlib import Path;print(tomli.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']['name'])")
+package_name="py4ai-core"
 
 $(shell mkdir -p $(cache_dir))
 
+POETRY_EXISTS := $(shell command -v poetry 2> /dev/null)
+
 pre_deps_tag := $(cache_dir)/.pre_deps
+setup_tag := $(cache_dir)/.setup_tag
 env_tag := $(cache_dir)/.env_tag
-env_dev_tag := $(cache_dir)/.env_dev_tag
 install_tag := $(cache_dir)/.install_tag
 docker_build_tag := $(cache_dir)/.docker_build_tag
 
@@ -59,90 +61,84 @@ help:
 	@echo "------------------------------------"
 
 $(pre_deps_tag):
-	@echo "==Installing pip-tools and black=="
-	${PYTHON} -m pip install --upgrade --quiet pip
-	grep "^pip-tools\|^black"  requirements/requirements_dev.in | xargs ${PYTHON} -m pip install --quiet
-	grep "^tomli\|^setuptools"  requirements/requirements.in | xargs ${PYTHON} -m pip install --upgrade --quiet
+ifndef POETRY_EXISTS
+	@echo "Installing Poetry"
+	curl -sSL https://install.python-poetry.org | python3 -
+	which poetry
+	poetry --version
 	touch $(pre_deps_tag)
+else
+	@echo "Poetry already installed"
+	poetry --version
+	touch $(pre_deps_tag)
+endif
 
-requirements/requirements.txt: requirements/requirements_dev.txt
-	@echo "==Compiling requirements.txt=="
-	cat requirements/requirements.in > subset.in
-	echo "" >> subset.in
-	echo "-c requirements/requirements_dev.txt" >> subset.in
-	pip-compile --output-file "requirements/requirements.txt" --quiet --no-emit-index-url subset.in
-	rm subset.in
+$(setup_tag): $(pre_deps_tag) pyproject.toml
+	@echo "==Setting up package environment=="
+	poetry config virtualenvs.prefer-active-python true
+	poetry lock --no-update
+	poetry install --with unit --no-cache
+	touch $(setup_tag)
+
+requirements.txt: poetry.lock pyproject.toml
+	poetry export -f requirements.txt --output requirements.txt --without dev
 
 reqs: requirements/requirements.txt
 
-requirements/requirements_dev.txt: requirements/requirements_dev.in requirements/requirements.in $(pre_deps_tag)
-	@echo "==Compiling requirements_dev.txt=="
-	pip-compile --output-file requirements/requirements_dev.txt --quiet --no-emit-index-url requirements/requirements.in requirements/requirements_dev.in
-
-reqs_dev: requirements/requirements_dev.txt
-
-$(env_tag): requirements/requirements.txt
-	@echo "==Installing requirements.txt=="
-	pip-sync --quiet requirements/requirements.txt
-	rm -rf $(install_tag)
-	touch $(env_tag)
-
-$(env_dev_tag): requirements/requirements_dev.txt
-	@echo "==Installing requirements_dev.txt=="
-	pip-sync --quiet requirements/requirements_dev.txt
-	rm -rf $(install_tag)
-	touch $(env_dev_tag)
+$(env_tag): $(pre_deps_tag) pyproject.toml
+	@echo "==Setting up package environment=="
+	poetry config virtualenvs.prefer-active-python true
+	poetry lock --no-update
+	poetry install --no-cache
+	touch $(setup_tag)
 
 setup: $(env_tag)
-	@echo "==Setting up package environment=="
-	rm -f $(env_dev_tag)
 
-setup_dev: $(env_dev_tag)
-	@echo "==Setting up development environment=="
-	rm -f $(env_tag)
+setup_dev: $(env_tag)
+	poetry install --with dev --sync --no-cache
 
 dist/.build-tag: $(files) pyproject.toml requirements/requirements.txt
 	@echo "==Building package distribution=="
-	${PYTHON} setup.py --quiet sdist
+	poetry build
 	ls -rt  dist/* | tail -1 > dist/.build-tag
 
 dist: dist/.build-tag setup.py
 
-$(install_tag): dist/.build-tag
+$(install_tag): $(files) pyproject.toml requirements/requirements.txt
 	@echo "==Installing package=="
-	${PYTHON} -m pip install --quiet --no-deps $(shell ls -rt  dist/*.tar.gz | tail -1)
+	poetry install
 	touch $(install_tag)
 
 uninstall:
 	@echo "==Uninstall package $(package_name)=="
-	pip uninstall -y $(package_name)
-	pip freeze | grep -v "@" | xargs pip uninstall -y
+	${PYTHON} pip uninstall -y $(package_name)
+	${PYTHON} pip freeze | grep -v "@" | xargs ${PYTHON} pip uninstall -y
 	rm -f $(env_tag) $(env_dev_tag) $(pre_deps_tag) $(install_tag)
 
 install: $(install_tag)
 
 format: setup_dev
-	${PYTHON} -m black $(folders)
-	${PYTHON} -m isort $(folders)
+	${PYTHON} black $(folders)
+	${PYTHON} isort $(folders)
 
 lint: setup_dev
-	${PYTHON} -m flake8 $(folders)
+	${PYTHON} flake8 $(folders)
 
 mypy: setup_dev
-	${PYTHON} -m mypy --install-types --non-interactive
+	${PYTHON} mypy --install-types --non-interactive
 
 tests: setup_dev
-	${PYTHON} -m pytest tests
+	${PYTHON} pytest tests
 
 bandit: setup_dev
-	${PYTHON} -m bandit -r -c pyproject.toml --severity-level high --confidence-level high .
+	${PYTHON} bandit -r -c pyproject.toml --severity-level high --confidence-level high .
 
 licensecheck: setup_dev requirements/requirements.txt
-	${PYTHON} -m licensecheck
+	${PYTHON} licensecheck
 
 checks: lint mypy bandit licensecheck tests
-	${PYTHON} -m black --check $(folders)
-	${PYTHON} -m isort $(folders) -c
+	${PYTHON} black --check $(folders)
+	${PYTHON} isort $(folders) -c
 
 docs: setup_dev $(install_tag) $(doc_files) pyproject.toml
 	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
