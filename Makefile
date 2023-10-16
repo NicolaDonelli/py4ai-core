@@ -142,7 +142,7 @@ checks: lint mypy bandit licensecheck tests
 	${PYTHON} isort $(folders) -c
 
 docs: setup_dev $(doc_files) pyproject.toml
-	sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
+	${PYTHON} sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
 	make --directory=sphinx --file=Makefile clean html
 
 clean:
