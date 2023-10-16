@@ -133,26 +133,21 @@ typeguard = ">=2.13.0"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-bandit = {extras = ["toml"], version = ">=1.7.4"}
-licensecheck = ">=2023.1.0,<2023.2.0"
-Sphinx = ">4.1"
 aiosqlite = ">=0.17"
+bandit = {extras = ["toml"], version = ">=1.7.4"}
 black = ">=21.12b0"
 darglint = ">=1.8.1"
 flake8-docstrings = ">=1.6"
-flake8-rst-docstrings = ">=0.2.5"
-flake8 = ">=4.0.1"
 Flake8-pyproject = ">=1.1.0"
+flake8-rst-docstrings = ">=0.2.5"
 isort = ">=5.10.1"
+licensecheck = ">=2023.1.0"
 m2r2 = ">=0.3.2,<0.3.3"
-mongomock = ">=3.19"
 mongomock_motor = "==0.0.12" # This should be updated
-mypy-extensions = "==0.4.3" # This should be updated
 mypy = "==0.991" # This should be updated
-pip-tools = ">=6.6.2"
+pip = ">=22.2"
 pytest-cov = ">=3.0"
-pytest = ">=6.2"
 recommonmark = ">=0.7"
+setuptools = ">65.0.0" # This should be removed
 sphinx-rtd-theme = ">=0.5"
-twine = ">=3.8"
 versioneer = ">=0.21"
