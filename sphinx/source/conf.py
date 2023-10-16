@@ -24,7 +24,7 @@ with open(BASE_FOLDER / "pyproject.toml", 'rb') as fobj:
 
 project = config['tool']['sphinx']['name']
 package_dir = config['tool']["sphinx"]["package_dir"]
-author_str = " & ".join([x['name'] for x in config['project']['authors']])
+author_str = " & ".join([x for x in config['tool']['poetry']['authors']])
 copyright = str(date.today().year) + ', ' + author_str
 
 sys.path.insert(0, BASE_FOLDER.as_posix())

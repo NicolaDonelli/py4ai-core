@@ -39,14 +39,12 @@ help:
 	@echo " "
 	@echo "Type 'make' followed by one of these keywords:"
 	@echo " "
-	@echo "  - reqs_dev to build closed development requirements, requirements/requirements_dev.txt, from requirements/requirements_dev.in and requirements/requirements.in"
 	@echo "  - reqs to build closed minimal requirements, requirements/requirements.txt, from requirements/requirements.in"
 	@echo "  - setup to install minimal requirements"
 	@echo "  - setup_dev to install development requirements"
 	@echo "  - format to reformat files to adhere to PEP8 standards"
 	@echo "  - dist to build a tar.gz distribution"
 	@echo "  - install to install the package with minimal requirements"
-	@echo "  - install_dev to install the package with development environment"
 	@echo "  - uninstall to uninstall the package and its dependencies"
 	@echo "  - tests to run unittests using pytest as configured in pyproject.toml"
 	@echo "  - lint to perform linting using flake8 as configured in pyproject.toml"
@@ -143,7 +141,7 @@ checks: lint mypy bandit licensecheck tests
 
 docs: setup_dev $(doc_files) pyproject.toml
 	${PYTHON} sphinx-apidoc --implicit-namespaces -f -o sphinx/source/api py4ai
-	make --directory=sphinx --file=Makefile clean html
+	${PYTHON} make --directory=sphinx --file=Makefile clean html
 
 clean:
 	@echo "==Cleaning environment=="
