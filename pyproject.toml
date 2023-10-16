@@ -124,14 +124,10 @@ dill = ">=0.3"
 motor = "==3.0.0" # This should be updated
 pandas = ">=1.0"
 pydantic = ">=1.9,<2.0" # This should be updated
-pymongo = ">=4.0"
 scipy = ">=1.7.3"
-setuptools = ">=47.1"
 sqlalchemy = "==1.4.39" # This should be updated
 tornado = ">=6.1"
-tomli = ">=2.0.1"
 typeguard = ">=2.13.0"
-typing-extensions = ">=4.0"
 
 [tool.poetry.group.dev]
 optional = true
