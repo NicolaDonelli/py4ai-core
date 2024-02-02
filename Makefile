@@ -75,7 +75,7 @@ $(setup_tag): $(pre_deps_tag) pyproject.toml
 	@echo "==Setting up package environment=="
 	poetry config virtualenvs.prefer-active-python true
 	poetry lock --no-update
-	poetry install --with unit --no-cache
+	poetry install --with unit --no-cache --sync
 	touch $(setup_tag)
 
 requirements/requirements.txt: poetry.lock pyproject.toml
@@ -88,7 +88,7 @@ $(env_tag): $(pre_deps_tag) pyproject.toml
 	@echo "==Setting up package environment=="
 	poetry config virtualenvs.prefer-active-python true
 	poetry lock --no-update
-	poetry install --no-cache
+	poetry install --no-cache --sync
 	touch $(setup_tag)
 
 setup: $(env_tag)
